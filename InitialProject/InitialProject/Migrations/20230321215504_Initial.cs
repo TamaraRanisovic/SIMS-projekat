@@ -163,6 +163,7 @@ namespace InitialProject.Migrations
                     Password = table.Column<string>(type: "TEXT", nullable: false),
                     UserType = table.Column<int>(type: "INTEGER", nullable: false),
                     Discriminator = table.Column<string>(type: "TEXT", nullable: false),
+                    AccomodationAccId = table.Column<int>(type: "INTEGER", nullable: true),
                     IsPresent = table.Column<bool>(type: "INTEGER", nullable: true),
                     CheckpointId = table.Column<int>(type: "INTEGER", nullable: true),
                     TourId = table.Column<int>(type: "INTEGER", nullable: true)
@@ -170,6 +171,12 @@ namespace InitialProject.Migrations
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_Users", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_Users_Accomodations_AccomodationAccId",
+                        column: x => x.AccomodationAccId,
+                        principalTable: "Accomodations",
+                        principalColumn: "AccId",
+                        onDelete: ReferentialAction.Cascade);
                     table.ForeignKey(
                         name: "FK_Users_Checkpoints_CheckpointId",
                         column: x => x.CheckpointId,
@@ -233,6 +240,11 @@ namespace InitialProject.Migrations
                 name: "IX_Tours_LocationId",
                 table: "Tours",
                 column: "LocationId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Users_AccomodationAccId",
+                table: "Users",
+                column: "AccomodationAccId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_Users_CheckpointId",
@@ -311,6 +323,10 @@ namespace InitialProject.Migrations
 
         protected override void Down(MigrationBuilder migrationBuilder)
         {
+            migrationBuilder.DropForeignKey(
+                name: "FK_Users_Accomodations_AccomodationAccId",
+                table: "Users");
+
             migrationBuilder.DropForeignKey(
                 name: "FK_Tours_Locations_LocationId",
                 table: "Tours");

@@ -24,5 +24,10 @@ namespace InitialProject.Model
             Name = name;
             URL = url;
         }
+
+        public override string ToString()
+        {
+            return $"AccomdationImagesId: {Id}\n, Name: {Name}\n, URL: {URL}\n";
+        }
     }
 }

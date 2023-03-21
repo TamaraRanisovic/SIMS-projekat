@@ -11,7 +11,7 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace InitialProject.Migrations
 {
     [DbContext(typeof(DataContext))]
-    [Migration("20230317225327_Initial")]
+    [Migration("20230321215504_Initial")]
     partial class Initial
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
@@ -279,6 +279,11 @@ namespace InitialProject.Migrations
                 {
                     b.HasBaseType("InitialProject.Model.User");
 
+                    b.Property<int?>("AccomodationAccId")
+                        .HasColumnType("INTEGER");
+
+                    b.HasIndex("AccomodationAccId");
+
                     b.HasDiscriminator().HasValue("Guest");
                 });
 
@@ -387,6 +392,14 @@ namespace InitialProject.Migrations
                         .OnDelete(DeleteBehavior.Cascade);
                 });
 
+            modelBuilder.Entity("InitialProject.Model.Guest", b =>
+                {
+                    b.HasOne("InitialProject.Model.Accomodation", null)
+                        .WithMany("Guests")
+                        .HasForeignKey("AccomodationAccId")
+                        .OnDelete(DeleteBehavior.Cascade);
+                });
+
             modelBuilder.Entity("InitialProject.Model.Tourist", b =>
                 {
                     b.HasOne("WebApi.Entities.Checkpoint", null)
@@ -402,6 +415,8 @@ namespace InitialProject.Migrations
 
             modelBuilder.Entity("InitialProject.Model.Accomodation", b =>
                 {
+                    b.Navigation("Guests");
+
                     b.Navigation("Images");
                 });
 

@@ -24,9 +24,14 @@ namespace InitialProject.Model
         public int DaysBeforeCanceling { get; set; }
 
         public List<AccomodationImage> Images { get; set; }
+
+        public List<Guest> Guests { get; set; }
      
 
-        public Accomodation() { }
+        public Accomodation() {
+            Images = new List<AccomodationImage>();
+            Guests = new List<Guest>();
+        }
 
         public Accomodation(int accId, string name, Location location, AccomodationType type, int maxGuests, int minReservationDays, int daysBeforeCanceling)
         {
@@ -36,7 +41,14 @@ namespace InitialProject.Model
             MaxGuests = maxGuests;
             MinReservationDays = minReservationDays;
             DaysBeforeCanceling = daysBeforeCanceling;
+            Images = new List<AccomodationImage>();
+            Guests = new List<Guest>();
 
+        }
+
+        public override string ToString()
+        {
+            return $"AccomodationId: {AccId}\n, Name: {Name}\n, AccomodationType: {AccomodationType}\n, MaxGuests: {MaxGuests}\n, MinDaysReservation: {MinReservationDays}\n, DaysBeforeCanceling: {DaysBeforeCanceling}\n";
         }
     }
 }

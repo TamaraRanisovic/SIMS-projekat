@@ -59,6 +59,11 @@ namespace InitialProject.Model
                 .WithMany(t => t.Images)
                 .OnDelete(DeleteBehavior.Cascade);
 
+            modelBuilder.Entity<Guest>()
+                .HasOne<Accomodation>()
+                .WithMany(t => t.Guests)
+                .OnDelete(DeleteBehavior.Cascade);
+
             //Checkpoint
 
             modelBuilder.Entity<Tourist>()
@@ -109,7 +114,7 @@ namespace InitialProject.Model
             
         }
 
-        public string path = @"C:\Users\Strahinja\Desktop\SIMS_DB\sims.db";
+        public string path = @"C:\Temp\SIMSDataBase.db";
         protected override void OnConfiguring(DbContextOptionsBuilder options) => options.UseSqlite($"Data Source = {path}");
 
     }

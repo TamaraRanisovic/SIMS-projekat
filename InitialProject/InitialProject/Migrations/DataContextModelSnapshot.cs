@@ -277,6 +277,11 @@ namespace InitialProject.Migrations
                 {
                     b.HasBaseType("InitialProject.Model.User");
 
+                    b.Property<int?>("AccomodationAccId")
+                        .HasColumnType("INTEGER");
+
+                    b.HasIndex("AccomodationAccId");
+
                     b.HasDiscriminator().HasValue("Guest");
                 });
 
@@ -385,6 +390,14 @@ namespace InitialProject.Migrations
                         .OnDelete(DeleteBehavior.Cascade);
                 });
 
+            modelBuilder.Entity("InitialProject.Model.Guest", b =>
+                {
+                    b.HasOne("InitialProject.Model.Accomodation", null)
+                        .WithMany("Guests")
+                        .HasForeignKey("AccomodationAccId")
+                        .OnDelete(DeleteBehavior.Cascade);
+                });
+
             modelBuilder.Entity("InitialProject.Model.Tourist", b =>
                 {
                     b.HasOne("WebApi.Entities.Checkpoint", null)
@@ -400,6 +413,8 @@ namespace InitialProject.Migrations
 
             modelBuilder.Entity("InitialProject.Model.Accomodation", b =>
                 {
+                    b.Navigation("Guests");
+
                     b.Navigation("Images");
                 });
 

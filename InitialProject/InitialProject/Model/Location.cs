@@ -26,4 +26,9 @@ public class Location
         City = city;
         Country = country;
     }
+
+    public override string ToString()
+    {
+        return $"LocationId: {LocationId}\n, City: {City}\n, Country: {Country}\n";
+    }
 }

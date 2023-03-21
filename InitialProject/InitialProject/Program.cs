@@ -1,4 +1,5 @@
-﻿using System;
+﻿using InitialProject.Controller;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -36,6 +37,8 @@ namespace InitialProject
             {
                 case "1":
                     Console.WriteLine("Chosen option: A");
+                    AccomodationController accomodationController = new AccomodationController();
+                    accomodationController.GetMenu();
                     break; 
                 case "2": 
                     Console.WriteLine("Chosen option: B"); 
