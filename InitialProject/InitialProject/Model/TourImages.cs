@@ -22,5 +22,11 @@ namespace InitialProject.Model
             Name = name;
             URL = url;
         }
+
+        public TourImages(string name, string url)
+        {
+            Name = name;
+            URL = url;
+        }
     }
 }

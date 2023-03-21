@@ -24,7 +24,7 @@ namespace InitialProject.Repository
             }
         }
 
-        public static List<User> GetAllUsers(User user)
+        public static List<User> GetAllUsers()
         {
             using (var db = new DataContext())
             {

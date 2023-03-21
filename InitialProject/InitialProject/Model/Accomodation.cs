@@ -25,6 +25,7 @@ namespace InitialProject.Model
 
         public List<AccomodationImage> Images { get; set; }
      
+        public List<Guest> Guests { get; set; } 
 
         public Accomodation() { }
 
@@ -36,7 +37,17 @@ namespace InitialProject.Model
             MaxGuests = maxGuests;
             MinReservationDays = minReservationDays;
             DaysBeforeCanceling = daysBeforeCanceling;
+            Images = new List<AccomodationImage>();
+        }
 
+        public Accomodation(string name, Location location, AccomodationType type, int maxGuests, int minReservationDays, int daysBeforeCanceling)
+        {
+            Name = name;
+            AccomodationType = type;
+            MaxGuests = maxGuests;
+            MinReservationDays = minReservationDays;
+            DaysBeforeCanceling = daysBeforeCanceling;
+            Images = new List<AccomodationImage>();
         }
     }
 }

@@ -10,12 +10,21 @@ namespace InitialProject.Model
 
         public Comment() { }
 
+        public Comment(int id, DateTime creationTime, string text, User user)
+        {
+            Id = id;
+            CreationTime = creationTime;
+            Text = text;
+        }
+
         public Comment(DateTime creationTime, string text, User user)
         {
             CreationTime = creationTime;
             Text = text;
         }
 
-        
+
+
+
     }
 }

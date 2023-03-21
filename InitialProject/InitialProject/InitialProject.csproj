@@ -39,9 +39,7 @@
   </ItemGroup>
 
   <ItemGroup>
-    <Folder Include="Migrations\" />
     <Folder Include="Resources\Data\" />
-    <Folder Include="Service\" />
     <Folder Include="View\" />
   </ItemGroup>
 

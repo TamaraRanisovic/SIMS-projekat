@@ -28,4 +28,11 @@ public class Checkpoint
         Type = type;
         Status = status;
     }
+
+    public Checkpoint(string name, CheckpointType type, bool status)
+    {
+        Name = name;
+        Type = type;
+        Status = status;
+    }
 }

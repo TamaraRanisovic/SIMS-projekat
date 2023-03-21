@@ -33,8 +33,7 @@ namespace InitialProject.Model
         public DbSet<AccomodationImage> AccomodationImages { get; set; }
 
         public DbSet<TourImages> TourImages { get; set; }
-
-
+        
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             //Tura
@@ -105,11 +104,10 @@ namespace InitialProject.Model
                 .HasOne<Owner>()
                 .WithMany(t => t.Accomodations)
                 .OnDelete(DeleteBehavior.Cascade);
-
-            
+      
         }
 
-        public string path = @"C:\Users\Strahinja\Desktop\SIMS_DB\sims.db";
+        public string path = @"C:\Temp\SIMSdatabase.db";
         protected override void OnConfiguring(DbContextOptionsBuilder options) => options.UseSqlite($"Data Source = {path}");
 
     }

@@ -44,5 +44,16 @@ public class Tour
         EndTime = endTime;
         Duration = duration;
     }
+
+    public Tour(string name, string description, string language, int maxGuests, DateTime startTime, DateTime endTime, int duration)
+    {
+        Name = name;
+        Description = description;
+        Language = language;
+        MaxGuests = maxGuests;
+        StartTime = startTime;
+        EndTime = endTime;
+        Duration = duration;
+    }
 }
 
