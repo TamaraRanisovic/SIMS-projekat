@@ -28,5 +28,13 @@ namespace InitialProject.Model
             Password = password;
             UserType = userType;
         }
+
+        public User(int id, string username, string password, UserType userType)
+        {
+            Id = id;
+            Username = username;
+            Password = password;
+            UserType = userType;
+        }
     }
 }

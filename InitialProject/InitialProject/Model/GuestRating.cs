@@ -23,5 +23,11 @@ namespace InitialProject.Model
             Cleanliness = cleanliness;
             RuleCompliance = ruleCompliance;
         }
+        public GuestRating(DateTime ratingExperationDate, int cleanliness, int ruleCompliance)
+        {
+            RatingExperationDate = ratingExperationDate;
+            Cleanliness = cleanliness;
+            RuleCompliance = ruleCompliance;
+        }
     }
 }

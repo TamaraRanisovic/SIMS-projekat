@@ -31,7 +31,12 @@ public class Tour
 
     public List<Tourist> Tourists { get; set; }
 
-    public Tour() { }
+    public Tour()
+    {
+        Images = new List<TourImages>();
+        Checkpoints = new List<Checkpoint>();
+        Tourists = new List<Tourist>();
+    }
 
     public Tour(int tourId, string name, string description, string language, int maxGuests, DateTime startTime, DateTime endTime, int duration)
     {
@@ -43,6 +48,23 @@ public class Tour
         StartTime = startTime;
         EndTime = endTime;
         Duration = duration;
+        Images = new List<TourImages>();
+        Checkpoints = new List<Checkpoint>();
+        Tourists = new List<Tourist>();
+    }
+
+    public Tour(string name, string description, string language, int maxGuests, DateTime startTime, DateTime endTime, int duration)
+    {
+        Name = name;
+        Description = description;
+        Language = language;
+        MaxGuests = maxGuests;
+        StartTime = startTime;
+        EndTime = endTime;
+        Duration = duration;
+        Images = new List<TourImages>();
+        Checkpoints = new List<Checkpoint>();
+        Tourists = new List<Tourist>();
     }
 }
 

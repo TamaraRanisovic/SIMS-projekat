@@ -19,13 +19,24 @@ public class Checkpoint
 
     public List<Tourist> Tourists { get; set; }
 
-    public Checkpoint() { }
+    public Checkpoint() 
+    {
+        Tourists = new List<Tourist>();
+    }
 
-    public Checkpoint(int checkpointId, string name, CheckpointType type, bool status)
+    public Checkpoint(int checkpointId, string name, CheckpointType type)
     {
         CheckpointId = checkpointId;
         Name = name;
         Type = type;
-        Status = status;
+        Status = false;
+        Tourists = new List<Tourist>();
+    }
+    public Checkpoint(string name, CheckpointType type)
+    {
+        Name = name;
+        Type = type;
+        Status = false;
+        Tourists = new List<Tourist>();
     }
 }

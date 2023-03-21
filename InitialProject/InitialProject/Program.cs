@@ -1,4 +1,5 @@
-﻿using System;
+﻿using InitialProject.Controller;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -24,7 +25,7 @@ namespace InitialProject
 
         private static void WriteMenuOptions()
         {
-            Console.WriteLine("1. option A");
+            Console.WriteLine("1.idi do kontrolera");
             Console.WriteLine("2. option B");
             Console.WriteLine("x. exit");
             Console.Write("Your option: ");
@@ -32,10 +33,13 @@ namespace InitialProject
 
         private static void ProcessChosenOption(string chosenOption) 
         {
+            
             switch(chosenOption)
             {
                 case "1":
                     Console.WriteLine("Chosen option: A");
+                    ControllerMenu controllerMenu = new ControllerMenu();
+                    controllerMenu.Menu();
                     break; 
                 case "2": 
                     Console.WriteLine("Chosen option: B"); 

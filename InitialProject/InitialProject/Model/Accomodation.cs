@@ -26,11 +26,24 @@ namespace InitialProject.Model
         public List<AccomodationImage> Images { get; set; }
      
 
-        public Accomodation() { }
+        public Accomodation() 
+        {
+            Images = new List<AccomodationImage>();
+        }
 
         public Accomodation(int accId, string name, Location location, AccomodationType type, int maxGuests, int minReservationDays, int daysBeforeCanceling)
         {
             AccId = accId;
+            Name = name;
+            AccomodationType = type;
+            MaxGuests = maxGuests;
+            MinReservationDays = minReservationDays;
+            DaysBeforeCanceling = daysBeforeCanceling;
+
+        }
+        public Accomodation(string name, Location location, AccomodationType type, int maxGuests, int minReservationDays, int daysBeforeCanceling)
+        {
+            
             Name = name;
             AccomodationType = type;
             MaxGuests = maxGuests;

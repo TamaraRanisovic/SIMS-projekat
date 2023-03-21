@@ -118,7 +118,7 @@ namespace InitialProject.Migrations
                     Id = table.Column<int>(type: "INTEGER", nullable: false)
                         .Annotation("Sqlite:Autoincrement", true),
                     Name = table.Column<string>(type: "TEXT", nullable: false),
-                    URL = table.Column<string>(type: "TEXT", nullable: false),
+                    URL = table.Column<string>(type: "TEXT", nullable: true),
                     TourId = table.Column<int>(type: "INTEGER", nullable: true)
                 },
                 constraints: table =>
