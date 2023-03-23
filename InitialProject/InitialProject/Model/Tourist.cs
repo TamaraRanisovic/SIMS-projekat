@@ -13,10 +13,10 @@ namespace InitialProject.Model
         public bool IsPresent { get; set; }
 
 
-        public Tourist(string username, string password, UserType userType) : base(username, password, userType)
+        public Tourist(string username, string password, UserType userType = UserType.Tourist) : base(username, password, userType)
         {
         }
-        public Tourist(string username, string password, UserType userType, bool isPresent) : base(username, password, userType)
+        public Tourist(string username, string password, bool isPresent, UserType userType = UserType.Tourist) : base(username, password, userType)
         {
             IsPresent = isPresent;
         }

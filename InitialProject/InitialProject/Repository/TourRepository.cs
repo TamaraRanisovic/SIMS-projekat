@@ -87,7 +87,7 @@ namespace InitialProject.Repository
             List<Tour> todaysTour = new List<Tour>();
             using (var db = new DataContext())
             {
-                todaysTour = db.Tours.Where(t => t.StartTime == startTime).Include(t => t.Checkpoints).ToList();
+                todaysTour = db.Tours.Where(t => t.StartTime == startTime).Include(t => t.Checkpoints).Include(t=>t.Tourists).Include(t => t.Images).ToList();
 
             }
             return todaysTour;
@@ -98,7 +98,7 @@ namespace InitialProject.Repository
             List<Tour> toursWithCheckpoints = new List<Tour>();
             using (var db = new DataContext())
             {
-               toursWithCheckpoints = db.Tours.Include(t => t.Checkpoints).ToList();
+               toursWithCheckpoints = db.Tours.Include(t => t.Checkpoints).Include(t => t.Tourists).Include(t => t.Images).ToList();
             }
             return toursWithCheckpoints; 
         }
