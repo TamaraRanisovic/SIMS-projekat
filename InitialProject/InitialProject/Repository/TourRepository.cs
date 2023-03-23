@@ -102,5 +102,25 @@ namespace InitialProject.Repository
             }
             return toursWithCheckpoints; 
         }
+
+        public List<Tourist> GetTourists(Tour tour)
+        {
+            using (var db = new DataContext())
+            {
+                {
+                  
+                    var tourToReturn = db.Tours.Include(t => t.Tourists).FirstOrDefault(t => t.TourId == tour.TourId);
+
+                    
+                    if (tour == null)
+                    {
+                        return new List<Tourist>();
+                    }
+
+                    
+                    return tour.Tourists;
+                }
+            }
+        }
     }
 }

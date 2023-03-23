@@ -112,7 +112,11 @@ namespace InitialProject.Service
                     case "1":
                         Console.WriteLine("Izabrali ste oznacavanje Cekpointa");
                         currentCheckpoint = MarkingCheckpoints(trackingTour);
-                        
+                        if (currentCheckpoint.Type == CheckpointType.End)
+                        {
+                            Console.WriteLine("Krajnji cekpoint je oznacen, tura je gotova");
+                            end = true;
+                        }
                         break;
                     case "2":
                         Console.WriteLine("Izabrali ste da oznacite prisutne");
@@ -121,7 +125,7 @@ namespace InitialProject.Service
                     case "3":
                         Console.WriteLine("Izabrali ste da zavrsite turu");
                         end = EndTour(trackingTour);
-                        chosenOption = "x";
+                        
                         break;
                     case "x":
                         break;
@@ -268,7 +272,6 @@ namespace InitialProject.Service
                 {
                     if (checkPoint.CheckpointId == checkpoint.CheckpointId)
                     {
-
                         checkpoint.Status = true;
                         db.Checkpoints.Update(checkpoint);
                         db.SaveChanges();
@@ -305,12 +308,15 @@ namespace InitialProject.Service
         public void MarkingPresentTourists(Checkpoint currentCheckpoint, Tour trackingTour)
         {
             Console.WriteLine("TEST"); //ne ucitava turiste ili ne prepoznaje
-            
+
+            trackingTour.Tourists = tourRepository.GetTourists(trackingTour);
+
             foreach(var tourist in trackingTour.Tourists)
             {
                 Console.WriteLine("Ime turiste: " + tourist.Username);
                 Console.WriteLine("da li je turista prisutan" + tourist.IsPresent);
             }
+
 
         }
 
@@ -330,7 +336,7 @@ namespace InitialProject.Service
                     }
                 }
             }
-            return false;
+            return true;
         }
     }
 
