@@ -439,11 +439,53 @@ namespace InitialProject.Service
 
             foreach(var tourist in trackingTour.Tourists)
             {
+                Console.WriteLine("***********************************");
                 Console.WriteLine("Ime turiste: " + tourist.Username);
-                Console.WriteLine("da li je turista prisutan" + tourist.IsPresent);
+                Console.WriteLine("da li je turista prisutan: " + (tourist.IsPresent == false ? "nije prisutan" : "jeste prisutan" + "\n\n\n"));
+            
             }
 
+            string choice;
+            do
+            {
+                Console.WriteLine("----------------------------------------------");
+                Console.WriteLine("Za prestanak unosa prisutnih turista unesite x");
+                Console.WriteLine("----------------------------------------------");
+                Console.WriteLine("Unesite ime turiste kojeg zelite da oznacite ");
+                Console.WriteLine("----------------------------------------------");
+                Console.WriteLine("vasa opcija: ");
 
+                choice = Console.ReadLine();
+                MarkTourist(choice, trackingTour,currentCheckpoint);
+
+            } while(!choice.Equals("x"));
+
+        }
+
+        public void MarkTourist (string name, Tour trackingTour, Checkpoint currentCheckpoint)
+        {
+            using (var db = new DataContext())
+            {
+                foreach(var tourist in trackingTour.Tourists)
+                {
+                    if(tourist.Username == name)
+                    {
+                        if (tourist.IsPresent)
+                        {
+                            Console.WriteLine($"Turista {tourist.Username} je prisutan");
+                            
+                        }
+                        else
+                        {
+                            tourist.IsPresent = true;
+
+                            currentCheckpoint.Tourists.Add(tourist);
+                            db.Tourists.Update(tourist);
+                            db.SaveChanges();
+                        }
+                    }
+                }
+            }
         }
 
         public bool EndTour(Tour trackingTour)

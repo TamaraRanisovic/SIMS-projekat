@@ -43,9 +43,8 @@ public class Tour
 
     }
 
-    public Tour(int tourId, string name, string description, string language, int maxGuests, DateTime startTime, DateTime endTime, int duration)
+    public Tour( string name, string description, string language, int maxGuests, DateTime startTime, DateTime endTime, int duration)
     {
-        TourId = tourId;
         Name = name;
         Description = description;
         Language = language;
@@ -64,5 +63,6 @@ public class Tour
     {
         return $"TourId: {TourId}\n, Name: {Name}\n, Description: {Description}\n, Language: {Language}\n, MaxGuests: {MaxGuests}\n, StartTime: {StartTime}\n, EndTime: {EndTime}\n, Duration: {Duration}\n";
 
-}
+    }
+}       
 

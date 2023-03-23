@@ -21,9 +21,8 @@ namespace InitialProject.Model
 
         public TourImages() { }
 
-        public TourImages(int id, string name, string url)
+        public TourImages(string name, string url)
         {
-            Id = id;
             Name = name;
             URL = url;
         }

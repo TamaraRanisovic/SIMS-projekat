@@ -11,8 +11,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace InitialProject.Migrations
 {
     [DbContext(typeof(DataContext))]
-    [Migration("20230323194707_New")]
-    partial class New
+    [Migration("20230323225342_Initial")]
+    partial class Initial
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -135,7 +135,7 @@ namespace InitialProject.Migrations
 
             modelBuilder.Entity("InitialProject.Model.TourImages", b =>
                 {
-                    b.Property<int>("Id")
+                    b.Property<int?>("Id")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("INTEGER");
 
@@ -147,7 +147,6 @@ namespace InitialProject.Migrations
                         .HasColumnType("INTEGER");
 
                     b.Property<string>("URL")
-                        .IsRequired()
                         .HasColumnType("TEXT");
 
                     b.HasKey("Id");

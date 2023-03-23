@@ -29,12 +29,11 @@ public class Checkpoint
         Tourists = new List<Tourist>();
     }
 
-    public Checkpoint(int checkpointId, string name, CheckpointType type)
+    public Checkpoint(string name, CheckpointType type)
     {
-        CheckpointId = checkpointId;
         Name = name;
         Type = type;
-        Status = status;
+        Status = false;
         TourReservations = new List<TourReservation>();
         Tourists = new List<Tourist>();
     }

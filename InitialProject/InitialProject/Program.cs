@@ -7,6 +7,7 @@ using System.Linq.Expressions;
 using System.Text;
 using System.Threading.Tasks;
 
+
 namespace InitialProject
 {
     internal class Program
@@ -15,7 +16,7 @@ namespace InitialProject
 
         public static void Main()
         {
-            TourController TourController = new TourController();
+            TouristController TourController = new TouristController();
             string chosenOption;
             do
             {
@@ -45,6 +46,8 @@ namespace InitialProject
             {
                 case "1":
                     Console.WriteLine("Chosen option: 1");
+                   // OwnerControllerMenu controllerMenu = new OwnerControllerMenu();
+                   // controllerMenu.Menu();
                     break; 
                 case "2": 
                     Console.WriteLine("Chosen option: 2");
@@ -56,6 +59,9 @@ namespace InitialProject
                     break;
                 case "4":
                     Console.WriteLine("Chosen option: 4");
+                    Console.WriteLine("Chosen option: Prikaz i pretraga tura");
+                    TouristController TouristController = new TouristController();
+                    TouristController.GetMenu();
                     break;
                 case "x":
                     break;

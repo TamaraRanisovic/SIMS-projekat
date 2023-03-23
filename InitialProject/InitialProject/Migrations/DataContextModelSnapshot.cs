@@ -133,7 +133,7 @@ namespace InitialProject.Migrations
 
             modelBuilder.Entity("InitialProject.Model.TourImages", b =>
                 {
-                    b.Property<int>("Id")
+                    b.Property<int?>("Id")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("INTEGER");
 
@@ -145,7 +145,6 @@ namespace InitialProject.Migrations
                         .HasColumnType("INTEGER");
 
                     b.Property<string>("URL")
-                        .IsRequired()
                         .HasColumnType("TEXT");
 
                     b.HasKey("Id");

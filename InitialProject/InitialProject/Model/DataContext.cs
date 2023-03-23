@@ -128,7 +128,7 @@ namespace InitialProject.Model
             
         }
 
-        public string path = @"C:\Users\Lenovo\Documents\GitHub\SIMS-projekat\database.db";
+        public string path = @"C:\Users\Strahinja\Desktop\SIMS_DB\sims.db";
         protected override void OnConfiguring(DbContextOptionsBuilder options) => options.UseSqlite($"Data Source = {path}");
 
     }

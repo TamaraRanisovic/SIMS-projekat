@@ -26,9 +26,8 @@ public class Location
         Accomodations = new List<Accomodation>();
     }
 
-    public Location(int locationId, string city, string country)
+    public Location(string city, string country)
     {
-        LocationId = locationId;
         City = city;
         Country = country;
         Tours = new List<Tour>();

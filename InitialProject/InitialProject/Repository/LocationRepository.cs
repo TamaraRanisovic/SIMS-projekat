@@ -79,20 +79,12 @@ namespace InitialProject.Repository
                     if (location.City.Equals(city) && location.Country.Equals(country))
                     {
                         return location;
-
-                foreach (Location loc in db.Locations)
-                {
-                    if (loc.City == city && loc.Country == country)
-                    {
-                        return loc;
-
                     }
                 }
             }
             return null;
         }
-
-
     }
 }
+
 

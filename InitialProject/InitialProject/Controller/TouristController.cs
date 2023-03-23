@@ -12,7 +12,7 @@ using WebApi.Entities;
 
 namespace InitialProject.Controller
 {
-    public class TourController
+    public class TouristController
     {
         public TourService TourService;
 
@@ -20,7 +20,7 @@ namespace InitialProject.Controller
 
         //public static readonly TourService tourService = new TourService();
 
-        public TourController()
+        public TouristController()
         {
             //TourService = new TourService();
         }

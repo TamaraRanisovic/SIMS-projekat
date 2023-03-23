@@ -11,10 +11,10 @@ using WebApi.Entities;
 
 namespace InitialProject.Controller
 {
-    public class ControllerMenu
+    public class GuideController
     {
 
-        public ControllerMenu() { }
+        public GuideController() { }
 
         public static readonly TourService tourService = new TourService();
       
@@ -105,7 +105,7 @@ namespace InitialProject.Controller
             Console.WriteLine("TourDuration:");
             duration = Int32.Parse(Console.ReadLine());
 
-            Tour newTour = new Tour( name, Description, language,maxGuests, starTime, endTime, duration);
+            Tour newTour = new Tour(name, Description, language,maxGuests, starTime, endTime, duration);
 
             return newTour;
         }
