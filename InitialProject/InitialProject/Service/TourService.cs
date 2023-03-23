@@ -141,10 +141,11 @@ namespace InitialProject.Service
 
         public int GetFreeSpotsNumber(int tourId)
         {
+            TourRepository tourRepository = new TourRepository();
             Tour tour = GetTourById(tourId);
             List<Tourist> tourTourists = new List<Tourist>();
             tourTourists = GetTourists(tourId);
-            int freeSpotsNumber = tour.MaxGuests - tourTourists.Count();
+            int freeSpotsNumber = tour.MaxGuests - tourRepository.GetNumberOfTouristsInATour(tourId);
             return freeSpotsNumber;
         }
 
@@ -152,7 +153,6 @@ namespace InitialProject.Service
         { 
             TourRepository tourRepository = new TourRepository();
             tourRepository.BookATour(tourId, touristId, touristsNumber);
-
         }
 
 

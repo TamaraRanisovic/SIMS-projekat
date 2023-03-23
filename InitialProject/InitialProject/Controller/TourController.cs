@@ -127,9 +127,7 @@ namespace InitialProject.Controller
                 {
                     Console.WriteLine(checkpoint);
                 }
-                Console.WriteLine("jej");
                 tourTourists = tourService.GetTourists(tour.TourId);
-                Console.WriteLine("jej2");
                 Console.WriteLine(tourTourists.Count());
                 foreach (Tourist tourist in tourTourists)
                 {
@@ -302,13 +300,7 @@ namespace InitialProject.Controller
                         Console.WriteLine("Chosen option: 1. Rezervisi turu");
                         Tourist tourist = (Tourist)userService.GetByUsername(username);
                         tourService.BookATour(tourId, tourist.Id, touristsNumber);
-                        List<Tourist> tourTourists = tourService.GetTourists(tourId);
-
-                        foreach (Tourist tourist1 in tourTourists)
-                        {
-                            Console.WriteLine(tourist1);
-                        }
-                        return true;
+                        break;
                     }
                     
                 }
