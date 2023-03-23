@@ -34,6 +34,9 @@ namespace InitialProject.Model
 
         public DbSet<TourImages> TourImages { get; set; }
 
+        public DbSet<TourReservation> TourReservations { get; set; }
+
+
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
@@ -53,18 +56,34 @@ namespace InitialProject.Model
                 .WithMany(t => t.Tourists)
                 .OnDelete(DeleteBehavior.Cascade);
 
+            modelBuilder.Entity<TourReservation>()
+                .HasOne<Tour>()
+                .WithMany(t => t.TourReservations)
+                .OnDelete(DeleteBehavior.Cascade);
+
+            modelBuilder.Entity<TourReservation>()
+                .HasOne<Checkpoint>()
+                .WithMany(t => t.TourReservations)
+                .OnDelete(DeleteBehavior.Cascade);
+
+            modelBuilder.Entity<TourReservation>()
+                .HasOne<Tourist>()
+                .WithMany(t => t.TourReservations)
+                .OnDelete(DeleteBehavior.Cascade);
+
             //Accomodations
             modelBuilder.Entity<AccomodationImage>()
                 .HasOne<Accomodation>()
                 .WithMany(t => t.Images)
                 .OnDelete(DeleteBehavior.Cascade);
 
-            //Checkpoint
 
+
+            //Checkpoint
             modelBuilder.Entity<Tourist>()
-                .HasOne<Checkpoint>()
-                .WithMany(t => t.Tourists)
-                .OnDelete(DeleteBehavior.Cascade);
+               .HasOne<Checkpoint>()
+               .WithMany(t => t.Tourists)
+               .OnDelete(DeleteBehavior.Cascade);
 
             //Guest
             modelBuilder.Entity<Accomodation>()

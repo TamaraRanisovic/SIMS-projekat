@@ -155,6 +155,38 @@ namespace InitialProject.Migrations
                     b.ToTable("TourImages");
                 });
 
+            modelBuilder.Entity("InitialProject.Model.TourReservation", b =>
+                {
+                    b.Property<int>("TourReservationId")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("INTEGER");
+
+                    b.Property<bool>("Attendance")
+                        .HasColumnType("INTEGER");
+
+                    b.Property<int?>("CheckpointId")
+                        .HasColumnType("INTEGER");
+
+                    b.Property<int?>("TourId")
+                        .HasColumnType("INTEGER");
+
+                    b.Property<int?>("TouristId")
+                        .HasColumnType("INTEGER");
+
+                    b.Property<int>("TouristsNumber")
+                        .HasColumnType("INTEGER");
+
+                    b.HasKey("TourReservationId");
+
+                    b.HasIndex("CheckpointId");
+
+                    b.HasIndex("TourId");
+
+                    b.HasIndex("TouristId");
+
+                    b.ToTable("TourReservations");
+                });
+
             modelBuilder.Entity("InitialProject.Model.User", b =>
                 {
                     b.Property<int>("Id")
@@ -364,6 +396,24 @@ namespace InitialProject.Migrations
                         .OnDelete(DeleteBehavior.Cascade);
                 });
 
+            modelBuilder.Entity("InitialProject.Model.TourReservation", b =>
+                {
+                    b.HasOne("WebApi.Entities.Checkpoint", null)
+                        .WithMany("TourReservations")
+                        .HasForeignKey("CheckpointId")
+                        .OnDelete(DeleteBehavior.Cascade);
+
+                    b.HasOne("WebApi.Entities.Tour", null)
+                        .WithMany("TourReservations")
+                        .HasForeignKey("TourId")
+                        .OnDelete(DeleteBehavior.Cascade);
+
+                    b.HasOne("InitialProject.Model.Tourist", null)
+                        .WithMany("TourReservations")
+                        .HasForeignKey("TouristId")
+                        .OnDelete(DeleteBehavior.Cascade);
+                });
+
             modelBuilder.Entity("WebApi.Entities.Checkpoint", b =>
                 {
                     b.HasOne("WebApi.Entities.Tour", null)
@@ -405,6 +455,8 @@ namespace InitialProject.Migrations
 
             modelBuilder.Entity("WebApi.Entities.Checkpoint", b =>
                 {
+                    b.Navigation("TourReservations");
+
                     b.Navigation("Tourists");
                 });
 
@@ -420,6 +472,8 @@ namespace InitialProject.Migrations
                     b.Navigation("Checkpoints");
 
                     b.Navigation("Images");
+
+                    b.Navigation("TourReservations");
 
                     b.Navigation("Tourists");
                 });
@@ -441,6 +495,11 @@ namespace InitialProject.Migrations
                     b.Navigation("Accomodations");
 
                     b.Navigation("GuestRatings");
+                });
+
+            modelBuilder.Entity("InitialProject.Model.Tourist", b =>
+                {
+                    b.Navigation("TourReservations");
                 });
 #pragma warning restore 612, 618
         }

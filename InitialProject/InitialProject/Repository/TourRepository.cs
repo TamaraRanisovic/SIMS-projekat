@@ -27,6 +27,22 @@ namespace InitialProject.Repository
             }
         }
 
+        public Tour GetTourById(int tourId)
+        {
+            using (var db = new DataContext())
+            {
+                List<Tour> allTours = GetAllTours();
+                foreach (Tour tour in allTours)
+                {
+                    if (tour.TourId == tourId)
+                    {
+                        return tour;
+                    }
+                }
+            }
+            return null;
+        }
+
         public List<Tour> GetToursByLocation(int locationId)
         {
             List<Tour> toursByLocation = new List<Tour>();
@@ -41,7 +57,33 @@ namespace InitialProject.Repository
             return toursByLocation;
         }
 
-        
+        public void BookATour(int tourId, int touristId, int touristsNumber)
+        {
+            TourReservation tourReservation = new TourReservation(touristsNumber);
+            using (var db = new DataContext())
+            {
+                Tourist tourist = db.Tourists.Find(touristId);
+                Tour tour = db.Tours.Find(tourId);
+                if (tourist != null && tour != null)
+                {
+                    tourist.TourReservations.Add(tourReservation);
+                    tour.TourReservations.Add(tourReservation);
+                    db.SaveChanges();
+                }
+
+                /*try
+                {
+                    db.TourReservations.Add(tourReservation);
+                    db.SaveChanges();
+                } catch (DbUpdateException ex)
+                {
+                    Console.WriteLine(ex.Message);
+                }*/
+                
+            }
+            Console.WriteLine("Uspesno ste rezervisali turu.");
+
+        }
 
 
         /*

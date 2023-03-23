@@ -18,10 +18,13 @@ public class Checkpoint
 
     public bool Status { get; set; }
 
-    public List<Tourist> Tourists { get; set; }
+    public List<Tourist> Tourists;
+
+    public List<TourReservation> TourReservations { get; set; }
 
     public Checkpoint() 
     {
+        TourReservations = new List<TourReservation>();
         Tourists = new List<Tourist>();
     }
 
@@ -31,6 +34,7 @@ public class Checkpoint
         Name = name;
         Type = type;
         Status = status;
+        TourReservations = new List<TourReservation>();
         Tourists = new List<Tourist>();
     }
 

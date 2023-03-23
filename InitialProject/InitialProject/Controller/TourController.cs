@@ -7,6 +7,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
+using System.Windows.Controls;
 using WebApi.Entities;
 
 namespace InitialProject.Controller
@@ -38,6 +39,7 @@ namespace InitialProject.Controller
                 Console.WriteLine("3. Prikaz tura po trajanju ture");
                 Console.WriteLine("4. Prikaz tura po jeziku");
                 Console.WriteLine("5. Prikaz tura po broju turista");
+                Console.WriteLine("6. Rezervisi turu");
                 Console.WriteLine("x - izlazak iz programa");
                 chosenOption = Console.ReadLine();
                 Console.Clear();
@@ -80,13 +82,24 @@ namespace InitialProject.Controller
                         GetByGuestsNumber(guestsNumber);
                         Console.WriteLine("\n\n\n");
                         break;
+                    case "6":
+                        Console.WriteLine("Chosen option: 6. Rezervisi turu");
+                        GetAllTours();
+                        Console.WriteLine("Izaberite koju turu zelite da rezervisete:\n");
+                        Console.WriteLine("TourId: ");
+                        int tourId = int.Parse(Console.ReadLine());
+                        Console.WriteLine("Number of Tourists: ");
+                        int touristsNumber = int.Parse(Console.ReadLine());
+                        BookATour(tourId, touristsNumber);
+                        Console.WriteLine("\n\n\n");
+                        break;
                     default:
                         Console.WriteLine("Option does not exist");
                         break;
                 }
             } while (!chosenOption.Equals("x"));
 
-            
+
         }
         public void GetAllTours()
         {
@@ -98,7 +111,7 @@ namespace InitialProject.Controller
             List<TourImages> tourImages = new List<TourImages>();
             List<Checkpoint> tourCheckpoints = new List<Checkpoint>();
             Location tourLocation = new Location();
-
+            List<Tourist> tourTourists = new List<Tourist>();
             foreach (Tour tour in allTours)
             {
                 Console.WriteLine(tour.ToString());
@@ -114,6 +127,17 @@ namespace InitialProject.Controller
                 {
                     Console.WriteLine(checkpoint);
                 }
+                Console.WriteLine("jej");
+                tourTourists = tourService.GetTourists(tour.TourId);
+                Console.WriteLine("jej2");
+                Console.WriteLine(tourTourists.Count());
+                foreach (Tourist tourist in tourTourists)
+                {
+                    Console.WriteLine(tourist);
+                }
+                Console.WriteLine("Number of free spots: ");
+                Console.WriteLine(tourService.GetFreeSpotsNumber(tour.TourId));
+
             }
 
 
@@ -231,6 +255,138 @@ namespace InitialProject.Controller
             }
         }
 
+        public bool HasFreeSpots(int tourId, int touristsNumber)
+        {
+            TourService tourService = new TourService();
+            Tour tour = tourService.GetTourById(tourId);
+            if (tourService.GetFreeSpotsNumber(tourId) < touristsNumber)
+            {
+                Console.WriteLine("Na izabranoj turi nema slobodnih mesta.");
+                Location location = tourService.GetTourLocation(tourId);
+                List<Tour> toursByLocation = tourService.GetToursByLocation(location.LocationId);
+                Console.WriteLine("Broj tura na istoj lokaciji: ");
+                Console.WriteLine(toursByLocation.Count());
+                foreach (Tour tourByLocation in toursByLocation)
+                {
+                    Console.WriteLine(tourByLocation);
+                }
+                return false;
+            }
+            Console.WriteLine("Broj slobodnih mesta: ");
+            Console.WriteLine(tourService.GetFreeSpotsNumber(tourId));
+            return true;
+        }
 
+        public bool BookOrExit(int tourId, int touristsNumber)
+        {
+            TourService tourService = new TourService();
+            UserService userService = new UserService();
+
+            string chosenOption;
+
+            do
+            {
+                Console.WriteLine("Izaberite jednu od opcija: ");
+                Console.WriteLine("1. Rezervisi turu");
+                Console.WriteLine("x - Izlazak iz programa");
+                chosenOption = Console.ReadLine();
+                Console.Clear();
+
+                if (chosenOption.Equals("1"))
+                {
+                    Console.WriteLine("Username: ");
+                    string username = Console.ReadLine();
+                    Console.WriteLine("Password: ");
+                    string password = Console.ReadLine();
+                    if (userService.Login(username, password) != null) {
+                        Console.WriteLine("Chosen option: 1. Rezervisi turu");
+                        Tourist tourist = (Tourist)userService.GetByUsername(username);
+                        tourService.BookATour(tourId, tourist.Id, touristsNumber);
+                        List<Tourist> tourTourists = tourService.GetTourists(tourId);
+
+                        foreach (Tourist tourist1 in tourTourists)
+                        {
+                            Console.WriteLine(tourist1);
+                        }
+                        return true;
+                    }
+                    
+                }
+            } while (!chosenOption.Equals("x"));
+            return false;
+             
+        }
+
+        public bool BookATour(int tourId, int touristsNumber)
+        {
+            TourService tourService = new TourService();
+
+            if (HasFreeSpots(tourId, touristsNumber)) {
+                return BookOrExit(tourId, touristsNumber);
+            }
+            string chosenOption;
+
+            {
+                string option;
+                do
+                {
+                    Console.WriteLine("Izaberite jednu od opcija: ");
+                    Console.WriteLine("1. Izmena broja turista");
+                    Console.WriteLine("2. Odabir druge ture na istoj lokaciji");
+                    Console.WriteLine("x. Izlazak iz programa");
+                    option = Console.ReadLine();
+                    Console.Clear();
+                    switch (option)
+                    {
+                        case "1":
+                            Console.WriteLine("Chosen option: 1. Izmena broja turista");
+                            Console.WriteLine("Number of Tourists: ");
+                            touristsNumber = int.Parse(Console.ReadLine());
+                            if (HasFreeSpots(tourId, touristsNumber))
+                            {
+                                return BookOrExit(tourId, touristsNumber);
+                            }
+                            break;
+                        case "2":
+                            Console.WriteLine("Chosen option: 2.  Odabir druge ture na istoj lokaciji");
+                            Location location = tourService.GetTourLocation(tourId);
+                            List<Tour> toursByLocation = tourService.GetToursByLocation(location.LocationId);
+                            Console.WriteLine("Odaberite jednu od ponudjenih tura koje su na istoj lokaciji: ");
+                            foreach (Tour tour in toursByLocation)
+                            {
+                                Console.WriteLine(tour);
+                            }
+                            Console.WriteLine("TourId: ");
+                            int newTourId = int.Parse(Console.ReadLine());
+                            Tour chosenTour = tourService.GetTourById(newTourId);
+                            Console.WriteLine(chosenTour);
+                            int b = 0;
+                            foreach (Tour tour in toursByLocation)
+                            {
+                                if (tour.TourId == newTourId)
+                                {
+                                    b++;
+                                }
+                            }
+                            if (b == 0)
+                            {
+                                Console.WriteLine("Izabrana tura nije na istoj lokaciji");
+                                break;
+                            }
+                            Console.WriteLine("TouristsNumber: ");
+                            touristsNumber = int.Parse(Console.ReadLine());
+                            if (HasFreeSpots(newTourId, touristsNumber))
+                            {
+                                return BookOrExit(newTourId, touristsNumber);
+                            }
+
+                            break;
+                        default:
+                            break;
+                    }
+                } while (!option.Equals("x"));
+            }
+            return false;
+        }
     }
 }

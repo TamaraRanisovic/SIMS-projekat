@@ -22,7 +22,7 @@ namespace InitialProject.Service
 
 
         public TourService() {
-           
+
         }
 
         public TourService(TourRepository tourRepository, LocationRepository locationRepository)
@@ -37,13 +37,19 @@ namespace InitialProject.Service
             return tourRepository.GetAllTours();
         }
 
+        public Tour GetTourById(int tourId)
+        {
+            TourRepository tourRepository = new TourRepository();
+            return tourRepository.GetTourById(tourId);
+        }
+
         public List<Tour> GetToursByLocation(int locationId)
         {
             TourRepository tourRepository = new TourRepository();
             //List<Location> allLocations = locationRepository.GetAllLocations();
             List<Tour> toursByLocation = tourRepository.GetToursByLocation(locationId);
             return toursByLocation;
-            
+
         }
 
         public List<Tour> GetByDuration(int duration)
@@ -124,6 +130,28 @@ namespace InitialProject.Service
                 }
             }
             return null;
+
+        }
+
+        public List<Tourist> GetTourists(int tourId)
+        {
+            TouristsRepository touristsRepository = new TouristsRepository();
+            return touristsRepository.GetTourists(tourId);
+        }
+
+        public int GetFreeSpotsNumber(int tourId)
+        {
+            Tour tour = GetTourById(tourId);
+            List<Tourist> tourTourists = new List<Tourist>();
+            tourTourists = GetTourists(tourId);
+            int freeSpotsNumber = tour.MaxGuests - tourTourists.Count();
+            return freeSpotsNumber;
+        }
+
+        public void BookATour(int tourId, int touristId, int touristsNumber)
+        { 
+            TourRepository tourRepository = new TourRepository();
+            tourRepository.BookATour(tourId, touristId, touristsNumber);
 
         }
 
