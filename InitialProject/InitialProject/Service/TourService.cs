@@ -67,23 +67,20 @@ namespace InitialProject.Service
             using (var context = new DataContext())
             {
                 TourRepository tourRepository = new TourRepository();
-                List<Tour> todaysTours = tourRepository.GetToursList();
-
-                foreach (var tour in todaysTours)
-                {
-                    foreach (var tourist in tour.Tourists)
-                    {
-                        Console.WriteLine("CheckpointId: " + tourist.Password);
-                        Console.WriteLine("CheckpointName: " + tourist.Username);
-                        Console.WriteLine("-------------------------");
-                    }
-                }
-
+                DateTime danasnjiDatum = new DateTime(DateTime.Now.Year, DateTime.Now.Month, DateTime.Now.Day, 0 , 0 , 0);
+                Console.WriteLine("Danasnji datum: " + danasnjiDatum);
+                List<Tour> todaysTours = tourRepository.GetToursByStartDate(danasnjiDatum);
+              
                 string trackingTourName = FindTodaysToursName();
 
                 Tour trackingTour = new Tour();
 
-                trackingTour = startTrackingTour(trackingTourName, todaysTours, trackingTour);
+                trackingTour = startTrackingTour(trackingTourName, todaysTours);
+                if(trackingTour == null) 
+                {
+                    Console.WriteLine("Tura sa tim imenom ne postoji ili nije na danasnjem programu");
+                    return;
+                }
                 context.SaveChanges();
                 ShowCheckpoints(trackingTour);
 
@@ -104,31 +101,36 @@ namespace InitialProject.Service
             Console.Write("Your option: ");
         }
 
-        private void ProcessChosenOption(string chosenOption, Tour trackingTour)
+        private bool ProcessChosenOption(string chosenOption, Tour trackingTour)
         {
             Checkpoint currentCheckpoint = new Checkpoint();
             currentCheckpoint = FindStartCheckpoint(trackingTour);
+            bool end = false;
+           
+                switch (chosenOption)
+                {
+                    case "1":
+                        Console.WriteLine("Izabrali ste oznacavanje Cekpointa");
+                        currentCheckpoint = MarkingCheckpoints(trackingTour);
+                        
+                        break;
+                    case "2":
+                        Console.WriteLine("Izabrali ste da oznacite prisutne");
+                        MarkingPresentTourists(currentCheckpoint, trackingTour);
+                        break;
+                    case "3":
+                        Console.WriteLine("Izabrali ste da zavrsite turu");
+                        end = EndTour(trackingTour);
+                        chosenOption = "x";
+                        break;
+                    case "x":
+                        break;
+                    default:
+                        Console.WriteLine("Option does not exist");
+                        break;
+                }
 
-            switch (chosenOption)
-            {
-                case "1":
-                    Console.WriteLine("Izabrali ste oznacavanje Cekpointa");
-                    currentCheckpoint = MarkingCheckpoints(trackingTour);
-                    break;
-                case "2":
-                    Console.WriteLine("Izabrali ste da oznacite prisutne");
-                    MarkingPresentTourists(currentCheckpoint, trackingTour);
-                    break;
-                case "3":
-                    Console.WriteLine("Izabrali ste da zavrsite turu");
-                    break;
-                case "x":
-                    break;
-                default:
-                    Console.WriteLine("Option does not exist");
-                    break;
-            }
-
+            return end;
         }
 
         public string FindTodaysToursName()
@@ -140,9 +142,10 @@ namespace InitialProject.Service
             return trackingTourName;
         }
 
-        public Tour startTrackingTour(string trackingTourName, List<Tour>todaysTours, Tour trackingTour)
+        public Tour startTrackingTour(string trackingTourName, List<Tour>todaysTours)
         {
-
+            Tour trackingTour = new Tour();
+            trackingTour.Name = "ne postoji";
             using (var context = new DataContext())
             {
                 foreach (var tour in todaysTours)
@@ -153,6 +156,8 @@ namespace InitialProject.Service
                         break;
                     }
                 }
+
+                if (trackingTour.Name == "ne postoji") return null;
 
                 // Pronađi prvi checkpoint sa statusom false i ažuriraj ga
                 foreach(var checkpoint in trackingTour.Checkpoints)
@@ -187,19 +192,23 @@ namespace InitialProject.Service
         }
 
         public void Menu(Tour trackingTour)
-        {
+        {   
+            bool end = false;
             string chosenOption;
             Console.WriteLine("Meni za dalje instrukcije: ");
             Console.WriteLine("-------------------------");
             do
             {
+                if (end == true) break;
                 WriteMenuOptions();
                 chosenOption = Console.ReadLine();
                 Console.WriteLine("-------------------------");
                 Console.Clear();
-                ProcessChosenOption(chosenOption, trackingTour);
-            } while (!chosenOption.Equals("x"));
+                end = ProcessChosenOption(chosenOption, trackingTour);
+                
+            } while (!chosenOption.Equals("x") || end != true);
 
+            
         }
 
         public void ShowCheckpointsList(List<Checkpoint> checkpoints)
@@ -218,16 +227,14 @@ namespace InitialProject.Service
         public Checkpoint MarkingCheckpoints(Tour trackingTour)
         {
            
-            List<Checkpoint> falseCheckpoints = new List<Checkpoint>();
-            foreach(var  checkpoint in trackingTour.Checkpoints)
-            {
-                if (!checkpoint.Status)
-                {
-                    falseCheckpoints.Add(checkpoint);
-                }   
-            }
-
+            List<Checkpoint> falseCheckpoints = ListFalseCheckpoints(trackingTour);
             
+
+            if(falseCheckpoints.Count == 0) 
+            {
+                Console.WriteLine("Svi Cekpointi u turi su obidjeni\ntura je gotova");
+                return null;
+            }
 
             Console.Clear();
             Console.WriteLine("----------------------------");
@@ -242,7 +249,18 @@ namespace InitialProject.Service
 
             return FindCheckpointForMarking(falseCheckpoints, name);
         }
-
+        public List<Checkpoint> ListFalseCheckpoints(Tour trackingTour)
+        {
+            List<Checkpoint> falseCheckpoints = new List<Checkpoint>();
+            foreach (var checkpoint in trackingTour.Checkpoints)
+            {
+                if (!checkpoint.Status)
+                {
+                    falseCheckpoints.Add(checkpoint);
+                }
+            }
+            return falseCheckpoints;
+        }
         public void MarkCheckpoint(Checkpoint checkpoint, Tour trackingTour)
         {
             using(var db = new DataContext()) {
@@ -295,6 +313,26 @@ namespace InitialProject.Service
             }
 
         }
+
+        public bool EndTour(Tour trackingTour)
+        {
+
+            using (var db = new DataContext())
+            {
+                foreach (var checkpoint in trackingTour.Checkpoints)
+                {
+                    if (checkpoint.Type == CheckpointType.End)
+                    {
+                        checkpoint.Status = true;
+                        db.Checkpoints.Update(checkpoint);
+                        db.SaveChanges();
+                        return checkpoint.Status;
+                    }
+                }
+            }
+            return false;
+        }
     }
+
         
 }

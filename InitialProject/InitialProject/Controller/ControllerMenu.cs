@@ -96,7 +96,7 @@ namespace InitialProject.Controller
             Console.WriteLine("MaxGuests:");
             maxGuests = Int32.Parse(Console.ReadLine());
 
-            Console.WriteLine("StartTime(yyyy-mm-dd hh:mm:ss):");
+            Console.WriteLine("StartTime(dd-mm-yyyy hh:mm:ss):");
             starTime = DateTime.Parse(Console.ReadLine());
 
             Console.WriteLine("EndTime(yyyy-mm-dd hh:mm:ss):");
