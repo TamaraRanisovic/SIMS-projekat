@@ -29,24 +29,34 @@ namespace InitialProject
 
         private static void WriteMenuOptions()
         {
-            Console.WriteLine("1. option A");
-            Console.WriteLine("2. option B");
+            Console.WriteLine("1.Owner's view");
+            Console.WriteLine("2. Guide's view");
+            Console.WriteLine("3. Guest's view");
+            Console.WriteLine("4. Tourists's view");
+
             Console.WriteLine("x. exit");
             Console.Write("Your option: ");
         }
 
         private static void ProcessChosenOption(string chosenOption) 
         {
+            
             switch(chosenOption)
             {
                 case "1":
-                    Console.WriteLine("Chosen option: Prikaz i pretraga tura");
-                    TourController TourController = new TourController();
-                    TourController.GetMenu();
+                    Console.WriteLine("Chosen option: 1");
                     break; 
                 case "2": 
-                    Console.WriteLine("Chosen option: B");
+                    Console.WriteLine("Chosen option: 2");
+                    GuideController controllerMenu = new GuideController();
+                    controllerMenu.Menu();
                     break; 
+                case "3":
+                    Console.WriteLine("Chosen option: 3");
+                    break;
+                case "4":
+                    Console.WriteLine("Chosen option: 4");
+                    break;
                 case "x":
                     break;
                 default:

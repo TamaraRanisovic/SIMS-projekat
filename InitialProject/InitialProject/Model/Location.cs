@@ -19,7 +19,8 @@ public class Location
     public List<Tour> Tours { get; set; }
 
     public List<Accomodation> Accomodations { get; set; }
-    public Location() 
+
+    public Location()
     {
         Tours = new List<Tour>();
         Accomodations = new List<Accomodation>();
@@ -37,5 +38,6 @@ public class Location
     public override string ToString()
     {
         return $"LocationId: {LocationId}\n, City: {City}\n, Country: {Country}\n";
+
     }
 }

@@ -20,6 +20,7 @@ public class Checkpoint
 
     public List<Tourist> Tourists;
 
+
     public List<TourReservation> TourReservations { get; set; }
 
     public Checkpoint() 
@@ -28,7 +29,7 @@ public class Checkpoint
         Tourists = new List<Tourist>();
     }
 
-    public Checkpoint(int checkpointId, string name, CheckpointType type, bool status)
+    public Checkpoint(int checkpointId, string name, CheckpointType type)
     {
         CheckpointId = checkpointId;
         Name = name;
@@ -41,5 +42,6 @@ public class Checkpoint
     public override string ToString()
     {
         return $"CheckPointId: {CheckpointId}\n, Name: {Name}\n, CheckPointType: {Type}\n, Status: {Status}\n";
+
     }
 }

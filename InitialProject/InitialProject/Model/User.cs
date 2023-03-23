@@ -34,6 +34,7 @@ namespace InitialProject.Model
         public override string ToString()
         {
             return $"Id: {Id}\n, Username: {Username}\n, Password: {Password}\n, UserType: {UserType}\n";
+
         }
     }
 }

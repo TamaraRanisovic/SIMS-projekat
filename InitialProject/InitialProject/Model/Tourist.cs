@@ -17,11 +17,11 @@ namespace InitialProject.Model
         public List<TourReservation> TourReservations { get; set; }
 
 
-        public Tourist(string username, string password, UserType userType) : base(username, password, userType)
+        public Tourist(string username, string password, UserType userType = UserType.Tourist) : base(username, password, userType)
         {
             TourReservations = new List<TourReservation>();
         }
-        public Tourist(string username, string password, UserType userType, bool isPresent) : base(username, password, userType)
+        public Tourist(string username, string password, bool isPresent, UserType userType = UserType.Tourist) : base(username, password, userType)
         {
             IsPresent = isPresent;
             TourReservations = new List<TourReservation>();

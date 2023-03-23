@@ -34,11 +34,13 @@ public class Tour
     public List<TourReservation> TourReservations { get; set; }
 
     public Tour() 
+
     {
         Images = new List<TourImages>();
         Checkpoints = new List<Checkpoint>();
         Tourists = new List<Tourist>();
         TourReservations = new List<TourReservation>();
+
     }
 
     public Tour(int tourId, string name, string description, string language, int maxGuests, DateTime startTime, DateTime endTime, int duration)
@@ -54,12 +56,13 @@ public class Tour
         Images = new List<TourImages>();
         Checkpoints = new List<Checkpoint>();
         Tourists = new List<Tourist>();
+
         TourReservations = new List<TourReservation>();
     }
 
     public override string ToString()
     {
         return $"TourId: {TourId}\n, Name: {Name}\n, Description: {Description}\n, Language: {Language}\n, MaxGuests: {MaxGuests}\n, StartTime: {StartTime}\n, EndTime: {EndTime}\n, Duration: {Duration}\n";
-    }
+
 }
 

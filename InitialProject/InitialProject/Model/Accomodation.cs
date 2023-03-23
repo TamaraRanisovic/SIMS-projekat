@@ -41,5 +41,15 @@ namespace InitialProject.Model
             DaysBeforeCanceling = daysBeforeCanceling;
             Images = new List<AccomodationImage>();
         }
+        public Accomodation(string name, Location location, AccomodationType type, int maxGuests, int minReservationDays, int daysBeforeCanceling)
+        {
+            
+            Name = name;
+            AccomodationType = type;
+            MaxGuests = maxGuests;
+            MinReservationDays = minReservationDays;
+            DaysBeforeCanceling = daysBeforeCanceling;
+
+        }
     }
 }

@@ -11,9 +11,15 @@ namespace InitialProject.Repository
 {
     public class LocationRepository
     {
-        public LocationRepository()
+        public LocationRepository() { }
+        public void AddLocation(Location locationToAdd)
         {
-            
+            using (var db = new DataContext())
+            {
+                db.Locations.Add(locationToAdd);
+                db.SaveChanges();
+            }
+
         }
 
         public List<Location> GetAllLocations()
@@ -24,7 +30,44 @@ namespace InitialProject.Repository
             }
         }
 
-        
+        public void DeleteLocation(int id)
+        {
+            using (var db = new DataContext())
+            {
+                var locationToDelete = db.Locations.FirstOrDefault(t => t.LocationId == id);
+
+                if (locationToDelete != null)
+                {
+                    db.Locations.Remove(locationToDelete);
+                    db.SaveChanges();
+                }
+            }
+        }
+
+        public void UpdateLocation(int id, Location locationToUpdate)
+        {
+            using (var db = new DataContext())
+            {
+                var location = db.Locations.FirstOrDefault(t => t.LocationId == id);
+
+                if (location != null)
+                {
+                    location.City = locationToUpdate.City;
+                    location.Country = locationToUpdate.Country;
+                    location.Tours = locationToUpdate.Tours;
+                    location.Accomodations = locationToUpdate.Accomodations;
+                    db.SaveChanges();
+                }
+            }
+        }
+
+        public Location GetLocationById(int id)
+        {
+            using (var db = new DataContext())
+            {
+                return db.Locations.FirstOrDefault(t => t.LocationId == id);
+            }
+        }
 
         public Location GetLocationByCityAndCountry(string city, string country)
         {
@@ -36,6 +79,13 @@ namespace InitialProject.Repository
                     if (location.City.Equals(city) && location.Country.Equals(country))
                     {
                         return location;
+
+                foreach (Location loc in db.Locations)
+                {
+                    if (loc.City == city && loc.Country == country)
+                    {
+                        return loc;
+
                     }
                 }
             }
@@ -45,3 +95,4 @@ namespace InitialProject.Repository
 
     }
 }
+
