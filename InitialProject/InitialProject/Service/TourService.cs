@@ -25,28 +25,21 @@ namespace InitialProject.Service
 
         public List<Tour> GetAllTours()
         {
-            TourRepository tourRepository = new TourRepository();
             return tourRepository.GetAllTours();
         }
 
         public Tour GetTourById(int tourId)
         {
-            TourRepository tourRepository = new TourRepository();
             return tourRepository.GetTourById(tourId);
         }
 
         public List<Tour> GetToursByLocation(int locationId)
         {
-            TourRepository tourRepository = new TourRepository();
-            //List<Location> allLocations = locationRepository.GetAllLocations();
-            List<Tour> toursByLocation = tourRepository.GetToursByLocation(locationId);
-            return toursByLocation;
-
+            return tourRepository.GetToursByLocation(locationId);
         }
 
-        public List<Tour> GetByDuration(int duration)
+        public List<Tour> GetToursByDuration(int duration)
         {
-            TourRepository tourRepository = new TourRepository();
             List<Tour> allTours = tourRepository.GetAllTours();
             List<Tour> toursByDuration = new List<Tour>();
 
@@ -61,9 +54,8 @@ namespace InitialProject.Service
             return toursByDuration;
         }
 
-        public List<Tour> GetByLanguage(string language)
+        public List<Tour> GetToursByLanguage(string language)
         {
-            TourRepository tourRepository = new TourRepository();
             List<Tour> allTours = tourRepository.GetAllTours();
             List<Tour> toursByLanguage = new List<Tour>();
 
@@ -77,36 +69,24 @@ namespace InitialProject.Service
 
             return toursByLanguage;
         }
-        public List<Tour> GetByGuestsNumber(int guestsNumber)
+        public List<Tour> GetToursByTouristsNumber(int tourists)
         {
-            TourRepository tourRepository = new TourRepository();
             List<Tour> allTours = tourRepository.GetAllTours();
-            List<Tour> toursByGuestsNumber = new List<Tour>();
+            List<Tour> toursByTouristsNumber = new List<Tour>();
 
             foreach (Tour tour in allTours)
             {
-                if (tour.Tourists != null)
+                if (tour.MaxGuests >= tourists)
                 {
-                    if (tour.MaxGuests - tour.Tourists.Count() >= guestsNumber)
-                    {
-                        toursByGuestsNumber.Add(tour);
-                    }
-                } else
-                {
-                    if (tour.MaxGuests >= guestsNumber)
-                    {
-                        toursByGuestsNumber.Add(tour);
-                    }
+                    toursByTouristsNumber.Add(tour);
                 }
             }
 
-            return toursByGuestsNumber;
+            return toursByTouristsNumber;
         }
 
         public Location GetTourLocation(int tourId)
         {
-            LocationRepository locationRepository = new LocationRepository();
-
             List<Location> allLocations = locationRepository.GetAllLocations();
             List<Tour> toursByLocation = new List<Tour>();
 
@@ -133,18 +113,15 @@ namespace InitialProject.Service
 
         public int GetFreeSpotsNumber(int tourId)
         {
-            TourRepository tourRepository = new TourRepository();
             Tour tour = GetTourById(tourId);
-            List<Tourist> tourTourists = new List<Tourist>();
-            tourTourists = GetTourists(tourId);
-            int freeSpotsNumber = tour.MaxGuests - tourRepository.GetNumberOfTouristsInATour(tourId);
+            List<Tourist> tourTourists = GetTourists(tourId);
+            int freeSpotsNumber = tour.MaxGuests - tourRepository.GetTouristsNumber(tourId);
             return freeSpotsNumber;
         }
 
-        public void BookATour(int tourId, int touristId, int touristsNumber)
+        public void BookTour(int tourId, int touristId, int tourists)
         { 
-            TourRepository tourRepository = new TourRepository();
-            tourRepository.BookATour(tourId, touristId, touristsNumber);
+            tourRepository.BookTour(tourId, touristId, tourists);
         }
 
         public void MakeTour(Tour tour, Location location, List<TourImages> tourImages, List<Checkpoint> checkpoints)

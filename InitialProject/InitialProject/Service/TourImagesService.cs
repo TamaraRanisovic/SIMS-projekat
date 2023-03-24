@@ -10,19 +10,15 @@ namespace InitialProject.Service
 {
     public class TourImagesService
     {
-        private readonly TourImagesRepository TourImagesRepository;
+        TourImagesRepository tourImagesRepository = new TourImagesRepository();
 
         public TourImagesService()
         {
             
         }
-        public TourImagesService(TourImagesRepository tourImagesRepository)
-        {
-            TourImagesRepository = tourImagesRepository;
-        }
+
         public List<TourImages> GetTourImages(int tourId)
         {
-            TourImagesRepository tourImagesRepository = new TourImagesRepository();
             return tourImagesRepository.GetTourImages(tourId);
         }
     }

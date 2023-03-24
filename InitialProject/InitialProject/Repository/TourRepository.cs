@@ -17,6 +17,8 @@ namespace InitialProject.Repository
     public class TourRepository
     {
 
+        TourReservationRepository tourReservationRepository = new TourReservationRepository();
+
         public TourRepository() { }
 
         public void AddTour(Tour tourToAdd)
@@ -51,26 +53,25 @@ namespace InitialProject.Repository
             return toursByLocation;
         }
 
-        public int GetNumberOfTouristsInATour(int tourId)
+        public int GetTouristsNumber(int tourId)
         {
-            TourReservationRepository tourReservationRepository = new TourReservationRepository();
             using (var db = new DataContext())
             {
                 var tour = db.Tours.Include(t => t.TourReservations).SingleOrDefault(t => t.TourId == tourId);
                 
-                int numberOfTouristsInATour = 0;
+                int tourists = 0;
                 List<TourReservation> tourReservations = tour.TourReservations.ToList();
                 foreach (TourReservation tourReservation in tourReservations)
                 {
-                    numberOfTouristsInATour += tourReservation.TouristsNumber;
+                    tourists += tourReservation.TouristsNumber;
                 }
-                return numberOfTouristsInATour;
+                return tourists;
             }
         }
 
-        public void BookATour(int tourId, int touristId, int touristsNumber)
+        public void BookTour(int tourId, int touristId, int tourists)
         {
-            TourReservation tourReservation = new TourReservation(touristsNumber);
+            TourReservation tourReservation = new TourReservation(tourists);
             using (var db = new DataContext())
             {
                 Tourist tourist = db.Tourists.Find(touristId);
@@ -85,7 +86,6 @@ namespace InitialProject.Repository
                 
             }
             Console.WriteLine("Uspesno ste rezervisali turu.");
-
         }
 
         public Tour GetTourById(int id)

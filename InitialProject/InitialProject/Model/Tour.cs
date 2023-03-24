@@ -52,11 +52,9 @@ public class Tour
         StartTime = startTime;
         EndTime = endTime;
         Duration = duration;
-
         Images = new List<TourImages>();
         Checkpoints = new List<Checkpoint>();
         Tourists = new List<Tourist>();
-
         TourReservations = new List<TourReservation>();
     }
 

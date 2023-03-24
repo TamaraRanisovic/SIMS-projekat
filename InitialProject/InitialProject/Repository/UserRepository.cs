@@ -38,7 +38,7 @@ namespace InitialProject.Repository
             {
                 foreach (User user in db.Users)
                 {
-                    if (user.Username == username)
+                    if (user.Username.Equals(username))
                     {
                         return user;
                     }
@@ -53,7 +53,7 @@ namespace InitialProject.Repository
             {
                 foreach (User user in db.Users)
                 {
-                    if (user.Username == username && user.Password == password)
+                    if (user.Username.Equals(username) && user.Password.Equals(password))
                     {
                         return user;
                     }

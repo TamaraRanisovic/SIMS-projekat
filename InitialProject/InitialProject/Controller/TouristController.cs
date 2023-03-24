@@ -13,20 +13,62 @@ namespace InitialProject.Controller
 {
     public class TouristController
     {
-        public TourService TourService;
 
-        public CheckpointService CheckpointService;
-
-        //public static readonly TourService tourService = new TourService();
+        TourService tourService = new TourService();
+        TourImagesService tourImagesService = new TourImagesService();
+        CheckpointService checkpointService = new CheckpointService();
+        LocationService locationService = new LocationService();
 
         public TouristController()
         {
-            //TourService = new TourService();
         }
-        /*public TourController(TourService tourService)
+
+        public void ShowToursByLocation()
         {
-            TourService = tourService;
-        }*/
+            string city, country;
+            Console.WriteLine("City: ");
+            city = Console.ReadLine();
+            Console.WriteLine("Country: ");
+            country = Console.ReadLine();
+
+            GetToursByLocation(city, country);
+        }
+
+        public void ShowToursByDuration()
+        {
+            Console.WriteLine("Duration:");
+            int duration = int.Parse(Console.ReadLine());
+
+            GetToursByDuration(duration);
+        }
+
+        public void ShowToursByLanguage()
+        {
+            Console.WriteLine("Language:");
+            string language = Console.ReadLine();
+
+            GetToursByLanguage(language);
+        }
+
+        public void ShowToursByTouristsNumber()
+        {
+            Console.WriteLine("Tourists Number:");
+            int tourists = int.Parse(Console.ReadLine());
+            GetToursByTouristsNumber(tourists);
+        }
+
+        public void GetBookTourMenu()
+        {
+            ShowAllTours();
+
+            Console.WriteLine("Izaberite koju turu zelite da rezervisete:\n");
+            Console.WriteLine("TourId: ");
+            int tourId = int.Parse(Console.ReadLine());
+            Console.WriteLine("Number of Tourists: ");
+            int tourists = int.Parse(Console.ReadLine());
+
+            BookTour(tourId, tourists);
+        }
 
         public void GetMenu()
         {
@@ -45,238 +87,141 @@ namespace InitialProject.Controller
                 switch (chosenOption)
                 {
                     case "1":
-                        Console.WriteLine("Chosen option: 1. Prikaz svih tura");
-                        Console.Clear();
-                        GetAllTours();
+                        Console.WriteLine("Izabrana opcija: 1. Prikaz svih tura");
+                        ShowAllTours();
                         break;
                     case "2":
                         Console.WriteLine("Chosen option: 2. Prikaz tura po lokaciji");
-
-                        string city, country;
-                        Console.WriteLine("City: ");
-                        city = Console.ReadLine();
-                        Console.WriteLine("Country: ");
-                        country = Console.ReadLine();
-                        GetByLocation(city, country);
+                        ShowToursByLocation();
                         break;
                     case "3":
-                        Console.WriteLine("Chosen option: 3. Prikaz tura po trajanju ture");
-                        Console.WriteLine("Duration:");
-                        int duration = int.Parse(Console.ReadLine());
-                        GetByDuration(duration);
+                        Console.WriteLine("Izabrana opcija: 3. Prikaz tura po trajanju ture");
+                        ShowToursByDuration();
                         Console.WriteLine("\n\n\n");
                         break;
                     case "4":
-                        Console.WriteLine("Chosen option: 4. Prikaz tura po jeziku");
-                        Console.WriteLine("Language:");
-                        string language = Console.ReadLine();
-                        GetByLanguage(language);
+                        Console.WriteLine("Izabrana opcija: 4. Prikaz tura po jeziku");
+                        ShowToursByLanguage();
                         Console.WriteLine("\n\n\n");
-
                         break;
                     case "5":
-                        Console.WriteLine("Chosen option: 5. Prikaz tura po broju turista");
-                        Console.WriteLine("Guests Number:");
-                        int guestsNumber = int.Parse(Console.ReadLine());
-                        GetByGuestsNumber(guestsNumber);
+                        Console.WriteLine("Izabrana opcija: 5. Prikaz tura po broju turista");
+                        ShowToursByTouristsNumber();
                         Console.WriteLine("\n\n\n");
                         break;
                     case "6":
-                        Console.WriteLine("Chosen option: 6. Rezervisi turu");
-                        GetAllTours();
-                        Console.WriteLine("Izaberite koju turu zelite da rezervisete:\n");
-                        Console.WriteLine("TourId: ");
-                        int tourId = int.Parse(Console.ReadLine());
-                        Console.WriteLine("Number of Tourists: ");
-                        int touristsNumber = int.Parse(Console.ReadLine());
-                        BookATour(tourId, touristsNumber);
+                        Console.WriteLine("Izabrana opcija: 6. Rezervisi turu");
+                        GetBookTourMenu();
                         Console.WriteLine("\n\n\n");
                         break;
                     default:
-                        Console.WriteLine("Option does not exist");
+                        Console.WriteLine("Opcija ne postoji");
                         break;
                 }
             } while (!chosenOption.Equals("x"));
 
 
         }
-        public void GetAllTours()
-        {
-            TourService tourService = new TourService();
-            TourImagesService tourImagesService = new TourImagesService();
-            CheckpointService checkpointService = new CheckpointService();
-            LocationService locationService = new LocationService();
-            List<Tour> allTours = tourService.GetAllTours();
-            List<TourImages> tourImages = new List<TourImages>();
-            List<Checkpoint> tourCheckpoints = new List<Checkpoint>();
-            Location tourLocation = new Location();
-            List<Tourist> tourTourists = new List<Tourist>();
-            foreach (Tour tour in allTours)
-            {
-                Console.WriteLine(tour.ToString());
-                tourImages = tourImagesService.GetTourImages(tour.TourId);
-                foreach (TourImages tourImage in tourImages)
-                {
-                    Console.WriteLine(tourImage);
-                }
-                tourLocation = tourService.GetTourLocation(tour.TourId);
-                Console.WriteLine(tourLocation);
-                tourCheckpoints = checkpointService.GetTourCheckpoints(tour.TourId);
-                foreach (Checkpoint checkpoint in tourCheckpoints)
-                {
-                    Console.WriteLine(checkpoint);
-                }
-                tourTourists = tourService.GetTourists(tour.TourId);
-                Console.WriteLine(tourTourists.Count());
-                foreach (Tourist tourist in tourTourists)
-                {
-                    Console.WriteLine(tourist);
-                }
-                Console.WriteLine("Number of free spots: ");
-                Console.WriteLine(tourService.GetFreeSpotsNumber(tour.TourId));
 
+        public void ShowTour(Tour tour)
+        {
+            Console.WriteLine(tour);
+
+            List<TourImages> tourImages = tourImagesService.GetTourImages(tour.TourId);
+            foreach (TourImages tourImage in tourImages)
+            {
+                Console.WriteLine(tourImage);
             }
 
+            Location tourLocation = tourService.GetTourLocation(tour.TourId);
+            Console.WriteLine(tourLocation);
+
+            List<Checkpoint> tourCheckpoints = checkpointService.GetTourCheckpoints(tour.TourId);
+            foreach (Checkpoint checkpoint in tourCheckpoints)
+            {
+                Console.WriteLine(checkpoint);
+            }
 
         }
 
-        public void GetByLocation(string city, string country)
+        public void ShowAllTours()
         {
-            TourService tourService = new TourService();
-            TourImagesService tourImagesService = new TourImagesService();
-            CheckpointService checkpointService = new CheckpointService();
+            List<Tour> allTours = tourService.GetAllTours();
+            
+            foreach (Tour tour in allTours)
+            {
+                ShowTour(tour);
+            }
+        }
 
-            LocationService locationService = new LocationService();
+        public void GetToursByLocation(string city, string country)
+        {
+
             Location location = locationService.GetLocationByCityAndCountry(city, country);
             List<Tour> toursByLocation = tourService.GetToursByLocation(location.LocationId);
-            List<TourImages> tourImages = new List<TourImages>();
-            Location tourLocation = new Location();
-            List<Checkpoint> tourCheckpoints = new List<Checkpoint>();
 
             foreach (Tour tour in toursByLocation)
             {
-                Console.WriteLine(tour);
-                tourImages = tourImagesService.GetTourImages(tour.TourId);
-                foreach (TourImages tourImage in tourImages)
-                {
-                    Console.WriteLine(tourImage);
-                }
-                tourLocation = tourService.GetTourLocation(tour.TourId);
-                Console.WriteLine(tourLocation);
-                tourCheckpoints = checkpointService.GetTourCheckpoints(tour.TourId);
-                foreach (Checkpoint checkpoint in tourCheckpoints)
-                {
-                    Console.WriteLine(checkpoint);
-                }
+                ShowTour(tour);
             }
         }
 
-        public void GetByDuration(int duration)
+        public void GetToursByDuration(int duration)
         {
-            TourService tourService = new TourService();
-            List<Tour> toursByDuration = tourService.GetByDuration(duration);
-            TourImagesService tourImagesService = new TourImagesService();
-            CheckpointService checkpointService = new CheckpointService();
-            List<TourImages> tourImages = new List<TourImages>();
-            Location tourLocation = new Location();
-            List<Checkpoint> tourCheckpoints = new List<Checkpoint>();
+            List<Tour> toursByDuration = tourService.GetToursByDuration(duration);
+            
             foreach (Tour tour in toursByDuration)
             {
-                Console.WriteLine(tour);
-                tourImages = tourImagesService.GetTourImages(tour.TourId);
-                foreach (TourImages tourImage in tourImages)
-                {
-                    Console.WriteLine(tourImage);
-                }
-                tourLocation = tourService.GetTourLocation(tour.TourId);
-                Console.WriteLine(tourLocation);
-                tourCheckpoints = checkpointService.GetTourCheckpoints(tour.TourId);
-                foreach (Checkpoint checkpoint in tourCheckpoints)
-                {
-                    Console.WriteLine(checkpoint);
-                }
+                ShowTour(tour);
             }
         }
 
-        public void GetByLanguage(string language)
+        public void GetToursByLanguage(string language)
         {
-            TourService tourService = new TourService();
-            TourImagesService tourImagesService = new TourImagesService();
-            CheckpointService checkpointService = new CheckpointService();
-            List<Tour> toursByLanguage = tourService.GetByLanguage(language);
-            List<TourImages> tourImages = new List<TourImages>();
-            Location tourLocation = new Location();
-            List<Checkpoint> tourCheckpoints = new List<Checkpoint>();
+
+            List<Tour> toursByLanguage = tourService.GetToursByLanguage(language);
+
             foreach (Tour tour in toursByLanguage)
             {
-                Console.WriteLine(tour);
-                tourImages = tourImagesService.GetTourImages(tour.TourId);
-                foreach (TourImages tourImage in tourImages)
-                {
-                    Console.WriteLine(tourImage);
-                }
-                tourLocation = tourService.GetTourLocation(tour.TourId);
-                Console.WriteLine(tourLocation);
-                tourCheckpoints = checkpointService.GetTourCheckpoints(tour.TourId);
-                foreach (Checkpoint checkpoint in tourCheckpoints)
-                {
-                    Console.WriteLine(checkpoint);
-                }
+                ShowTour(tour);
             }
         }
 
-        public void GetByGuestsNumber(int guestsNumber)
+        public void GetToursByTouristsNumber(int tourists)
         {
-            TourService tourService = new TourService();
-            TourImagesService tourImagesService = new TourImagesService();
-            CheckpointService checkpointService = new CheckpointService();
-            List<Tour> toursByGuestsNumber = tourService.GetByGuestsNumber(guestsNumber);
-            List<TourImages> tourImages = new List<TourImages>();
-            Location tourLocation = new Location();
-            List<Checkpoint> tourCheckpoints = new List<Checkpoint>();
+
+            List<Tour> toursByGuestsNumber = tourService.GetToursByTouristsNumber(tourists);
+
             foreach (Tour tour in toursByGuestsNumber)
             {
-                Console.WriteLine(tour);
-                tourImages = tourImagesService.GetTourImages(tour.TourId);
-                foreach (TourImages tourImage in tourImages)
-                {
-                    Console.WriteLine(tourImage);
-                }
-                tourLocation = tourService.GetTourLocation(tour.TourId);
-                Console.WriteLine(tourLocation);
-                tourCheckpoints = checkpointService.GetTourCheckpoints(tour.TourId);
-                foreach (Checkpoint checkpoint in tourCheckpoints)
-                {
-                    Console.WriteLine(checkpoint);
-                }
+                ShowTour(tour);
             }
         }
 
         public bool HasFreeSpots(int tourId, int touristsNumber)
         {
-            TourService tourService = new TourService();
             Tour tour = tourService.GetTourById(tourId);
+
             if (tourService.GetFreeSpotsNumber(tourId) < touristsNumber)
             {
                 Console.WriteLine("Na izabranoj turi nema slobodnih mesta.");
+
                 Location location = tourService.GetTourLocation(tourId);
-                List<Tour> toursByLocation = tourService.GetToursByLocation(location.LocationId);
-                Console.WriteLine("Broj tura na istoj lokaciji: ");
-                Console.WriteLine(toursByLocation.Count());
-                foreach (Tour tourByLocation in toursByLocation)
-                {
-                    Console.WriteLine(tourByLocation);
-                }
+
+                Console.WriteLine("Ture na istoj lokaciji: ");                
+                GetToursByLocation(location.City, location.Country);
+
                 return false;
             }
+
             Console.WriteLine("Broj slobodnih mesta: ");
             Console.WriteLine(tourService.GetFreeSpotsNumber(tourId));
+
             return true;
         }
 
-        public bool BookOrExit(int tourId, int touristsNumber)
+        public bool BookOrExit(int tourId, int tourists)
         {
-            TourService tourService = new TourService();
             UserService userService = new UserService();
 
             string chosenOption;
@@ -291,66 +236,73 @@ namespace InitialProject.Controller
 
                 if (chosenOption.Equals("1"))
                 {
+                    Console.WriteLine("Izabrana opcija: 1. Rezervisi turu");
+
                     Console.WriteLine("Username: ");
                     string username = Console.ReadLine();
                     Console.WriteLine("Password: ");
                     string password = Console.ReadLine();
-                    if (userService.Login(username, password) != null) {
-                        Console.WriteLine("Chosen option: 1. Rezervisi turu");
+
+                    if (userService.Login(username, password) != null)
+                    {
                         Tourist tourist = (Tourist)userService.GetByUsername(username);
-                        tourService.BookATour(tourId, tourist.Id, touristsNumber);
-                        break;
+                        tourService.BookTour(tourId, tourist.Id, tourists);
+
+                        return true;
                     }
-                    
                 }
             } while (!chosenOption.Equals("x"));
+
             return false;
-             
         }
 
-        public bool BookATour(int tourId, int touristsNumber)
+        public bool ChangeTouristsNumber(int tourId)
         {
-            TourService tourService = new TourService();
+            Console.WriteLine("Number of Tourists: ");
+            int tourists = int.Parse(Console.ReadLine());
 
-            if (HasFreeSpots(tourId, touristsNumber)) {
-                return BookOrExit(tourId, touristsNumber);
+            if (HasFreeSpots(tourId, tourists))
+            {
+                return BookOrExit(tourId, tourists);
             }
+            return false;
+        }
+        public bool BookTour(int tourId, int tourists)
+        {
+            if (HasFreeSpots(tourId, tourists)) {
+                return BookOrExit(tourId, tourists);
+            }
+
             string chosenOption;
 
             {
-                string option;
                 do
                 {
                     Console.WriteLine("Izaberite jednu od opcija: ");
                     Console.WriteLine("1. Izmena broja turista");
                     Console.WriteLine("2. Odabir druge ture na istoj lokaciji");
                     Console.WriteLine("x. Izlazak iz programa");
-                    option = Console.ReadLine();
+                    chosenOption = Console.ReadLine();
                     Console.Clear();
-                    switch (option)
+
+                    switch (chosenOption)
                     {
                         case "1":
-                            Console.WriteLine("Chosen option: 1. Izmena broja turista");
-                            Console.WriteLine("Number of Tourists: ");
-                            touristsNumber = int.Parse(Console.ReadLine());
-                            if (HasFreeSpots(tourId, touristsNumber))
-                            {
-                                return BookOrExit(tourId, touristsNumber);
-                            }
+                            Console.WriteLine("Izabrana opcija: 1. Izmena broja turista");
+                            ChangeTouristsNumber(tourId);
                             break;
                         case "2":
-                            Console.WriteLine("Chosen option: 2.  Odabir druge ture na istoj lokaciji");
+                            Console.WriteLine("Izabrana opcija: 2.  Odabir druge ture na istoj lokaciji");
                             Location location = tourService.GetTourLocation(tourId);
+                            GetToursByLocation(location.City, location.Country);
+
                             List<Tour> toursByLocation = tourService.GetToursByLocation(location.LocationId);
                             Console.WriteLine("Odaberite jednu od ponudjenih tura koje su na istoj lokaciji: ");
-                            foreach (Tour tour in toursByLocation)
-                            {
-                                Console.WriteLine(tour);
-                            }
+
                             Console.WriteLine("TourId: ");
                             int newTourId = int.Parse(Console.ReadLine());
                             Tour chosenTour = tourService.GetTourById(newTourId);
-                            Console.WriteLine(chosenTour);
+
                             int b = 0;
                             foreach (Tour tour in toursByLocation)
                             {
@@ -364,18 +316,17 @@ namespace InitialProject.Controller
                                 Console.WriteLine("Izabrana tura nije na istoj lokaciji");
                                 break;
                             }
-                            Console.WriteLine("TouristsNumber: ");
-                            touristsNumber = int.Parse(Console.ReadLine());
-                            if (HasFreeSpots(newTourId, touristsNumber))
+                            if (ChangeTouristsNumber(chosenTour.TourId))
                             {
-                                return BookOrExit(newTourId, touristsNumber);
-                            }
-
+                                return true; 
+                            }  
+                            
                             break;
                         default:
+                            Console.WriteLine("Opcija ne postoji");
                             break;
                     }
-                } while (!option.Equals("x"));
+                } while (!chosenOption.Equals("x"));
             }
             return false;
         }

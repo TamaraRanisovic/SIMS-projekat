@@ -11,27 +11,21 @@ namespace InitialProject.Service
 {
     public class UserService
     {
-        private readonly UserRepository UserRepository;
+
+        UserRepository userRepository = new UserRepository();
 
         public UserService()
         {
             
         }
 
-        public UserService(UserRepository userRepository) 
-        {
-            UserRepository = userRepository;
-        }
-
         public User Login(string username, string password)
         {
-            UserRepository userRepository = new UserRepository();
             return userRepository.Login(username, password);
         }
 
         public User GetByUsername(string username)
         {
-            UserRepository userRepository = new UserRepository();
             return userRepository.GetByUsername(username);
         }
     }
