@@ -47,6 +47,21 @@ namespace InitialProject.Repository
             return null;
         }
 
+        public User Login(string username, string password)
+        {
+            using (var db = new DataContext())
+            {
+                foreach (User user in db.Users)
+                {
+                    if (user.Username == username && user.Password == password)
+                    {
+                        return user;
+                    }
+                }
+            }
+            return null;
+        }
+
         public void UpdateUser(User updatedUser)
         {
             using (var db = new DataContext())

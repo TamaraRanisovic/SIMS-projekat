@@ -12,7 +12,16 @@ namespace InitialProject.Model
 
         public List<Accomodation> Accomodations { get; set; }
 
+        public Owner()
+        {
+            GuestRatings = new List<GuestRating>();
+            Accomodations = new List<Accomodation>();
+        }
+
         public Owner(string username, string password, UserType userType) : base (username, password, userType) 
-        { }
+        {
+            GuestRatings = new List<GuestRating>();
+            Accomodations = new List<Accomodation>();
+        }
     }
 }

@@ -2,10 +2,12 @@
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.Data;
+using System.Diagnostics.Metrics;
 using System.Linq;
 using System.Text;
 using System.Text.Json.Serialization;
 using System.Threading.Tasks;
+using WebApi.Entities;
 
 namespace InitialProject.Model
 {
@@ -27,6 +29,12 @@ namespace InitialProject.Model
             Username = username;
             Password = password;
             UserType = userType;
+        }
+
+        public override string ToString()
+        {
+            return $"Id: {Id}\n, Username: {Username}\n, Password: {Password}\n, UserType: {UserType}\n";
+
         }
     }
 }

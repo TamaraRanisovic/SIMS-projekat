@@ -29,6 +29,7 @@ namespace InitialProject.Model
         public List<Guest> Guests { get; set; }
      
 
+
         public List<AccomodationReservation> AccomodationReservations { get; set; }
 
         public override string ToString()
@@ -41,27 +42,7 @@ namespace InitialProject.Model
             Images = new List<AccomodationImage>(); 
             Guests = new List<Guest>(); 
             AccomodationReservations = new List<AccomodationReservation>(); 
-
-
-        
-
         }
-
-        public Accomodation(int accId, string name, Location location, AccomodationType type, int maxGuests, int minReservationDays, int daysBeforeCanceling)
-        {
-            AccId = accId;
-            Name = name;
-            AccomodationType = type;
-            MaxGuests = maxGuests;
-            MinReservationDays = minReservationDays;
-            DaysBeforeCanceling = daysBeforeCanceling;
-            Images = new List<AccomodationImage>();
-            Guests = new List<Guest>();
-            AccomodationReservations = new List<AccomodationReservation>();
-
-            
-        }
-
 
 
         public Accomodation(string name, Location location, AccomodationType type, int maxGuests, int minReservationDays, int daysBeforeCanceling)

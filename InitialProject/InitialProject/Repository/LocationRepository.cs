@@ -1,4 +1,4 @@
-﻿using InitialProject.Model;
+using InitialProject.Model;
 using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
@@ -19,6 +19,7 @@ namespace InitialProject.Repository
                 db.Locations.Add(locationToAdd);
                 db.SaveChanges();
             }
+
         }
 
         public List<Location> GetAllLocations()
@@ -72,16 +73,16 @@ namespace InitialProject.Repository
         {
             using (var db = new DataContext())
             {
-                foreach (Location loc in db.Locations)
+                List<Location> allLocations = GetAllLocations();
+                foreach (Location location in allLocations)
                 {
-                    if (loc.City == city && loc.Country == country)
+                    if (location.City.Equals(city) && location.Country.Equals(country))
                     {
-                        return loc;
+                        return location;
                     }
                 }
             }
             return null;
         }
     }
-
 }

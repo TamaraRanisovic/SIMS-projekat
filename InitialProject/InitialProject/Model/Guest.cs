@@ -16,6 +16,8 @@ namespace InitialProject.Model
 
         public Guest(string username, string password, UserType userType) : base(username, password, userType) 
         {
+            Accomodations = new List<Accomodation>();
+            Comments = new List<Comment>();
 
         }
 

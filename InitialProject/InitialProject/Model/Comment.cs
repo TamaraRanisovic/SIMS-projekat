@@ -10,9 +10,8 @@ namespace InitialProject.Model
 
         public Comment() { }
 
-        public Comment(int id, DateTime creationTime, string text, User user)
+        public Comment(DateTime creationTime, string text, User user)
         {
-            Id = id;
             CreationTime = creationTime;
             Text = text;
         }
@@ -22,9 +21,6 @@ namespace InitialProject.Model
             CreationTime = creationTime;
             Text = text;
         }
-
-
-
 
     }
 }

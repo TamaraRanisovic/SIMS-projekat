@@ -31,21 +31,19 @@ public class Tour
 
     public List<Tourist> Tourists { get; set; }
 
-    public Tour() { }
+    public List<TourReservation> TourReservations { get; set; }
 
-    public Tour(int tourId, string name, string description, string language, int maxGuests, DateTime startTime, DateTime endTime, int duration)
+    public Tour() 
+
     {
-        TourId = tourId;
-        Name = name;
-        Description = description;
-        Language = language;
-        MaxGuests = maxGuests;
-        StartTime = startTime;
-        EndTime = endTime;
-        Duration = duration;
+        Images = new List<TourImages>();
+        Checkpoints = new List<Checkpoint>();
+        Tourists = new List<Tourist>();
+        TourReservations = new List<TourReservation>();
+
     }
 
-    public Tour(string name, string description, string language, int maxGuests, DateTime startTime, DateTime endTime, int duration)
+    public Tour( string name, string description, string language, int maxGuests, DateTime startTime, DateTime endTime, int duration)
     {
         Name = name;
         Description = description;
@@ -54,6 +52,19 @@ public class Tour
         StartTime = startTime;
         EndTime = endTime;
         Duration = duration;
+
+        Images = new List<TourImages>();
+        Checkpoints = new List<Checkpoint>();
+        Tourists = new List<Tourist>();
+
+        TourReservations = new List<TourReservation>();
     }
-}
+
+    public override string ToString()
+    {
+        return $"TourId: {TourId}\n, Name: {Name}\n, Description: {Description}\n, Language: {Language}\n, MaxGuests: {MaxGuests}\n, StartTime: {StartTime}\n, EndTime: {EndTime}\n, Duration: {Duration}\n";
+
+    }
+}       
+
 

@@ -30,5 +30,6 @@ namespace InitialProject.Model
             return $"AccomdationImagesId: {Id}\n, Name: {Name}\n, URL: {URL}\n";
         }
 
+
     }
 }
