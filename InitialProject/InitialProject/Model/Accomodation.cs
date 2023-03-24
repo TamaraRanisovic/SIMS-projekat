@@ -25,14 +25,15 @@ namespace InitialProject.Model
         public int DaysBeforeCanceling { get; set; }
 
         public List<AccomodationImage> Images { get; set; }
+
+        public List<Guest> Guests { get; set; }
      
-        public List<Guest> Guests { get; set; } 
 
         public List<AccomodationReservation> AccomodationReservations { get; set; }
 
         public override string ToString()
         {
-            return "Name" + Name + "AccomodationType" + AccomodationType + "MaxGuests" + MaxGuests + "MinReservationDays" + MinReservationDays + "DaysBeforeCacneling" + DaysBeforeCanceling + "Images" + Images + "Guests" + Guests + "AccReservations" + AccomodationReservations;
+            return "Name" + Name + "AccomodationType" + AccomodationType + "MaxGuests" + MaxGuests + "MinReservationDays" + MinReservationDays + "DaysBeforeCacneling" + DaysBeforeCanceling + "Images" + Images + "AccReservations" + AccomodationReservations;
         }
 
         public Accomodation() 
@@ -40,6 +41,9 @@ namespace InitialProject.Model
             Images = new List<AccomodationImage>(); 
             Guests = new List<Guest>(); 
             AccomodationReservations = new List<AccomodationReservation>(); 
+
+
+        
 
         }
 
@@ -54,7 +58,11 @@ namespace InitialProject.Model
             Images = new List<AccomodationImage>();
             Guests = new List<Guest>();
             AccomodationReservations = new List<AccomodationReservation>();
+
+            
         }
+
+
 
         public Accomodation(string name, Location location, AccomodationType type, int maxGuests, int minReservationDays, int daysBeforeCanceling)
         {
@@ -66,6 +74,11 @@ namespace InitialProject.Model
             Images = new List<AccomodationImage>(); 
             Guests = new List<Guest>();
             AccomodationReservations = new List<AccomodationReservation>();
+        }
+
+        public override string ToString()
+        {
+            return $"AccomodationId: {AccId}\n, Name: {Name}\n, AccomodationType: {AccomodationType}\n, MaxGuests: {MaxGuests}\n, MinDaysReservation: {MinReservationDays}\n, DaysBeforeCanceling: {DaysBeforeCanceling}\n";
         }
     }
 }

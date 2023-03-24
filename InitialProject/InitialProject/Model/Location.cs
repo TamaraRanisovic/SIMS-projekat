@@ -23,22 +23,18 @@ public class Location
         Accomodations = new List<Accomodation>();
     }
 
-    public Location(int locationId, string city, string country)
+    public Location(string city, string country)
     {
-        LocationId = locationId;
         City = city;
         Country = country;
         Tours = new List<Tour>(); 
         Accomodations = new List<Accomodation>();  
     }
 
-    public Location(string city, string country)
-    {
-        City = city;
-        Country = country;
-        Tours = new List<Tour>();
-        Accomodations = new List<Accomodation>();
-    }
 
+    public override string ToString()
+    {
+        return $"LocationId: {LocationId}\n, City: {City}\n, Country: {Country}\n";
+    }
 
 }

@@ -142,8 +142,8 @@ namespace InitialProject.Model
 
 
         }
-
         public string path = @"C:\Temp\SIMSdatabase.db";
+
         protected override void OnConfiguring(DbContextOptionsBuilder options) => options.UseSqlite($"Data Source = {path}");
 
     }
