@@ -26,10 +26,6 @@ namespace InitialProject.Repository
             }
         }
 
-        public static List<Accomodation> GetAllAccomodations()
-
-
-
         public List<Accomodation> GetAllAccomodations()
 
         {

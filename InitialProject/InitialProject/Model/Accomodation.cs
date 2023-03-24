@@ -57,9 +57,6 @@ namespace InitialProject.Model
             AccomodationReservations = new List<AccomodationReservation>();
         }
 
-        public override string ToString()
-        {
-            return $"AccomodationId: {AccId}\n, Name: {Name}\n, AccomodationType: {AccomodationType}\n, MaxGuests: {MaxGuests}\n, MinDaysReservation: {MinReservationDays}\n, DaysBeforeCanceling: {DaysBeforeCanceling}\n";
-        }
+    
     }
 }

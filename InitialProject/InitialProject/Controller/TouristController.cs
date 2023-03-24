@@ -1,6 +1,5 @@
 ﻿using InitialProject.Model;
 using InitialProject.Service;
-using Microsoft.AspNetCore.Mvc;
 using System;
 using System.Collections.Generic;
 using System.Linq;

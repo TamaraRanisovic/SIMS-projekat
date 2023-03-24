@@ -1,5 +1,4 @@
 ﻿using InitialProject.Controller;
-using Microsoft.Extensions.Hosting;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -52,8 +51,8 @@ namespace InitialProject
                     break; 
                 case "2": 
                     Console.WriteLine("Chosen option: 2");
-                    GuideController controllerMenu = new GuideController();
-                    controllerMenu.Menu();
+                    GuideController guideMenu = new GuideController();
+                    guideMenu.Menu();
                     break; 
                 case "3":
                     Console.WriteLine("Chosen option: 3");

@@ -17,16 +17,7 @@ namespace InitialProject.Model
         public int RuleCompliance { get; set; } 
 
         public AccomodationReservation AccomodationReservation { get; set; }
-
-        public GuestRating(int id, DateTime ratingExperationDate, int cleanliness, int ruleCompliance)
-        {
-            Id = id;
-            RatingExperationDate = ratingExperationDate;
-            Cleanliness = cleanliness;
-            RuleCompliance = ruleCompliance;
-            
-        }
-
+ 
         public GuestRating(DateTime ratingExperationDate, int cleanliness, int ruleCompliance)
         {
             RatingExperationDate = ratingExperationDate;
@@ -34,11 +25,6 @@ namespace InitialProject.Model
             RuleCompliance = ruleCompliance;
             
         }
-        public GuestRating(DateTime ratingExperationDate, int cleanliness, int ruleCompliance)
-        {
-            RatingExperationDate = ratingExperationDate;
-            Cleanliness = cleanliness;
-            RuleCompliance = ruleCompliance;
-        }
+       
     }
 }

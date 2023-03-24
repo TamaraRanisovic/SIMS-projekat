@@ -15,12 +15,7 @@ namespace InitialProject.Model
             CreationTime = creationTime;
             Text = text;
         }
-
-        public Comment(DateTime creationTime, string text, User user)
-        {
-            CreationTime = creationTime;
-            Text = text;
-        }
+    
 
     }
 }
