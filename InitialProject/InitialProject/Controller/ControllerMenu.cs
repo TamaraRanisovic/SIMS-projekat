@@ -1,5 +1,6 @@
 ﻿using InitialProject.Migrations;
 using InitialProject.Model;
+using InitialProject.Repository;
 using InitialProject.Service;
 using System;
 using System.Collections.Generic;
@@ -80,8 +81,59 @@ namespace InitialProject.Controller
                     }
                     break;
                 case "5":
-                    
+                    /*List<AccomodationReservation> accomodationReservations = new List<AccomodationReservation>();
+                    accomodationReservations = guestRatingService.GetNotGradedExpiredReservations();
+                    if (accomodationReservations.Count == 0)
+                    {
+                        Console.WriteLine("No new notifications!");
+                        return;
+                    }
+
+                    DateTime todaysDate = DateTime.UtcNow.Date;
+
+
+
+                    foreach (var reservation in accomodationReservations)
+                    {
+                        int daysLeft = 5 - (todaysDate.Day - reservation.CheckOutDate.Day);
+
+                        if (daysLeft == 1)
+                        {
+                            Console.WriteLine("Reservation " + reservation.AccomodationReservationId + " has expired: \n   " + daysLeft.ToString() + " day left to rate guest: " + reservation.User.Username);
+                        }
+
+
+                        Console.WriteLine("Reservation " + reservation.AccomodationReservationId + " has expired: \n   " + daysLeft.ToString() + " days left to rate guest: " + reservation.User.Username);
+                    }
                     break;
+                case "6":
+                    List<AccomodationReservation> reservations = new List<AccomodationReservation>();
+                    reservations = guestRatingService.GetNotGradedExpiredReservations();
+
+                    int n = 0;
+                    foreach (var reservation in reservations)
+                    {
+                        Console.WriteLine(n + "." + reservation.ToString());
+                        n++;
+                    }
+
+                    Console.WriteLine("Enter Reservation ID: ");
+
+                    int option = Int32.Parse(Console.ReadLine());
+
+                    Console.WriteLine("Enter Cleanlines");
+                    int cleanliness = Int32.Parse(Console.ReadLine());
+                    Console.WriteLine("RuleCompl");
+                    int rulec = Int32.Parse(Console.ReadLine());
+
+                    GuestRating guestRating = new GuestRating(cleanliness, rulec, reservations[option]);
+
+                    guestRatingRepository.Save(guestRating);
+
+
+                    
+
+                    break; */
                 case "x":
                     break;
                 default:
