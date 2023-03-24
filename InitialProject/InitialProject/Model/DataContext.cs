@@ -21,6 +21,8 @@ namespace InitialProject.Model
 
         public DbSet<Accomodation> Accomodations { get; set; }
 
+        public DbSet<AccomodationReservation> AccomodationReservations { get; set; }
+
         public DbSet<Comment> Comments { get; set; }
         public DbSet<Guest> Guests { get; set; }
         public DbSet<GuestRating> GuestRatings { get; set; }
@@ -64,6 +66,22 @@ namespace InitialProject.Model
                 .WithMany(t => t.Guests)
                 .OnDelete(DeleteBehavior.Cascade);
 
+            modelBuilder.Entity<AccomodationReservation>()
+                .HasOne<Accomodation>()
+                .WithMany(t => t.AccomodationReservations)
+                .OnDelete(DeleteBehavior.Cascade);
+
+            //AccRes
+            modelBuilder.Entity<Accomodation>()
+                .HasOne<AccomodationReservation>()
+                .WithMany(t => t.Accomodations)
+                .OnDelete(DeleteBehavior.Cascade);
+
+           // modelBuilder.Entity<User>()
+             //   .HasOne<AccomodationReservation>()
+              //  .WithMany(t => t.Users)
+               // .OnDelete(DeleteBehavior.Cascade);
+
             //Checkpoint
 
             modelBuilder.Entity<Tourist>()
@@ -72,7 +90,7 @@ namespace InitialProject.Model
                 .OnDelete(DeleteBehavior.Cascade);
 
             //Guest
-            modelBuilder.Entity<Accomodation>()
+           modelBuilder.Entity<Accomodation>()
                 .HasOne<Guest>()
                 .WithMany(t => t.Accomodations)
                 .OnDelete(DeleteBehavior.Cascade);
@@ -80,6 +98,11 @@ namespace InitialProject.Model
             modelBuilder.Entity<Comment>()
                 .HasOne<Guest>()
                 .WithMany(t => t.Comments)
+                .OnDelete(DeleteBehavior.Cascade);
+
+            modelBuilder.Entity<AccomodationReservation>()
+                .HasOne<Guest>()
+                .WithMany(t => t.AccomodationReservations)
                 .OnDelete(DeleteBehavior.Cascade);
 
             //Guide

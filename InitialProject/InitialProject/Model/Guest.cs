@@ -8,6 +8,10 @@ namespace InitialProject.Model
 {
     public class Guest : User
     {
+        public bool IsPresent { get; set; }
+        
+        public List<AccomodationReservation> AccomodationReservations { get; set; }
+
         public List<Accomodation> Accomodations { get; set; }
 
         public List<Comment> Comments { get; set; }

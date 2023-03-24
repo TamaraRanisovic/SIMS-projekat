@@ -22,6 +22,22 @@ namespace InitialProject.Repository
             }
         }
 
+        public Accomodation GetAccomodationById(int accId)
+        {
+            using(var db = new DataContext())
+            {
+                List<Accomodation> allAccomodations = GetAllAccomodations();
+                foreach(Accomodation accomodation in allAccomodations)
+                {
+                    if(accomodation.AccId == accId)
+                    {
+                        return accomodation;
+                    }
+                }
+            }
+            return null;
+        }
+
         public List<Accomodation> GetAccomodationsByLocation(int locationId)
         {
             List<Accomodation> accomodationsByLocation = new List<Accomodation>();
@@ -34,6 +50,42 @@ namespace InitialProject.Repository
                 }
             }
             return accomodationsByLocation;
+        }
+
+        public int GetNumberOfGuestsInAccomodation(int accId)
+        {
+            AccomodationRepository accomodationRepository = new AccomodationRepository();
+            using(var db = new DataContext())
+            {
+                var acc = db.Accomodations.Include(a => a.AccomodationReservations).SingleOrDefault(a => a.AccId == accId);
+
+                int numberOfGuestsInAccomodation = 0;
+                List<AccomodationReservation> accomodationReservations = acc.AccomodationReservations.ToList();
+                foreach(AccomodationReservation accomodationReservation in accomodationReservations)
+                {
+                    numberOfGuestsInAccomodation += accomodationReservation.NumberOfGuests;
+
+                }
+                return numberOfGuestsInAccomodation;
+            }
+        }
+
+        public void BookAcc(int accId, int guestId,int guestsNumber)
+        {
+            AccomodationReservation accomodationResrvation = new AccomodationReservation();
+            using(var db = new DataContext())
+            {
+                Guest guests = db.Guests.Find(guestId);
+                Accomodation accomodation = db.Accomodations.Find(accId);
+                if(guests != null && accomodation != null)
+                {
+                    guests.AccomodationReservations.Add(accomodationResrvation);
+                    accomodation.AccomodationReservations.Add(accomodationResrvation);
+                    accomodation.Guests.Add(guests);
+                    db.SaveChanges();
+                }
+            }
+            Console.WriteLine("Successfully reserved accomodation");
         }
 
 

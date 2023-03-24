@@ -17,10 +17,43 @@ namespace InitialProject.Migrations
 #pragma warning disable 612, 618
             modelBuilder.HasAnnotation("ProductVersion", "6.0.0");
 
+            modelBuilder.Entity("AccomodationReservation", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("INTEGER");
+
+                    b.Property<int?>("AccomodationAccId")
+                        .HasColumnType("INTEGER");
+
+                    b.Property<DateTime>("CheckInDate")
+                        .HasColumnType("TEXT");
+
+                    b.Property<DateTime>("CheckOutDate")
+                        .HasColumnType("TEXT");
+
+                    b.Property<int?>("GuestId")
+                        .HasColumnType("INTEGER");
+
+                    b.Property<int>("NumberOfGuests")
+                        .HasColumnType("INTEGER");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("AccomodationAccId");
+
+                    b.HasIndex("GuestId");
+
+                    b.ToTable("AccomodationReservations");
+                });
+
             modelBuilder.Entity("InitialProject.Model.Accomodation", b =>
                 {
                     b.Property<int>("AccId")
                         .ValueGeneratedOnAdd()
+                        .HasColumnType("INTEGER");
+
+                    b.Property<int?>("AccomodationReservationId")
                         .HasColumnType("INTEGER");
 
                     b.Property<int>("AccomodationType")
@@ -49,6 +82,8 @@ namespace InitialProject.Migrations
                         .HasColumnType("INTEGER");
 
                     b.HasKey("AccId");
+
+                    b.HasIndex("AccomodationReservationId");
 
                     b.HasIndex("GuestId");
 
@@ -280,6 +315,10 @@ namespace InitialProject.Migrations
                     b.Property<int?>("AccomodationAccId")
                         .HasColumnType("INTEGER");
 
+                    b.Property<bool>("IsPresent")
+                        .HasColumnType("INTEGER")
+                        .HasColumnName("Guest_IsPresent");
+
                     b.HasIndex("AccomodationAccId");
 
                     b.HasDiscriminator().HasValue("Guest");
@@ -319,8 +358,26 @@ namespace InitialProject.Migrations
                     b.HasDiscriminator().HasValue("Tourist");
                 });
 
+            modelBuilder.Entity("AccomodationReservation", b =>
+                {
+                    b.HasOne("InitialProject.Model.Accomodation", null)
+                        .WithMany("AccomodationReservations")
+                        .HasForeignKey("AccomodationAccId")
+                        .OnDelete(DeleteBehavior.Cascade);
+
+                    b.HasOne("InitialProject.Model.Guest", null)
+                        .WithMany("AccomodationReservations")
+                        .HasForeignKey("GuestId")
+                        .OnDelete(DeleteBehavior.Cascade);
+                });
+
             modelBuilder.Entity("InitialProject.Model.Accomodation", b =>
                 {
+                    b.HasOne("AccomodationReservation", null)
+                        .WithMany("Accomodations")
+                        .HasForeignKey("AccomodationReservationId")
+                        .OnDelete(DeleteBehavior.Cascade);
+
                     b.HasOne("InitialProject.Model.Guest", null)
                         .WithMany("Accomodations")
                         .HasForeignKey("GuestId")
@@ -411,8 +468,15 @@ namespace InitialProject.Migrations
                         .OnDelete(DeleteBehavior.Cascade);
                 });
 
+            modelBuilder.Entity("AccomodationReservation", b =>
+                {
+                    b.Navigation("Accomodations");
+                });
+
             modelBuilder.Entity("InitialProject.Model.Accomodation", b =>
                 {
+                    b.Navigation("AccomodationReservations");
+
                     b.Navigation("Guests");
 
                     b.Navigation("Images");
@@ -441,6 +505,8 @@ namespace InitialProject.Migrations
 
             modelBuilder.Entity("InitialProject.Model.Guest", b =>
                 {
+                    b.Navigation("AccomodationReservations");
+
                     b.Navigation("Accomodations");
 
                     b.Navigation("Comments");

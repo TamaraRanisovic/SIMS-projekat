@@ -38,6 +38,12 @@ namespace InitialProject.Service
             return accomodationsByLocation;
         }
 
+        public Accomodation GetAccomodationById(int accId)
+        {
+            AccomodationRepository accomodationRepository = new AccomodationRepository();
+            return accomodationRepository.GetAccomodationById(accId);
+        }
+
         public List<Accomodation> GetByType(string type)
         {
             AccomodationRepository accomodationRepository = new AccomodationRepository();
@@ -132,6 +138,46 @@ namespace InitialProject.Service
                 }
             }
             return null;
+        }
+
+
+        public List<Accomodation> FindAvailableAccomodations(DateTime startDate, DateTime endDate, int numberOfGuests)
+        {
+            AccomodationService accomodationService = new AccomodationService();
+            List<Accomodation> availableAccomodations = new List<Accomodation>();
+            foreach (Accomodation accomodation in accomodationService.GetAllAccomodations())
+            {
+                if ((endDate - startDate).Days + 1 > accomodation.MinReservationDays)
+                {
+                    if(GetFreeSpotsNumber(accomodation.AccId) >= numberOfGuests) //&& accomodation.IsAvailable
+                    {
+                        availableAccomodations.Add(accomodation);
+                    }
+                }
+            }
+            return availableAccomodations;
+        }
+
+        public List<Guest> GetGuests(int accId)
+        {
+            GuestsRepository guestsRepository = new GuestsRepository();
+            return guestsRepository.GetGuests(accId);
+        }
+
+        public int GetFreeSpotsNumber(int accId)
+        {
+            AccomodationRepository accomodationRepository = new AccomodationRepository();
+            Accomodation accomodation = GetAccomodationById(accId);
+            List<Guest> accomodationsGuests = new List<Guest>();
+            accomodationsGuests = GetGuests(accId);
+            int freeSpotsNumber = accomodation.MaxGuests - accomodationRepository.GetNumberOfGuestsInAccomodation(accId);
+            return freeSpotsNumber;
+        }
+
+        public void BookAcc(int accId,int guestsId,int guestsNumber)
+        {
+            AccomodationRepository accomodationRepository = new AccomodationRepository();
+            accomodationRepository.BookAcc(accId, guestsId, guestsNumber);
         }
 
 

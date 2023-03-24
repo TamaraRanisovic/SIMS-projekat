@@ -39,32 +39,6 @@ namespace InitialProject.Migrations
                 });
 
             migrationBuilder.CreateTable(
-                name: "Accomodations",
-                columns: table => new
-                {
-                    AccId = table.Column<int>(type: "INTEGER", nullable: false)
-                        .Annotation("Sqlite:Autoincrement", true),
-                    Name = table.Column<string>(type: "TEXT", nullable: false),
-                    AccomodationType = table.Column<int>(type: "INTEGER", nullable: false),
-                    MaxGuests = table.Column<int>(type: "INTEGER", nullable: false),
-                    MinReservationDays = table.Column<int>(type: "INTEGER", nullable: false),
-                    DaysBeforeCanceling = table.Column<int>(type: "INTEGER", nullable: false),
-                    GuestId = table.Column<int>(type: "INTEGER", nullable: true),
-                    LocationId = table.Column<int>(type: "INTEGER", nullable: true),
-                    OwnerId = table.Column<int>(type: "INTEGER", nullable: true)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_Accomodations", x => x.AccId);
-                    table.ForeignKey(
-                        name: "FK_Accomodations_Locations_LocationId",
-                        column: x => x.LocationId,
-                        principalTable: "Locations",
-                        principalColumn: "LocationId",
-                        onDelete: ReferentialAction.Cascade);
-                });
-
-            migrationBuilder.CreateTable(
                 name: "Checkpoints",
                 columns: table => new
                 {
@@ -163,6 +137,7 @@ namespace InitialProject.Migrations
                     Password = table.Column<string>(type: "TEXT", nullable: false),
                     UserType = table.Column<int>(type: "INTEGER", nullable: false),
                     Discriminator = table.Column<string>(type: "TEXT", nullable: false),
+                    Guest_IsPresent = table.Column<bool>(type: "INTEGER", nullable: true),
                     AccomodationAccId = table.Column<int>(type: "INTEGER", nullable: true),
                     IsPresent = table.Column<bool>(type: "INTEGER", nullable: true),
                     CheckpointId = table.Column<int>(type: "INTEGER", nullable: true),
@@ -171,12 +146,6 @@ namespace InitialProject.Migrations
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_Users", x => x.Id);
-                    table.ForeignKey(
-                        name: "FK_Users_Accomodations_AccomodationAccId",
-                        column: x => x.AccomodationAccId,
-                        principalTable: "Accomodations",
-                        principalColumn: "AccId",
-                        onDelete: ReferentialAction.Cascade);
                     table.ForeignKey(
                         name: "FK_Users_Checkpoints_CheckpointId",
                         column: x => x.CheckpointId,
@@ -191,10 +160,93 @@ namespace InitialProject.Migrations
                         onDelete: ReferentialAction.Cascade);
                 });
 
+            migrationBuilder.CreateTable(
+                name: "AccomodationReservations",
+                columns: table => new
+                {
+                    Id = table.Column<int>(type: "INTEGER", nullable: false)
+                        .Annotation("Sqlite:Autoincrement", true),
+                    CheckInDate = table.Column<DateTime>(type: "TEXT", nullable: false),
+                    CheckOutDate = table.Column<DateTime>(type: "TEXT", nullable: false),
+                    NumberOfGuests = table.Column<int>(type: "INTEGER", nullable: false),
+                    AccomodationAccId = table.Column<int>(type: "INTEGER", nullable: true),
+                    GuestId = table.Column<int>(type: "INTEGER", nullable: true)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_AccomodationReservations", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_AccomodationReservations_Users_GuestId",
+                        column: x => x.GuestId,
+                        principalTable: "Users",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                });
+
+            migrationBuilder.CreateTable(
+                name: "Accomodations",
+                columns: table => new
+                {
+                    AccId = table.Column<int>(type: "INTEGER", nullable: false)
+                        .Annotation("Sqlite:Autoincrement", true),
+                    Name = table.Column<string>(type: "TEXT", nullable: false),
+                    AccomodationType = table.Column<int>(type: "INTEGER", nullable: false),
+                    MaxGuests = table.Column<int>(type: "INTEGER", nullable: false),
+                    MinReservationDays = table.Column<int>(type: "INTEGER", nullable: false),
+                    DaysBeforeCanceling = table.Column<int>(type: "INTEGER", nullable: false),
+                    AccomodationReservationId = table.Column<int>(type: "INTEGER", nullable: true),
+                    GuestId = table.Column<int>(type: "INTEGER", nullable: true),
+                    LocationId = table.Column<int>(type: "INTEGER", nullable: true),
+                    OwnerId = table.Column<int>(type: "INTEGER", nullable: true)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_Accomodations", x => x.AccId);
+                    table.ForeignKey(
+                        name: "FK_Accomodations_AccomodationReservations_AccomodationReservationId",
+                        column: x => x.AccomodationReservationId,
+                        principalTable: "AccomodationReservations",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                    table.ForeignKey(
+                        name: "FK_Accomodations_Locations_LocationId",
+                        column: x => x.LocationId,
+                        principalTable: "Locations",
+                        principalColumn: "LocationId",
+                        onDelete: ReferentialAction.Cascade);
+                    table.ForeignKey(
+                        name: "FK_Accomodations_Users_GuestId",
+                        column: x => x.GuestId,
+                        principalTable: "Users",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                    table.ForeignKey(
+                        name: "FK_Accomodations_Users_OwnerId",
+                        column: x => x.OwnerId,
+                        principalTable: "Users",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                });
+
             migrationBuilder.CreateIndex(
                 name: "IX_AccomodationImages_AccomodationAccId",
                 table: "AccomodationImages",
                 column: "AccomodationAccId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_AccomodationReservations_AccomodationAccId",
+                table: "AccomodationReservations",
+                column: "AccomodationAccId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_AccomodationReservations_GuestId",
+                table: "AccomodationReservations",
+                column: "GuestId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Accomodations_AccomodationReservationId",
+                table: "Accomodations",
+                column: "AccomodationReservationId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_Accomodations_GuestId",
@@ -265,22 +317,6 @@ namespace InitialProject.Migrations
                 onDelete: ReferentialAction.Cascade);
 
             migrationBuilder.AddForeignKey(
-                name: "FK_Accomodations_Users_GuestId",
-                table: "Accomodations",
-                column: "GuestId",
-                principalTable: "Users",
-                principalColumn: "Id",
-                onDelete: ReferentialAction.Cascade);
-
-            migrationBuilder.AddForeignKey(
-                name: "FK_Accomodations_Users_OwnerId",
-                table: "Accomodations",
-                column: "OwnerId",
-                principalTable: "Users",
-                principalColumn: "Id",
-                onDelete: ReferentialAction.Cascade);
-
-            migrationBuilder.AddForeignKey(
                 name: "FK_Checkpoints_Tours_TourId",
                 table: "Checkpoints",
                 column: "TourId",
@@ -319,17 +355,33 @@ namespace InitialProject.Migrations
                 principalTable: "Users",
                 principalColumn: "Id",
                 onDelete: ReferentialAction.Cascade);
+
+            migrationBuilder.AddForeignKey(
+                name: "FK_Users_Accomodations_AccomodationAccId",
+                table: "Users",
+                column: "AccomodationAccId",
+                principalTable: "Accomodations",
+                principalColumn: "AccId",
+                onDelete: ReferentialAction.Cascade);
+
+            migrationBuilder.AddForeignKey(
+                name: "FK_AccomodationReservations_Accomodations_AccomodationAccId",
+                table: "AccomodationReservations",
+                column: "AccomodationAccId",
+                principalTable: "Accomodations",
+                principalColumn: "AccId",
+                onDelete: ReferentialAction.Cascade);
         }
 
         protected override void Down(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.DropForeignKey(
-                name: "FK_Users_Accomodations_AccomodationAccId",
-                table: "Users");
+                name: "FK_Accomodations_AccomodationReservations_AccomodationReservationId",
+                table: "Accomodations");
 
             migrationBuilder.DropForeignKey(
-                name: "FK_Tours_Locations_LocationId",
-                table: "Tours");
+                name: "FK_Users_Accomodations_AccomodationAccId",
+                table: "Users");
 
             migrationBuilder.DropForeignKey(
                 name: "FK_Tours_Users_GuideId",
@@ -348,10 +400,10 @@ namespace InitialProject.Migrations
                 name: "TourImages");
 
             migrationBuilder.DropTable(
-                name: "Accomodations");
+                name: "AccomodationReservations");
 
             migrationBuilder.DropTable(
-                name: "Locations");
+                name: "Accomodations");
 
             migrationBuilder.DropTable(
                 name: "Users");
@@ -361,6 +413,9 @@ namespace InitialProject.Migrations
 
             migrationBuilder.DropTable(
                 name: "Tours");
+
+            migrationBuilder.DropTable(
+                name: "Locations");
         }
     }
 }
