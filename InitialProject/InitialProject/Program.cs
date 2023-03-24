@@ -56,6 +56,8 @@ namespace InitialProject
                     break; 
                 case "3":
                     Console.WriteLine("Chosen option: 3");
+                    AccomodationController accomodationController = new AccomodationController();
+                    accomodationController.GetMenu();
                     break;
                 case "4":
                     Console.WriteLine("Chosen option: 4");
