@@ -124,7 +124,7 @@ namespace InitialProject.Service
             tourRepository.BookTour(tourId, touristId, tourists);
         }
 
-        public void MakeTour(Tour tour, Location location, List<TourImages> tourImages, List<Checkpoint> checkpoints)
+        public void MakeTour(Tour tour, Location location, List<TourImages> tourImages, List<Checkpoint> checkpoints, List<Dates> dates)
         {       
 
             using (var context = new DataContext())
@@ -158,6 +158,11 @@ namespace InitialProject.Service
                     tour.Checkpoints.Add(checkpoint);
                 }
 
+                foreach(var date in dates)
+                {
+                    context.Dates.Add(date);
+                    tour.StartingDates.Add(date);
+                }
                 
 
                 context.SaveChanges();
@@ -170,10 +175,10 @@ namespace InitialProject.Service
             using (var context = new DataContext())
             {
                 TourRepository tourRepository = new TourRepository();
-                DateTime danasnjiDatum = new DateTime(DateTime.Now.Year, DateTime.Now.Month, DateTime.Now.Day, 0 , 0 , 0);
-                Console.WriteLine("Danasnji datum: " + danasnjiDatum);
-                List<Tour> todaysTours = tourRepository.GetToursByStartDate(danasnjiDatum);
-              
+                DateTime todayDate = new DateTime(DateTime.Now.Year, DateTime.Now.Month, DateTime.Now.Day, 0 , 0 , 0);
+                Console.WriteLine("Danasnji datum: " + todayDate);
+                List<Tour> todaysTours = tourRepository.GetToursByStartDate(todayDate);
+                UnmarkCheckpoints(todaysTours);
                 string trackingTourName = FindTodaysToursName();
 
                 Tour trackingTour = new Tour();
@@ -482,6 +487,22 @@ namespace InitialProject.Service
                 }
             }
             return true;
+        }
+
+        public void UnmarkCheckpoints(List<Tour> tours)
+        {
+            using (var db = new DataContext())
+            {
+                foreach (var tour in tours)
+                {
+                    foreach (var checkpoint in tour.Checkpoints)
+                    {
+                        checkpoint.Status = false;
+                        db.Checkpoints.Update(checkpoint);
+                        db.SaveChanges();
+                    }
+                }
+            }
         }
     }
 }

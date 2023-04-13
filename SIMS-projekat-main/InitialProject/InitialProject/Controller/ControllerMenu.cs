@@ -1,5 +1,4 @@
-﻿using InitialProject.Migrations;
-using InitialProject.Model;
+﻿using InitialProject.Model;
 using InitialProject.Repository;
 using InitialProject.Service;
 using System;

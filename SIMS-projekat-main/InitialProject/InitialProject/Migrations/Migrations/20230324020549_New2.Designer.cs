@@ -11,8 +11,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace InitialProject.Migrations
 {
     [DbContext(typeof(DataContext))]
-    [Migration("20230323163258_GuestRating")]
-    partial class GuestRating
+    [Migration("20230324020549_New2")]
+    partial class New2
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -108,9 +108,6 @@ namespace InitialProject.Migrations
                     b.Property<int?>("GuestId")
                         .HasColumnType("INTEGER");
 
-                    b.Property<int?>("GuestRatingId")
-                        .HasColumnType("INTEGER");
-
                     b.Property<int>("NumberOfGuests")
                         .HasColumnType("INTEGER");
 
@@ -119,8 +116,6 @@ namespace InitialProject.Migrations
                     b.HasIndex("AccomodationAccId");
 
                     b.HasIndex("GuestId");
-
-                    b.HasIndex("GuestRatingId");
 
                     b.ToTable("AccomodationReservations");
                 });
@@ -154,6 +149,9 @@ namespace InitialProject.Migrations
                         .ValueGeneratedOnAdd()
                         .HasColumnType("INTEGER");
 
+                    b.Property<int>("AccomodationReservationId")
+                        .HasColumnType("INTEGER");
+
                     b.Property<int>("Cleanliness")
                         .HasColumnType("INTEGER");
 
@@ -168,6 +166,8 @@ namespace InitialProject.Migrations
 
                     b.HasKey("Id");
 
+                    b.HasIndex("AccomodationReservationId");
+
                     b.HasIndex("OwnerId");
 
                     b.ToTable("GuestRatings");
@@ -175,7 +175,7 @@ namespace InitialProject.Migrations
 
             modelBuilder.Entity("InitialProject.Model.TourImages", b =>
                 {
-                    b.Property<int>("Id")
+                    b.Property<int?>("Id")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("INTEGER");
 
@@ -187,7 +187,6 @@ namespace InitialProject.Migrations
                         .HasColumnType("INTEGER");
 
                     b.Property<string>("URL")
-                        .IsRequired()
                         .HasColumnType("TEXT");
 
                     b.HasKey("Id");
@@ -195,6 +194,38 @@ namespace InitialProject.Migrations
                     b.HasIndex("TourId");
 
                     b.ToTable("TourImages");
+                });
+
+            modelBuilder.Entity("InitialProject.Model.TourReservation", b =>
+                {
+                    b.Property<int>("TourReservationId")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("INTEGER");
+
+                    b.Property<bool>("Attendance")
+                        .HasColumnType("INTEGER");
+
+                    b.Property<int?>("CheckpointId")
+                        .HasColumnType("INTEGER");
+
+                    b.Property<int?>("TourId")
+                        .HasColumnType("INTEGER");
+
+                    b.Property<int?>("TouristId")
+                        .HasColumnType("INTEGER");
+
+                    b.Property<int>("TouristsNumber")
+                        .HasColumnType("INTEGER");
+
+                    b.HasKey("TourReservationId");
+
+                    b.HasIndex("CheckpointId");
+
+                    b.HasIndex("TourId");
+
+                    b.HasIndex("TouristId");
+
+                    b.ToTable("TourReservations");
                 });
 
             modelBuilder.Entity("InitialProject.Model.User", b =>
@@ -408,11 +439,6 @@ namespace InitialProject.Migrations
                         .WithMany("AccomodationReservations")
                         .HasForeignKey("GuestId")
                         .OnDelete(DeleteBehavior.Cascade);
-
-                    b.HasOne("InitialProject.Model.GuestRating", null)
-                        .WithMany("AccomodationReservations")
-                        .HasForeignKey("GuestRatingId")
-                        .OnDelete(DeleteBehavior.Cascade);
                 });
 
             modelBuilder.Entity("InitialProject.Model.Comment", b =>
@@ -425,10 +451,18 @@ namespace InitialProject.Migrations
 
             modelBuilder.Entity("InitialProject.Model.GuestRating", b =>
                 {
+                    b.HasOne("InitialProject.Model.AccomodationReservation", "AccomodationReservation")
+                        .WithMany()
+                        .HasForeignKey("AccomodationReservationId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
                     b.HasOne("InitialProject.Model.Owner", null)
                         .WithMany("GuestRatings")
                         .HasForeignKey("OwnerId")
                         .OnDelete(DeleteBehavior.Cascade);
+
+                    b.Navigation("AccomodationReservation");
                 });
 
             modelBuilder.Entity("InitialProject.Model.TourImages", b =>
@@ -436,6 +470,24 @@ namespace InitialProject.Migrations
                     b.HasOne("WebApi.Entities.Tour", null)
                         .WithMany("Images")
                         .HasForeignKey("TourId")
+                        .OnDelete(DeleteBehavior.Cascade);
+                });
+
+            modelBuilder.Entity("InitialProject.Model.TourReservation", b =>
+                {
+                    b.HasOne("WebApi.Entities.Checkpoint", null)
+                        .WithMany("TourReservations")
+                        .HasForeignKey("CheckpointId")
+                        .OnDelete(DeleteBehavior.Cascade);
+
+                    b.HasOne("WebApi.Entities.Tour", null)
+                        .WithMany("TourReservations")
+                        .HasForeignKey("TourId")
+                        .OnDelete(DeleteBehavior.Cascade);
+
+                    b.HasOne("InitialProject.Model.Tourist", null)
+                        .WithMany("TourReservations")
+                        .HasForeignKey("TouristId")
                         .OnDelete(DeleteBehavior.Cascade);
                 });
 
@@ -505,13 +557,10 @@ namespace InitialProject.Migrations
                     b.Navigation("Users");
                 });
 
-            modelBuilder.Entity("InitialProject.Model.GuestRating", b =>
-                {
-                    b.Navigation("AccomodationReservations");
-                });
-
             modelBuilder.Entity("WebApi.Entities.Checkpoint", b =>
                 {
+                    b.Navigation("TourReservations");
+
                     b.Navigation("Tourists");
                 });
 
@@ -527,6 +576,8 @@ namespace InitialProject.Migrations
                     b.Navigation("Checkpoints");
 
                     b.Navigation("Images");
+
+                    b.Navigation("TourReservations");
 
                     b.Navigation("Tourists");
                 });
@@ -550,6 +601,11 @@ namespace InitialProject.Migrations
                     b.Navigation("Accomodations");
 
                     b.Navigation("GuestRatings");
+                });
+
+            modelBuilder.Entity("InitialProject.Model.Tourist", b =>
+                {
+                    b.Navigation("TourReservations");
                 });
 #pragma warning restore 612, 618
         }

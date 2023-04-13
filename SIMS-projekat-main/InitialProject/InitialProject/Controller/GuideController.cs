@@ -52,7 +52,8 @@ namespace InitialProject.Controller
                     Location location = CreateLocation();
                     List<TourImages> image = CreateTourImages();
                     List<Checkpoint> checkpoint = CreateCheckpoints();
-                    tourService.MakeTour(tour, location, image, checkpoint);
+                    List<Dates> dates = CreateDates();
+                    tourService.MakeTour(tour, location, image, checkpoint, dates);
 
                     break;
                 case "2":
@@ -66,6 +67,25 @@ namespace InitialProject.Controller
                     break;
             }
 
+        }
+
+        public static List<Dates> CreateDates()
+        {
+            
+            List<Dates> StartingDates = new List<Dates>();
+
+            Console.WriteLine("koliko tura ima datuma");
+            int n = Int32.Parse(Console.ReadLine());
+
+            for (int i = 0; i < n; i++)
+            {
+                Dates date = new Dates();
+                Console.WriteLine("Unesite datum:");
+                date.Date = DateTime.Parse(Console.ReadLine());
+                StartingDates.Add(date);
+            }
+
+            return StartingDates;
         }
 
         public static Tour CreateTour()
@@ -96,16 +116,13 @@ namespace InitialProject.Controller
             Console.WriteLine("MaxGuests:");
             maxGuests = Int32.Parse(Console.ReadLine());
 
-            Console.WriteLine("StartTime(yyyy-mm-dd hh:mm:ss):");
-            starTime = DateTime.Parse(Console.ReadLine());
-
-            Console.WriteLine("EndTime(yyyy-mm-dd hh:mm:ss):");
-            endTime = DateTime.Parse(Console.ReadLine());
+           // Console.WriteLine("StartTime(yyyy-mm-dd hh:mm:ss):");
+            //starTime = DateTime.Parse(Console.ReadLine());
 
             Console.WriteLine("TourDuration:");
             duration = Int32.Parse(Console.ReadLine());
 
-            Tour newTour = new Tour(name, Description, language,maxGuests, starTime, endTime, duration);
+            Tour newTour = new Tour(name, Description, language,maxGuests,duration);
 
             return newTour;
         }

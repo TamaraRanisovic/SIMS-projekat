@@ -38,9 +38,7 @@ namespace InitialProject.Model
         public DbSet<AccomodationReservation> AccomodationReservations { get; set; }
 
         public DbSet<TourReservation> TourReservations { get; set; }
-
-
-
+        public DbSet<Dates> Dates { get; set; }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
@@ -58,6 +56,11 @@ namespace InitialProject.Model
             modelBuilder.Entity<Tourist>()
                 .HasOne<Tour>()
                 .WithMany(t => t.Tourists)
+                .OnDelete(DeleteBehavior.Cascade);
+
+            modelBuilder.Entity<Dates>()
+                .HasOne<Tour>()
+                .WithMany(t => t.StartingDates)
                 .OnDelete(DeleteBehavior.Cascade);
 
             modelBuilder.Entity<TourReservation>()
@@ -166,7 +169,7 @@ namespace InitialProject.Model
 
 
         }
-        public string path = @"C:\Users\Lenovo\Documents\GitHub\SIMS-projekat\database.db";
+        public string path = @"C:\Users\Strahinja\Desktop\SIMS_DB\database.db";
 
         protected override void OnConfiguring(DbContextOptionsBuilder options) => options.UseSqlite($"Data Source = {path}");
 

@@ -5,7 +5,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 
 namespace InitialProject.Migrations
 {
-    public partial class Initial : Migration
+    public partial class New : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
@@ -184,6 +184,41 @@ namespace InitialProject.Migrations
                         onDelete: ReferentialAction.Cascade);
                 });
 
+            migrationBuilder.CreateTable(
+                name: "TourReservations",
+                columns: table => new
+                {
+                    TourReservationId = table.Column<int>(type: "INTEGER", nullable: false)
+                        .Annotation("Sqlite:Autoincrement", true),
+                    TouristsNumber = table.Column<int>(type: "INTEGER", nullable: false),
+                    Attendance = table.Column<bool>(type: "INTEGER", nullable: false),
+                    CheckpointId = table.Column<int>(type: "INTEGER", nullable: true),
+                    TourId = table.Column<int>(type: "INTEGER", nullable: true),
+                    TouristId = table.Column<int>(type: "INTEGER", nullable: true)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_TourReservations", x => x.TourReservationId);
+                    table.ForeignKey(
+                        name: "FK_TourReservations_Checkpoints_CheckpointId",
+                        column: x => x.CheckpointId,
+                        principalTable: "Checkpoints",
+                        principalColumn: "CheckpointId",
+                        onDelete: ReferentialAction.Cascade);
+                    table.ForeignKey(
+                        name: "FK_TourReservations_Tours_TourId",
+                        column: x => x.TourId,
+                        principalTable: "Tours",
+                        principalColumn: "TourId",
+                        onDelete: ReferentialAction.Cascade);
+                    table.ForeignKey(
+                        name: "FK_TourReservations_Users_TouristId",
+                        column: x => x.TouristId,
+                        principalTable: "Users",
+                        principalColumn: "Id",
+                        onDelete: ReferentialAction.Cascade);
+                });
+
             migrationBuilder.CreateIndex(
                 name: "IX_AccomodationImages_AccomodationAccId",
                 table: "AccomodationImages",
@@ -223,6 +258,21 @@ namespace InitialProject.Migrations
                 name: "IX_TourImages_TourId",
                 table: "TourImages",
                 column: "TourId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_TourReservations_CheckpointId",
+                table: "TourReservations",
+                column: "CheckpointId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_TourReservations_TourId",
+                table: "TourReservations",
+                column: "TourId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_TourReservations_TouristId",
+                table: "TourReservations",
+                column: "TouristId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_Tours_GuideId",
@@ -330,6 +380,9 @@ namespace InitialProject.Migrations
 
             migrationBuilder.DropTable(
                 name: "TourImages");
+
+            migrationBuilder.DropTable(
+                name: "TourReservations");
 
             migrationBuilder.DropTable(
                 name: "Accomodations");

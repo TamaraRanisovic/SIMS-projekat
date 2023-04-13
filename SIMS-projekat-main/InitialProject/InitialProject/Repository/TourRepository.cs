@@ -115,8 +115,6 @@ namespace InitialProject.Repository
                     tourToUpdate.Description = updatedTour.Description;
                     tourToUpdate.Language = updatedTour.Language;
                     tourToUpdate.MaxGuests = updatedTour.MaxGuests;
-                    tourToUpdate.StartTime = updatedTour.StartTime;
-                    tourToUpdate.EndTime = updatedTour.EndTime;
                     tourToUpdate.Duration = updatedTour.Duration;
                     tourToUpdate.Checkpoints = updatedTour.Checkpoints;
                     tourToUpdate.Images = updatedTour.Images;
@@ -140,12 +138,17 @@ namespace InitialProject.Repository
             }
         }
 
-        public List<Tour> GetToursByStartDate(DateTime startTime)
-        {
+        public List<Tour> GetToursByStartDate(DateTime startingDate)
+        {   
             List<Tour> todaysTour = new List<Tour>();
             using (var db = new DataContext())
             {
-                todaysTour = db.Tours.Where(t => t.StartTime == startTime).Include(t => t.Checkpoints).Include(t=>t.Tourists).Include(t => t.Images).ToList();
+                List<Tour> tours = db.Tours.Include(t => t.Checkpoints).Include(t => t.Tourists).Include(t => t.Images).Include(t => t.StartingDates).ToList();
+                foreach (var tour in tours)
+                {
+                    todaysTour = db.Tours.Include(t => t.Checkpoints).Include(t => t.Tourists).Include(t => t.Images).Include(t => t.StartingDates).
+                        Where(t => t.StartingDates.Any(d => d.Date.Date == startingDate.Date)).ToList();
+                }
 
             }
             return todaysTour;
