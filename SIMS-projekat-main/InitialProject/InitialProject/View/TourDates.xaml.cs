@@ -43,8 +43,12 @@ namespace InitialProject.View
                     DatesRepository datesRepository = new DatesRepository();
                     TourRepository tourRepository = new TourRepository();
 
-                    List<Dates> dates = datesRepository.GetAll();
-
+                    List<Dates> dates = new List<Dates>();
+                       
+                    foreach(var date in Tour.StartingDates) 
+                    {
+                        dates.Add(date);
+                    }
                     ListOfTours.ItemsSource = dates;
 
                 }

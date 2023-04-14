@@ -15,6 +15,9 @@ namespace InitialProject.View
             DataContext = viewModel;
         }
 
-        
+        private void txtPassword_TextChanged(object sender, System.Windows.Controls.TextChangedEventArgs e)
+        {
+
+        }
     }
 }

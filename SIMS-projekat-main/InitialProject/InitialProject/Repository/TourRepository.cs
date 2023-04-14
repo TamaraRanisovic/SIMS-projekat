@@ -100,7 +100,7 @@ namespace InitialProject.Repository
         {
             using (var db = new DataContext())
             {
-                return db.Tours.FirstOrDefault(t => t.Name == name);
+                return db.Tours.Include(t=>t.StartingDates).Where(t=>t.Name == name).FirstOrDefault();
             }
         }
 
