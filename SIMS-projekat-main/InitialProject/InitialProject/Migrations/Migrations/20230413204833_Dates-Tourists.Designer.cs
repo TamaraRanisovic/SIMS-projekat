@@ -3,6 +3,7 @@ using System;
 using InitialProject.Model;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -10,9 +11,10 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace InitialProject.Migrations
 {
     [DbContext(typeof(DataContext))]
-    partial class DataContextModelSnapshot : ModelSnapshot
+    [Migration("20230413204833_Dates-Tourists")]
+    partial class DatesTourists
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder.HasAnnotation("ProductVersion", "6.0.0");
@@ -139,28 +141,6 @@ namespace InitialProject.Migrations
                     b.HasIndex("GuestId");
 
                     b.ToTable("Comments");
-                });
-
-            modelBuilder.Entity("InitialProject.Model.Coupon", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("INTEGER");
-
-                    b.Property<DateTime>("Date")
-                        .HasColumnType("TEXT");
-
-                    b.Property<bool>("IsUsed")
-                        .HasColumnType("INTEGER");
-
-                    b.Property<int?>("TouristId")
-                        .HasColumnType("INTEGER");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("TouristId");
-
-                    b.ToTable("Coupons");
                 });
 
             modelBuilder.Entity("InitialProject.Model.Dates", b =>
@@ -351,9 +331,6 @@ namespace InitialProject.Migrations
                         .ValueGeneratedOnAdd()
                         .HasColumnType("INTEGER");
 
-                    b.Property<int?>("DatesId")
-                        .HasColumnType("INTEGER");
-
                     b.Property<string>("Description")
                         .IsRequired()
                         .HasColumnType("TEXT");
@@ -379,8 +356,6 @@ namespace InitialProject.Migrations
                         .HasColumnType("TEXT");
 
                     b.HasKey("TourId");
-
-                    b.HasIndex("DatesId");
 
                     b.HasIndex("GuideId");
 
@@ -492,14 +467,6 @@ namespace InitialProject.Migrations
                         .OnDelete(DeleteBehavior.Cascade);
                 });
 
-            modelBuilder.Entity("InitialProject.Model.Coupon", b =>
-                {
-                    b.HasOne("InitialProject.Model.Tourist", null)
-                        .WithMany("Coupons")
-                        .HasForeignKey("TouristId")
-                        .OnDelete(DeleteBehavior.Cascade);
-                });
-
             modelBuilder.Entity("InitialProject.Model.Dates", b =>
                 {
                     b.HasOne("WebApi.Entities.Tour", null)
@@ -568,11 +535,6 @@ namespace InitialProject.Migrations
 
             modelBuilder.Entity("WebApi.Entities.Tour", b =>
                 {
-                    b.HasOne("InitialProject.Model.Dates", null)
-                        .WithMany("tours")
-                        .HasForeignKey("DatesId")
-                        .OnDelete(DeleteBehavior.Cascade);
-
                     b.HasOne("InitialProject.Model.Guide", null)
                         .WithMany("Tours")
                         .HasForeignKey("GuideId")
@@ -629,8 +591,6 @@ namespace InitialProject.Migrations
             modelBuilder.Entity("InitialProject.Model.Dates", b =>
                 {
                     b.Navigation("tourists");
-
-                    b.Navigation("tours");
                 });
 
             modelBuilder.Entity("WebApi.Entities.Checkpoint", b =>
@@ -683,8 +643,6 @@ namespace InitialProject.Migrations
 
             modelBuilder.Entity("InitialProject.Model.Tourist", b =>
                 {
-                    b.Navigation("Coupons");
-
                     b.Navigation("TourReservations");
                 });
 #pragma warning restore 612, 618

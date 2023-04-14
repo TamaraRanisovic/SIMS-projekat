@@ -21,7 +21,7 @@ namespace InitialProject.Repository
 
         public TourRepository() { }
 
-        public void AddTour(Tour tourToAdd)
+        public void Add(Tour tourToAdd)
         {
             using (var db = new DataContext())
             {
@@ -30,7 +30,7 @@ namespace InitialProject.Repository
             }
         }
 
-        public List<Tour> GetAllTours()
+        public List<Tour> GetAll()
         {
             using (var db = new DataContext())
             {
@@ -39,7 +39,7 @@ namespace InitialProject.Repository
             }
         }
 
-        public List<Tour> GetToursByLocation(int locationId)
+        public List<Tour> GetByLocation(int locationId)
         {
             List<Tour> toursByLocation = new List<Tour>();
             using (var db = new DataContext())
@@ -88,7 +88,7 @@ namespace InitialProject.Repository
             Console.WriteLine("Uspesno ste rezervisali turu.");
         }
 
-        public Tour GetTourById(int id)
+        public Tour GetById(int id)
         {
             using (var db = new DataContext())
             {
@@ -96,7 +96,7 @@ namespace InitialProject.Repository
             }
         }
 
-        public Tour GetTourByName(string name)
+        public Tour GetByName(string name)
         {
             using (var db = new DataContext())
             {
@@ -104,7 +104,7 @@ namespace InitialProject.Repository
             }
         }
 
-        public void UpdateTour(int id, Tour updatedTour)
+        public void Update(int id, Tour updatedTour)
         {
             using (var context = new DataContext())
             {
@@ -124,7 +124,7 @@ namespace InitialProject.Repository
             }
         }
 
-        public void DeleteTour(int id)
+        public void Delete(int id)
         {
             using (var db = new DataContext())
             {
@@ -138,7 +138,7 @@ namespace InitialProject.Repository
             }
         }
 
-        public List<Tour> GetToursByStartDate(DateTime startingDate)
+        public List<Tour> GetByStartDate(DateTime startingDate)
         {   
             List<Tour> todaysTour = new List<Tour>();
             using (var db = new DataContext())
@@ -154,7 +154,7 @@ namespace InitialProject.Repository
             return todaysTour;
         }
 
-        public List<Tour> GetToursList()
+        public List<Tour> GetList()
         {
             List<Tour> toursWithCheckpoints = new List<Tour>();
             using (var db = new DataContext())

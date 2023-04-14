@@ -40,6 +40,8 @@ namespace InitialProject.Model
         public DbSet<TourReservation> TourReservations { get; set; }
         public DbSet<Dates> Dates { get; set; }
 
+        public DbSet<Coupon> Coupons { get; set; }
+
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             //Tura
@@ -166,7 +168,22 @@ namespace InitialProject.Model
             //.WithMany(t => t.AccomodationReservations)
             //.OnDelete(DeleteBehavior.Cascade);
 
+            //Dates
+            modelBuilder.Entity<Tourist>()
+           .HasOne<Dates>()
+           .WithMany(t => t.tourists)
+           .OnDelete(DeleteBehavior.Cascade);
 
+            modelBuilder.Entity<Tour>()
+           .HasOne<Dates>()
+           .WithMany(t => t.tours)
+           .OnDelete(DeleteBehavior.Cascade);
+
+            //Coupons
+            modelBuilder.Entity<Coupon>()
+           .HasOne<Tourist>()
+           .WithMany(t => t.Coupons)
+           .OnDelete(DeleteBehavior.Cascade);
 
         }
         public string path = @"C:\Users\Strahinja\Desktop\SIMS_DB\database.db";

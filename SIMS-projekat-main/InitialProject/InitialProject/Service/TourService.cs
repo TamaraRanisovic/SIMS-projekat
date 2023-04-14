@@ -25,22 +25,22 @@ namespace InitialProject.Service
 
         public List<Tour> GetAllTours()
         {
-            return tourRepository.GetAllTours();
+            return tourRepository.GetAll();
         }
 
         public Tour GetTourById(int tourId)
         {
-            return tourRepository.GetTourById(tourId);
+            return tourRepository.GetById(tourId);
         }
 
         public List<Tour> GetToursByLocation(int locationId)
         {
-            return tourRepository.GetToursByLocation(locationId);
+            return tourRepository.GetByLocation(locationId);
         }
 
         public List<Tour> GetToursByDuration(int duration)
         {
-            List<Tour> allTours = tourRepository.GetAllTours();
+            List<Tour> allTours = tourRepository.GetAll();
             List<Tour> toursByDuration = new List<Tour>();
 
             foreach (Tour tour in allTours)
@@ -56,7 +56,7 @@ namespace InitialProject.Service
 
         public List<Tour> GetToursByLanguage(string language)
         {
-            List<Tour> allTours = tourRepository.GetAllTours();
+            List<Tour> allTours = tourRepository.GetAll();
             List<Tour> toursByLanguage = new List<Tour>();
 
             foreach (Tour tour in allTours)
@@ -71,7 +71,7 @@ namespace InitialProject.Service
         }
         public List<Tour> GetToursByTouristsNumber(int tourists)
         {
-            List<Tour> allTours = tourRepository.GetAllTours();
+            List<Tour> allTours = tourRepository.GetAll();
             List<Tour> toursByTouristsNumber = new List<Tour>();
 
             foreach (Tour tour in allTours)
@@ -177,7 +177,7 @@ namespace InitialProject.Service
                 TourRepository tourRepository = new TourRepository();
                 DateTime todayDate = new DateTime(DateTime.Now.Year, DateTime.Now.Month, DateTime.Now.Day, 0 , 0 , 0);
                 Console.WriteLine("Danasnji datum: " + todayDate);
-                List<Tour> todaysTours = tourRepository.GetToursByStartDate(todayDate);
+                List<Tour> todaysTours = tourRepository.GetByStartDate(todayDate);
                 UnmarkCheckpoints(todaysTours);
                 string trackingTourName = FindTodaysToursName();
 
