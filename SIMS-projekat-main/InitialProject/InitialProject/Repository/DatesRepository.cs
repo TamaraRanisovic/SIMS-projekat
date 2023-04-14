@@ -26,7 +26,7 @@ namespace InitialProject.Repository
         {
             using (var db = new DataContext())
             {
-                return db.Dates.Include(t=>t.tours).ToList();
+                return db.Dates.ToList();
             }
         }
         

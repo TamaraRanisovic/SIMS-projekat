@@ -17,8 +17,6 @@ namespace InitialProject.Model
 
         public List<Tourist> tourists = new List<Tourist>();
 
-        public List<Tour> tours = new List<Tour>();
-
         public Dates() { }
 
         public Dates(DateTime date)

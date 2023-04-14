@@ -174,10 +174,6 @@ namespace InitialProject.Model
            .WithMany(t => t.tourists)
            .OnDelete(DeleteBehavior.Cascade);
 
-            modelBuilder.Entity<Tour>()
-           .HasOne<Dates>()
-           .WithMany(t => t.tours)
-           .OnDelete(DeleteBehavior.Cascade);
 
             //Coupons
             modelBuilder.Entity<Coupon>()
