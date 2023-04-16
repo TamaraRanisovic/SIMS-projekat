@@ -89,7 +89,8 @@ namespace InitialProject.Controller
         }
 
         public static Tour CreateTour()
-        {
+        {   
+
             int id;
             string name;
             string Description;
@@ -121,8 +122,8 @@ namespace InitialProject.Controller
 
             Console.WriteLine("TourDuration:");
             duration = Int32.Parse(Console.ReadLine());
-
-            Tour newTour = new Tour(name, Description, language,maxGuests,duration);
+            int guideId = UserSession.LoggedInUser.Id;
+            Tour newTour = new Tour(name, guideId, Description, language,maxGuests,duration);
 
             return newTour;
         }
