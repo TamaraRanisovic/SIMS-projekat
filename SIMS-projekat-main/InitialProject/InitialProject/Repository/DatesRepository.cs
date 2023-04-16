@@ -37,5 +37,13 @@ namespace InitialProject.Repository
                 return db.Dates.FirstOrDefault(t => t.Id == id);
             }
         }
+
+        public List<Dates> GetByYear(int year)
+        {
+            using (var db = new DataContext())
+            {
+                return db.Dates.Where(t=>t.Date.Year == year).ToList();
+            }
+        }
     }
 }

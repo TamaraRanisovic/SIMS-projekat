@@ -15,7 +15,7 @@ namespace InitialProject.Repository
 
         }
 
-        public static void AddUser(User user)
+        public void AddUser(User user)
         {
             using (var db = new DataContext())
             {

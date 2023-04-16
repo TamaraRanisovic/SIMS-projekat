@@ -8,6 +8,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Input;
 using System.Windows;
+using InitialProject.View;
 
 namespace InitialProject.ViewModel
 {
@@ -82,8 +83,9 @@ namespace InitialProject.ViewModel
 
         private void Register()
         {
-            //var registerWindow = new RegisterWindow();
-            //registerWindow.ShowDialog();
+            RegisterWindow registerWindow = new RegisterWindow();
+            
+            registerWindow.ShowDialog();
         }
 
         private void RaisePropertyChanged(string propertyName)
