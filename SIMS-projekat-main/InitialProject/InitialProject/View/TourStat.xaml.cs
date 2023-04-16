@@ -1,4 +1,8 @@
-﻿using System;
+﻿using InitialProject.DTO;
+using InitialProject.Model;
+using InitialProject.Repository;
+using InitialProject.Service;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -25,6 +29,19 @@ namespace InitialProject.View
         }
 
         private void FinishedTours_Click(object sender, RoutedEventArgs e)
+        {
+            using (var db = new DataContext())
+            {
+                K2_F2_Guide k2_F2_Guide = new K2_F2_Guide();
+
+
+                List<TourDateDTO> tourDateDTO = k2_F2_Guide.FinishedTours();
+
+                ListOfTours.ItemsSource = tourDateDTO;
+            }
+        }
+
+        private void MostVisited_Click(object sender, RoutedEventArgs e)
         {
 
         }

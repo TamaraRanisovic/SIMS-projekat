@@ -76,10 +76,10 @@ namespace InitialProject.Service
         }
         public List<TourDateDTO> FinishedTours()
         {
-            List<Tour> Tour = tourRepository.GetAll();
+            List<Tour> Tours = tourRepository.GetAll();
             List<TourDateDTO> toursToReturn = new List<TourDateDTO>();
             DateTime currentTime = DateTime.Now;
-            foreach (var tour in Tour)
+            foreach (var tour in Tours)
             {
                 foreach (var date in tour.StartingDates)
                 {

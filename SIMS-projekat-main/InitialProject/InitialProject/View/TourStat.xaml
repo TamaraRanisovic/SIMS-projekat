@@ -16,22 +16,21 @@
         <Grid Grid.Row="0">
             <Grid.ColumnDefinitions>
                 <ColumnDefinition Width="*" />
-                <ColumnDefinition Width="100" />
+                <ColumnDefinition Width="67.925" />
+                <ColumnDefinition Width="32.075"/>
                 <ColumnDefinition Width="100" />
             </Grid.ColumnDefinitions>
             <Grid.RowDefinitions>
                 <RowDefinition Height="50" />
             </Grid.RowDefinitions>
             <Button 
-                Grid.Column="2"
+                Grid.Column="3"
                 x:Name="MostVisited"
-                Click="MostVisited_Click">
-                Cancel Tour
-            </Button>
+                Click="MostVisited_Click" Content="MostVisite&#xD;&#xA;Tours"/>
             <Button 
                 Grid.Column="1"
                 x:Name="FinishedTours"
-                Click="FinishedTours_Click" Content="Show Tours"/>
+                Click="FinishedTours_Click" Content="FinishedTours" Grid.ColumnSpan="2"/>
         </Grid>
 
 
@@ -48,11 +47,7 @@
                 Grid.ColumnSpan="2"
                 Orientation="Vertical">
 
-                <Label>Tour Id</Label>
-                <TextBox
-                    x:Name="TourIdCancel"
-                    Margin="3"
-                    />
+                <Label Content=""/>
             </StackPanel>
 
             <ListBox x:Name="ListOfTours" Margin="10,29,10,10" d:ItemsSource="{d:SampleData ItemCount=5}">
@@ -61,11 +56,12 @@
                         <Button>
                             <StackPanel Orientation="Horizontal">
                                 <Button></Button>
+                                <TextBlock Text="{Binding Id}" FontWeight="Bold" Margin="0,0,5,0"/>
                                 <TextBlock Text="{Binding TourId}" FontWeight="Bold" Margin="0,0,5,0"/>
-                                <TextBlock Text="{Binding Name}" FontWeight="Bold" Margin="0,0,5,0"/>
+                                <TextBlock Text="{Binding TourName}" FontWeight="Bold" Margin="0,0,5,0"/>
+                                <TextBlock Text="{Binding DateId}" FontWeight="Bold" Margin="0,0,5,0"/>
+                                <TextBlock Text="{Binding Date}" FontWeight="Bold" Margin="0,0,5,0"/>
                                 <TextBlock Text="{Binding Description}" FontWeight="Bold" Margin="0,0,5,0"/>
-                                <TextBlock Text="{Binding StartingDate}" FontWeight="Bold" Margin="0,0,5,0"/>
-                                <TextBlock Text="{Binding MaxTourists}" FontWeight="Bold" Margin="0,0,5,0"/>
                             </StackPanel>
                         </Button>
                     </DataTemplate>
