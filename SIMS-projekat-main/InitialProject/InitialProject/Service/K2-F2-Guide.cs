@@ -3,6 +3,7 @@ using InitialProject.Model;
 using InitialProject.Repository;
 using System;
 using System.Collections.Generic;
+using System.Diagnostics;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -78,6 +79,8 @@ namespace InitialProject.Service
         {
             List<Tour> Tours = tourRepository.GetAll();
             List<TourDateDTO> toursToReturn = new List<TourDateDTO>();
+            TourDateDTO tourDate1 = new TourDateDTO(1, "akija", DateTime.Now, 2, "srbija");
+            toursToReturn.Add(tourDate1);
             DateTime currentTime = DateTime.Now;
             foreach (var tour in Tours)
             {
@@ -86,6 +89,7 @@ namespace InitialProject.Service
                     DateTime finishDate = date.Date.AddHours(tour.Duration);
                     if (DateTime.Compare(finishDate, currentTime) < 0)
                     {
+                        
                         TourDateDTO tourDate = new TourDateDTO(tour.TourId, tour.Name, date.Date, date.Id, tour.Description);
                         toursToReturn.Add(tourDate);
                     }
