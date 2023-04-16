@@ -9,7 +9,8 @@ namespace InitialProject.DTO
     public class TourDateDTO
     {
         public int Id { get; set; }
-
+        
+        public int TourId { get; set; }
         public string TourName { get; set; }
         
         public int DateId { get; set; }
@@ -20,8 +21,9 @@ namespace InitialProject.DTO
 
         public TourDateDTO() { }
 
-        public TourDateDTO(string tourName, DateTime date, int dateId ,string description)
-        {
+        public TourDateDTO(int tourId, string tourName, DateTime date, int dateId ,string description)
+        {   
+            Id = tourId;
             TourName = tourName;
             Date = date;
             DateId = dateId;

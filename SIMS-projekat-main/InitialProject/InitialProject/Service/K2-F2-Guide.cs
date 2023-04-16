@@ -21,7 +21,7 @@ namespace InitialProject.Service
             Tour tour = FindMostVisitedTourName(tours, mostVisitedDateId);
             Dates date = datesRepository.GetById(mostVisitedDateId);
 
-            TourDateDTO tourDateDTO = new TourDateDTO(tour.Name, date.Date, date.Id, tour.Description);
+            TourDateDTO tourDateDTO = new TourDateDTO(tour.TourId,tour.Name, date.Date, date.Id, tour.Description);
 
             return tourDateDTO;
         }
