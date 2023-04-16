@@ -39,6 +39,7 @@ namespace InitialProject.Controller
         {
             Console.WriteLine("1.kreiraj turu i ubaci u bazu");
             Console.WriteLine("2. prati turu");
+            Console.WriteLine("3. testiraj");
             Console.WriteLine("x. exit");
             Console.Write("Your option: ");
         }
@@ -59,6 +60,10 @@ namespace InitialProject.Controller
                 case "2":
                     Console.WriteLine("Izabrali ste pracenje ture");
                     tourService.TourTracking();
+                    break;
+                case "3": 
+                    K2_F2_Guide k2_F2_Guide = new K2_F2_Guide();
+                    k2_F2_Guide.FinishedTours();
                     break;
                 case "x":
                     break;

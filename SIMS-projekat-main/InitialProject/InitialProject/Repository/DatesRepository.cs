@@ -26,7 +26,7 @@ namespace InitialProject.Repository
         {
             using (var db = new DataContext())
             {
-                return db.Dates.ToList();
+                return db.Dates.Include(t=>t.tourists).ToList();
             }
         }
         
@@ -34,7 +34,7 @@ namespace InitialProject.Repository
         {
             using (var db = new DataContext())
             {
-                return db.Dates.FirstOrDefault(t => t.Id == id);
+                return db.Dates.Include(t=>t.tourists).FirstOrDefault(t => t.Id == id);
             }
         }
 

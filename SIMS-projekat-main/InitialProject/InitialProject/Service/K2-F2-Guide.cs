@@ -41,7 +41,7 @@ namespace InitialProject.Service
         public int FindMostVisitedDateId(List<Dates> dates)
         {
             int max = 0;
-            int maxDateId = 0;
+            int maxDateId = dates[0].Id;
             foreach (var date in dates)
             {
                 int brojacTurista = 0;
@@ -77,25 +77,38 @@ namespace InitialProject.Service
         }
         public List<TourDateDTO> FinishedTours()
         {
+            
             List<Tour> Tours = tourRepository.GetAll();
             List<TourDateDTO> toursToReturn = new List<TourDateDTO>();
-            TourDateDTO tourDate1 = new TourDateDTO(1, "akija", DateTime.Now, 2, "srbija");
-            toursToReturn.Add(tourDate1);
             DateTime currentTime = DateTime.Now;
             foreach (var tour in Tours)
             {
-                foreach (var date in tour.StartingDates)
-                {
-                    DateTime finishDate = date.Date.AddHours(tour.Duration);
-                    if (DateTime.Compare(finishDate, currentTime) < 0)
-                    {
-                        
-                        TourDateDTO tourDate = new TourDateDTO(tour.TourId, tour.Name, date.Date, date.Id, tour.Description);
-                        toursToReturn.Add(tourDate);
-                    }
-                }
+
+                TourDateDTO dto = dDTO(tour);
+                toursToReturn.Add(dto);
             }
             return toursToReturn;
+        }
+
+        public TourDateDTO dDTO (Tour tour)
+        {   
+            List<TourDateDTO> toursToReturn =  new List<TourDateDTO> ();
+            TourDateDTO tourDate = new TourDateDTO();
+            DateTime currentTime = DateTime.Now;
+            foreach (var date in tour.StartingDates)
+            {   
+                DateTime finishDate = date.Date.AddHours(tour.Duration);
+                if (DateTime.Compare(finishDate, currentTime) < 0)
+                {
+                    tourDate.TourId = tour.TourId;
+                    tourDate.TourName = tour.Name;
+                    tourDate.DateId = date.Id;
+                    tourDate.Date = date.Date;
+                    tourDate.Description = tour.Description;
+                   
+                }
+            }
+            return tourDate;
         }
     }
 }

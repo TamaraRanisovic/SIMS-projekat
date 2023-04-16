@@ -42,8 +42,11 @@ namespace InitialProject.View
         }
 
         private void MostVisited_Click(object sender, RoutedEventArgs e)
-        {
-
+        {   
+            
+            MostVisited mostVisited = new MostVisited();
+            mostVisited.Show();
+            Close();
         }
     }
 }
