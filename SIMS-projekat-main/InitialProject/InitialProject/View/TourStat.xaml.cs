@@ -23,5 +23,10 @@ namespace InitialProject.View
         {
             InitializeComponent();
         }
+
+        private void FinishedTours_Click(object sender, RoutedEventArgs e)
+        {
+
+        }
     }
 }

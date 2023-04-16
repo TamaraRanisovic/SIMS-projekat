@@ -74,5 +74,24 @@ namespace InitialProject.Service
             }
             return null;
         }
+        public List<TourDateDTO> FinishedTours()
+        {
+            List<Tour> Tour = tourRepository.GetAll();
+            List<TourDateDTO> toursToReturn = new List<TourDateDTO>();
+            DateTime currentTime = DateTime.Now;
+            foreach (var tour in Tour)
+            {
+                foreach (var date in tour.StartingDates)
+                {
+                    DateTime finishDate = date.Date.AddHours(tour.Duration);
+                    if (DateTime.Compare(finishDate, currentTime) < 0)
+                    {
+                        TourDateDTO tourDate = new TourDateDTO(tour.TourId, tour.Name, date.Date, date.Id, tour.Description);
+                        toursToReturn.Add(tourDate);
+                    }
+                }
+            }
+            return toursToReturn;
+        }
     }
 }
