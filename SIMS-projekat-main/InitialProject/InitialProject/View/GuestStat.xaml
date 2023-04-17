@@ -10,15 +10,13 @@
         <StackPanel
             x:Name="CancelTourStackPannel"
             Orientation="Vertical" Margin="600,0,0,50">
-
             <Label Content="Tour Id"/>
             <TextBox
                 x:Name="TourId"
-                Margin="3"
                     />
             <Label Content="Date Id"/>
             <TextBox
-                x:Name="DateId"
+                x:Name="DateId" TextChanged="DateId_TextChanged"
                     />
         </StackPanel>
         <ListBox x:Name="ListOfTours" d:ItemsSource="{d:SampleData ItemCount=5}" Margin="10,38,464,255">
@@ -39,7 +37,7 @@
             </ListBox.ItemTemplate>
         </ListBox>
 
-        <ListBox x:Name="ListOfStat" Margin="10,229,391,10" d:ItemsSource="{d:SampleData ItemCount=1}">
+        <ListBox x:Name="ListOfStat" Margin="10,229,283,10" d:ItemsSource="{d:SampleData ItemCount=1}">
             <ListBox.ItemTemplate>
                 <DataTemplate>
                     <Button>
@@ -50,6 +48,8 @@
                             <TextBlock Text="{Binding Under18}" FontWeight="Bold" Margin="0,0,5,0"/>
                             <TextBlock Text="{Binding Beetween18and50}" FontWeight="Bold" Margin="0,0,5,0"/>
                             <TextBlock Text="{Binding Above50}" FontWeight="Bold" Margin="0,0,5,0"/>
+                            <TextBlock Text="{Binding WithCoupons, StringFormat={}{0:N2}}" FontWeight="Bold" Margin="0,0,5,0"/>
+                            <TextBlock Text="{Binding WithoutCoupons, StringFormat={}{0:N2}}" FontWeight="Bold" Margin="0,0,5,0"/>
                         </StackPanel>
                     </Button>
                 </DataTemplate>
@@ -60,7 +60,6 @@
             Click="ShowTour_Click" Content="Show Dates" Margin="359,58,341,325"/>
         <Button
             x:Name="ShowStat"
-            Click="ShowStat_Click" Content="ShowStat" Margin="650,129,50,255"/>
-
+            Click="ShowStat_Click" Content="ShowStat" Margin="650,97,50,283"/>
     </Grid>
 </Window>

@@ -56,5 +56,15 @@ namespace InitialProject.View
             ListOfStat.ItemsSource= list;
 
         }
+
+        private void DateId_TextChanged(object sender, TextChangedEventArgs e)
+        {
+
+        }
+
+        private void TourId1_TextChanged(object sender, TextChangedEventArgs e)
+        {
+            
+        }
     }
 }

@@ -34,8 +34,12 @@ namespace InitialProject.Repository
         {
             using (var db = new DataContext())
             {
-                return db.Dates.Include(t=>t.tourists).FirstOrDefault(t => t.Id == id);
+                return  db.Dates.Include(d => d.tourists)
+                        .ThenInclude(t => t.Coupons)
+                        .FirstOrDefault(d => d.Id == id);
             }
+
+            
         }
 
         public List<Dates> GetByYear(int year)

@@ -91,14 +91,16 @@ namespace InitialProject.Service
             DateTime currentTime = DateTime.Now;
             foreach (var tour in Tours)
             {
-
-                List<TourDateDTO> dto = dDTO(tour);
-
-                foreach (var date in dto)
+                if (tour.GuideId == UserSession.LoggedInUser.Id)
                 {
-                    if (date.TourId != 0)
+                    List<TourDateDTO> dto = dDTO(tour);
+
+                    foreach (var date in dto)
                     {
+
+
                         toursToReturn.Add(date);
+
                     }
                 }
             }
@@ -108,22 +110,23 @@ namespace InitialProject.Service
         public List<TourDateDTO> dDTO (Tour tour)
         {   
             List<TourDateDTO> toursToReturn =  new List<TourDateDTO> ();
-            TourDateDTO tourDate = new TourDateDTO();
+            
             DateTime currentTime = DateTime.Now;
             foreach (var date in tour.StartingDates)
             {   
                 DateTime finishDate = date.Date.AddHours(tour.Duration);
                 if (DateTime.Compare(finishDate, currentTime) < 0)
                 {
+                    TourDateDTO tourDate = new TourDateDTO();
                     tourDate.TourId = tour.TourId;
                     tourDate.TourName = tour.Name;
                     tourDate.DateId = date.Id;
                     tourDate.Date = date.Date;
                     tourDate.Description = tour.Description;
-                   
-                    
+
+                    toursToReturn.Add(tourDate);
                 }
-                toursToReturn.Add(tourDate);
+                
             }
             return toursToReturn;
         }
@@ -136,17 +139,16 @@ namespace InitialProject.Service
             int percentUnder18 = CountUnder18(date);
             int percent18and50 = CountBeetween18and50(date);
             int percentAbove50 = CountAbove50(date);
-
+            double with = WithCouponsPercent(date, tourId);
+            double without = WithoutCouponsPercent(date, tourId);
             
             
 
-            GuestAgeStatisticDTO guestStatisticDTO = new GuestAgeStatisticDTO(tourId, tour.Name, percentUnder18, percent18and50, percentAbove50);
+            GuestAgeStatisticDTO guestStatisticDTO = new GuestAgeStatisticDTO(tourId, tour.Name, percentUnder18, percent18and50, percentAbove50, with, without);
         
             return guestStatisticDTO;
         
-        }
-
-        //public 
+        } 
 
         public int CountUnder18(Dates date)
         {
@@ -214,6 +216,53 @@ namespace InitialProject.Service
 
             return above50;
 
+        }
+
+        public double WithCouponsPercent(Dates dates, int tourId)
+        {
+            double numOfCoupons = 0;
+            double numOfTourists = 0;
+            foreach (var tourist in dates.tourists)
+            {   
+                numOfTourists++;
+                foreach(var coupons in tourist.Coupons)
+                {
+                    if(coupons.TourId == tourId)
+                    {
+                        numOfCoupons++;
+                    }
+                }
+            }
+            if(numOfTourists <= 0) { return 0; }
+            double result = numOfCoupons/ numOfTourists;
+            return result*100;
+        }
+
+        public double WithoutCouponsPercent(Dates dates, int tourId)
+        {   
+            
+            double numOfCoupons = 0;
+            double numOfTourists = 0;
+            foreach (var tourist in dates.tourists)
+            {
+                int flag = 0;
+                numOfTourists++;
+                
+                foreach (var coupons in tourist.Coupons)
+                {
+                    if (coupons.TourId == tourId)
+                    {
+                        flag = 1;
+                        break;
+                    }
+                    
+                }
+                if (flag == 0) { numOfCoupons++; }
+            }
+            if (numOfTourists <= 0) { return 0; }
+            double result = numOfCoupons / numOfTourists;
+             return result * 100;
+            ;
         }
     }
 }
