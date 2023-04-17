@@ -55,8 +55,15 @@ namespace InitialProject.View
                 TourDates tourDates = new TourDates(tour);
 
                 tourDates.Tour = tour;
-                if(tourDates.Tour != null) { tourDates.Show(); }
-                Close();
+                if (tourDates.Tour.GuideId == UserSession.LoggedInUser.Id)
+                {
+                    if (tourDates.Tour != null) { tourDates.Show(); }
+                }
+                else
+                {
+                    FreePlacesLabel.Content = "Ne mozete otkazati turu koju niste kreirali";
+                }
+                //Close();
             }
         }
 

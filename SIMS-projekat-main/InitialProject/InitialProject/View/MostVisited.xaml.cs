@@ -40,8 +40,14 @@ namespace InitialProject.View
             List<TourDateDTO> dto = new List<TourDateDTO>();
             TourDateDTO tourDateDTO = new TourDateDTO();
             tourDateDTO = k2_F2_Guide.ShowMostVisitedTour(dates);
-            dto.Add(tourDateDTO);
-            ListOfTours.ItemsSource = dto;
+            if (tourDateDTO != null)
+            {
+                dto.Add(tourDateDTO);
+                ListOfTours.ItemsSource = dto;
+            } else
+            {
+                FreePlacesLabel.Content = "nijedna tura nema prijavljenog turistu";
+            }
         }
 
         private void TourDates_Click(object sender, RoutedEventArgs e)
@@ -56,8 +62,16 @@ namespace InitialProject.View
             int year = Int32.Parse(TourNameCancel.Text);
             List<Dates> dates = datesRepository.GetByYear(year);
             tourDateDTO = k2_F2_Guide.ShowMostVisitedTour(dates);
-            dto.Add(tourDateDTO);
-            ListOfTours.ItemsSource = dto;
+            if (tourDateDTO != null)
+            {
+                dto.Add(tourDateDTO);
+                ListOfTours.ItemsSource = dto;
+
+            }
+            else
+            {
+                FreePlacesLabel.Content = "nijedna tura nema prijavljenog turistu za tu godinu";
+            }
         }
     }
 }

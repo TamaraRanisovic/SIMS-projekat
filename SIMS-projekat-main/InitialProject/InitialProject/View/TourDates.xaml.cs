@@ -47,8 +47,15 @@ namespace InitialProject.View
                        
                     foreach(var date in Tour.StartingDates) 
                     {
-                        dates.Add(date);
+                        if (DateTime.Compare(date.Date, DateTime.Now) > 0)
+                        {
+
+                            dates.Add(date);
+                        }
                     }
+
+
+
                     ListOfTours.ItemsSource = dates;
 
                 }
@@ -64,27 +71,33 @@ namespace InitialProject.View
             string content = "";
             
             
-            Tour tour = tourRepository.GetById(tourId);
+            Tour tour = tourRepository.GetById(Tour.TourId);
 
-            if(tour.GuideId != UserSession.LoggedInUser.Id)
+            if (Tour.GuideId != UserSession.LoggedInUser.Id)
             {
                 content = "Niste kreirali ovu turu";
-                Close();
-            }
-
-            bool CancelTourInfo = kT2_F1_Guide.CancelTour(tourId);
-            
-            if (CancelTourInfo == false)
-            {
-                content = "Ne mozete otkazati turu koja krece za manje od 48h!";
+                
+                FreePlacesLabel.Content = content;
+                CancelTour cancelTour = new CancelTour();
+                
             }
             else
             {
-                content = "Uspesno otkazana tura!";
-            }
 
-            FreePlacesLabel.Content = content;
-        }
+                bool CancelTourInfo = kT2_F1_Guide.CancelTour(tourId);
+
+                if (CancelTourInfo == false)
+                {
+                    content = "Ne mozete otkazati turu koja krece za manje od 48h!";
+                }
+                else
+                {
+                    content = "Uspesno otkazana tura!";
+                }
+
+                FreePlacesLabel.Content = content;
+            }
+            }
     }
     
 }

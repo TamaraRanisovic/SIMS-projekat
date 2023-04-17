@@ -33,7 +33,6 @@ public class Tour
     public List<TourReservation> TourReservations { get; set; }
 
     public Tour() 
-
     {
         GuideId = UserSession.LoggedInUser.Id;
         Images = new List<TourImages>();

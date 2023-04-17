@@ -20,11 +20,19 @@ namespace InitialProject.Service
             int mostVisitedDateId = FindMostVisitedDateId(dates);
             List<Tour> tours = tourRepository.GetAll();
             Tour tour = FindMostVisitedTourName(tours, mostVisitedDateId);
-            Dates date = datesRepository.GetById(mostVisitedDateId);
 
-            TourDateDTO tourDateDTO = new TourDateDTO(tour.TourId,tour.Name, date.Date, date.Id, tour.Description);
+            if (tour != null)
+            {
 
-            return tourDateDTO;
+                Dates date = datesRepository.GetById(mostVisitedDateId);
+
+                TourDateDTO tourDateDTO = new TourDateDTO(tour.TourId, tour.Name, date.Date, date.Id, tour.Description);
+
+                return tourDateDTO;
+            } else
+            {
+                return null;
+            }
         }
         
         public TourDateDTO ShowMostVisitedByYear(int year)
@@ -84,16 +92,20 @@ namespace InitialProject.Service
             foreach (var tour in Tours)
             {
 
-                TourDateDTO dto = dDTO(tour);
-                if (dto.TourId != 0)
+                List<TourDateDTO> dto = dDTO(tour);
+
+                foreach (var date in dto)
                 {
-                    toursToReturn.Add(dto);
+                    if (date.TourId != 0)
+                    {
+                        toursToReturn.Add(date);
+                    }
                 }
             }
             return toursToReturn;
         }
 
-        public TourDateDTO dDTO (Tour tour)
+        public List<TourDateDTO> dDTO (Tour tour)
         {   
             List<TourDateDTO> toursToReturn =  new List<TourDateDTO> ();
             TourDateDTO tourDate = new TourDateDTO();
@@ -111,8 +123,9 @@ namespace InitialProject.Service
                    
                     
                 }
+                toursToReturn.Add(tourDate);
             }
-            return tourDate;
+            return toursToReturn;
         }
     }
 }
