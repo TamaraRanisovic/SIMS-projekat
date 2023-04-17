@@ -30,15 +30,14 @@ namespace InitialProject.View
 
         private void FinishedTours_Click(object sender, RoutedEventArgs e)
         {
-            using (var db = new DataContext())
-            {
+            
                 K2_F2_Guide k2_F2_Guide = new K2_F2_Guide();
 
 
                 List<TourDateDTO> tourDateDTO = k2_F2_Guide.FinishedTours();
 
                 ListOfTours.ItemsSource = tourDateDTO;
-            }
+            
         }
 
         private void MostVisited_Click(object sender, RoutedEventArgs e)
@@ -49,10 +48,12 @@ namespace InitialProject.View
             Close();
         }
 
-        private void TourAgeStart_Click(object sender, RoutedEventArgs e)
+       
+
+        private void GuestStat_Click(object sender, RoutedEventArgs e)
         {
-            AgeStat ageStat = new AgeStat();
-            ageStat.Show();
+            GuestStat guestStat = new GuestStat();
+            guestStat.Show();
             Close();
         }
     }

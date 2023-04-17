@@ -32,6 +32,10 @@
                 Grid.Column="1"
                 x:Name="ShowTours"
                 Click="ShowTour_Click" Content="Show Dates"/>
+            <TextBox
+                x:Name="TourIdCancel_Copy"
+                    Margin="3,29,403,3"
+                    />
         </Grid>
 
 

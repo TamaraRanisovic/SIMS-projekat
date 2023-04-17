@@ -127,5 +127,89 @@ namespace InitialProject.Service
             }
             return toursToReturn;
         }
+
+        public GuestAgeStatisticDTO GuestAgeStatisticDTO(Dates date, int tourId)
+        {
+
+            Tour tour = tourRepository.GetById(tourId);
+
+            double percentUnder18 = CountUnder18(date);
+            double percent18and50 = CountBeetween18and50(date);
+            double percentAbove50 = CountAbove50(date);
+
+
+            GuestAgeStatisticDTO guestStatisticDTO = new GuestAgeStatisticDTO(tourId, tour.Name, percentUnder18, percent18and50, percentAbove50);
+        
+            return guestStatisticDTO;
+        
+        }
+
+        public double CountUnder18(Dates date)
+        {
+            int under18 = 0;
+            int allTourists = 0;
+
+            foreach(var tourist in date.tourists)
+            {   
+                allTourists++;
+                if (tourist.Age < 18)
+                {
+                    under18++;
+                }
+            }
+            if(under18 <= 0)
+            {
+                return 0;
+            }
+
+            return allTourists / under18;
+
+        }
+
+        public double CountBeetween18and50(Dates date)
+        {
+            int under50 = 0;
+            int allTourists = 0;
+
+            foreach (var tourist in date.tourists)
+            {
+                allTourists++;
+                if (tourist.Age > 18 && tourist.Age < 50)
+                {
+                    under50++;
+                }
+            }
+
+            if (under50 <= 0)
+            {
+                return 0;
+            }
+
+            return allTourists / under50;
+
+        }
+
+        public double CountAbove50(Dates date)
+        {
+            int above50 = 0;
+            int allTourists = 0;
+
+            foreach (var tourist in date.tourists)
+            {
+                allTourists++;
+                if (tourist.Age > 50)
+                {
+                    above50++;
+                }
+            }
+
+            if (above50 <= 0)
+            {
+                return 0;
+            }
+
+            return allTourists / above50;
+
+        }
     }
 }
