@@ -31,6 +31,9 @@
                 Grid.Column="1"
                 x:Name="FinishedTours"
                 Click="FinishedTours_Click" Content="FinishedTours" Grid.ColumnSpan="2"/>
+            <Button
+                x:Name="TourAgeStart"
+                Click="TourAgeStart_Click" Content="Age Stat" Margin="350,0,150,0"/>
         </Grid>
 
 

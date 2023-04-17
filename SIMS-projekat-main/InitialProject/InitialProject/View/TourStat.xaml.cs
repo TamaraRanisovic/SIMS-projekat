@@ -48,5 +48,12 @@ namespace InitialProject.View
             mostVisited.Show();
             Close();
         }
+
+        private void TourAgeStart_Click(object sender, RoutedEventArgs e)
+        {
+            AgeStat ageStat = new AgeStat();
+            ageStat.Show();
+            Close();
+        }
     }
 }

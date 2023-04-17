@@ -85,7 +85,10 @@ namespace InitialProject.Service
             {
 
                 TourDateDTO dto = dDTO(tour);
-                toursToReturn.Add(dto);
+                if (dto.TourId != 0)
+                {
+                    toursToReturn.Add(dto);
+                }
             }
             return toursToReturn;
         }
@@ -106,6 +109,7 @@ namespace InitialProject.Service
                     tourDate.Date = date.Date;
                     tourDate.Description = tour.Description;
                    
+                    
                 }
             }
             return tourDate;

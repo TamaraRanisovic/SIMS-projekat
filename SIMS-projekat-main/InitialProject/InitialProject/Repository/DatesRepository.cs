@@ -42,7 +42,7 @@ namespace InitialProject.Repository
         {
             using (var db = new DataContext())
             {
-                return db.Dates.Where(t=>t.Date.Year == year).ToList();
+                return db.Dates.Include(t => t.tourists).Where(t=>t.Date.Year == year).ToList();
             }
         }
     }

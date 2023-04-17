@@ -25,11 +25,11 @@
             <Button 
                 Grid.Column="2"
                 x:Name="TourDates"
-                Click="TourDates_Click" Content="most visited &#xD;&#xA;tour"/>
+                Click="TourDates_Click" Content="most visited &#xA;by year"/>
             <Button 
                 Grid.Column="1"
                 x:Name="ShowTours"
-                Click="ShowTour_Click" Content="Most Visited &#xD;&#xA;by year"/>
+                Click="ShowTour_Click" Content="Most Visited &#xA;Tour"/>
         </Grid>
 
 
