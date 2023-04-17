@@ -1,4 +1,8 @@
 ﻿using InitialProject.Model;
+<<<<<<< Updated upstream
+=======
+using Microsoft.EntityFrameworkCore;
+>>>>>>> Stashed changes
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -76,5 +80,22 @@ namespace InitialProject.Repository
                 }
             }
         }
+<<<<<<< Updated upstream
+=======
+
+        public void UpdateClassBy(string accommodationClass)
+        {
+            List<Accomodation> Accommodations = new();
+
+            using (DataContext db = new())
+            {
+                Accommodations = db.Accomodations
+                    .ToList();
+
+                Accommodations.ForEach(t => t.Class = accommodationClass);
+                db.SaveChanges();
+            }
+        }
+>>>>>>> Stashed changes
     }
 }

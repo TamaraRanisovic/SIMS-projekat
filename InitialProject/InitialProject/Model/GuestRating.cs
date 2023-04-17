@@ -8,9 +8,9 @@ namespace InitialProject.Model
 {
     public class GuestRating
     {
-        public int Id { get; set; }
+        public int OwnerUserId { get; set; }
 
-        public DateTime RatingExperationDate { get; set; }
+        public DateTime RatingExperationDate { get; set; } //string comment
 
         public int Cleanliness { get; set; }
 
@@ -18,6 +18,7 @@ namespace InitialProject.Model
 
         public AccomodationReservation AccomodationReservation { get; set; }
 
+<<<<<<< Updated upstream
         public GuestRating(int id, DateTime ratingExperationDate, int cleanliness, int ruleCompliance)
         {
             Id = id;
@@ -25,6 +26,14 @@ namespace InitialProject.Model
             Cleanliness = cleanliness;
             RuleCompliance = ruleCompliance;
             
+=======
+
+        public GuestRating(int cleanliness, int ruleCompliance, AccomodationReservation accomodationReservation)
+        {
+            Cleanliness = cleanliness; 
+            RuleCompliance = ruleCompliance; 
+            AccomodationReservation = accomodationReservation;
+>>>>>>> Stashed changes
         }
 
         public GuestRating(DateTime ratingExperationDate, int cleanliness, int ruleCompliance)

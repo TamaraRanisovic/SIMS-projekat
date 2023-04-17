@@ -3,6 +3,7 @@ using InitialProject.Repository;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Security.Cryptography.X509Certificates;
 using System.Text;
 using System.Threading.Tasks;
 using WebApi.Entities;
@@ -47,5 +48,20 @@ namespace InitialProject.Service
             }
 
         }
+<<<<<<< Updated upstream
+=======
+
+        public void UpdateClassBy(bool superOwner)
+        {
+            string accomodationClass = "B";
+
+            if(superOwner)
+            {
+                accomodationClass = "A";
+            }
+
+            this.accomodationRepository.UpdateClassBy(accomodationClass);
+        }
+>>>>>>> Stashed changes
     }
 }

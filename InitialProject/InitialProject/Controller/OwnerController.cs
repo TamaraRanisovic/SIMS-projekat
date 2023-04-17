@@ -1,4 +1,4 @@
-﻿using InitialProject.Migrations;
+﻿
 using InitialProject.Model;
 using InitialProject.Service;
 using System;
@@ -13,13 +13,14 @@ using WebApi.Entities;
 
 namespace InitialProject.Controller
 {
-    public class ControllerMenu
+    public class OwnerController
     {
-        public ControllerMenu() { }
+        public OwnerController() { }
 
         public static readonly AccomodationService accomodationService = new AccomodationService(); 
         public static readonly AccomodationReservationService accomodationReservationService = new AccomodationReservationService();
-        public static readonly GuestRatingService guestRatingService = new GuestRatingService();
+        public static readonly GuestRatingService guestRatingService = new GuestRatingService(); 
+        public static readonly GuestRatingRepository guestRatingRepository = new GuestRatingRepository();
 
         public void Menu()
         {
@@ -44,6 +45,7 @@ namespace InitialProject.Controller
             Console.WriteLine("3. ispisi sve ocenjene rezervacije");
             Console.WriteLine("4. ispisi sve neocenjene istekle rezervacije");
             Console.WriteLine("5. obavestenja");
+            Console.WriteLine("6. oceni gosta");
             Console.WriteLine("x. exit");
             Console.Write("Your option: ");
         }
@@ -80,8 +82,62 @@ namespace InitialProject.Controller
                     }
                     break;
                 case "5":
+<<<<<<< Updated upstream:InitialProject/InitialProject/Controller/ControllerMenu.cs
                     
                     break;
+=======
+                   /* List<AccomodationReservation> accomodationReservations = new List<AccomodationReservation>();
+                    accomodationReservations = guestRatingService.GetNotGradedExpiredReservations(); 
+                    if (accomodationReservations.Count == 0)
+                    {
+                        Console.WriteLine("No new notifications!");
+                        return;
+                    }
+
+                    DateTime todaysDate = DateTime.UtcNow.Date;
+
+                    
+
+                    foreach (var reservation in accomodationReservations)
+                    {
+                        int daysLeft = 5 - (todaysDate.Day - reservation.CheckOutDate.Day);
+                        
+                        if (daysLeft == 1)
+                        {
+                            Console.WriteLine("Reservation " + reservation.AccomodationReservationId + " has expired: \n   " + daysLeft.ToString() + " day left to rate guest: " + reservation.User.Username);
+                        } 
+
+
+                       Console.WriteLine("Reservation " + reservation.AccomodationReservationId + " has expired: \n   " + daysLeft.ToString() + " days left to rate guest: " + reservation.User.Username);
+                    }
+                    break; */
+                case "6":
+                   /* List<AccomodationReservation> reservations = new List<AccomodationReservation>();
+                    reservations = guestRatingService.GetNotGradedExpiredReservations();
+
+                    int n = 0;
+                    foreach(var reservation in reservations)
+                    {
+                        Console.WriteLine(n + "." + reservation.ToString());
+                        n++;
+                    }
+
+                    Console.WriteLine("Enter Reservation ID: ");
+     
+                    int option = Int32.Parse(Console.ReadLine());
+
+                    Console.WriteLine("Enter Cleanlines");
+                    int cleanliness = Int32.Parse(Console.ReadLine());
+                    Console.WriteLine("RuleCompl");
+                    int rulec = Int32.Parse(Console.ReadLine());
+
+                    GuestRating guestRating = new GuestRating(cleanliness, rulec, reservations[option]);
+                    
+                    guestRatingRepository.Save(guestRating);
+
+
+                    break;*/
+>>>>>>> Stashed changes:InitialProject/InitialProject/Controller/OwnerController.cs
                 case "x":
                     break;
                 default:
@@ -90,6 +146,7 @@ namespace InitialProject.Controller
             }
 
         }
+
 
         public static Location CreateLocation()
         {

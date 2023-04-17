@@ -8,6 +8,8 @@ namespace InitialProject.Model
 {
     public class Owner : User
     {
+
+        public bool SuperOwner { get; set; }
         public List<GuestRating> GuestRatings { get; set; }
 
         public List<Accomodation> Accomodations { get; set; }

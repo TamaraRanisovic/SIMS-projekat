@@ -3,6 +3,7 @@ using System;
 using InitialProject.Model;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -10,9 +11,10 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace InitialProject.Migrations
 {
     [DbContext(typeof(DataContext))]
-    partial class DataContextModelSnapshot : ModelSnapshot
+    [Migration("20230417111133_nestonovo")]
+    partial class nestonovo
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder.HasAnnotation("ProductVersion", "6.0.0");
@@ -28,10 +30,6 @@ namespace InitialProject.Migrations
 
                     b.Property<int>("AccomodationType")
                         .HasColumnType("INTEGER");
-
-                    b.Property<string>("Class")
-                        .IsRequired()
-                        .HasColumnType("TEXT");
 
                     b.Property<int>("DaysBeforeCanceling")
                         .HasColumnType("INTEGER");
@@ -99,9 +97,6 @@ namespace InitialProject.Migrations
                         .HasColumnType("INTEGER");
 
                     b.Property<int?>("AccomodationAccId")
-                        .HasColumnType("INTEGER");
-
-                    b.Property<bool>("Cancelled")
                         .HasColumnType("INTEGER");
 
                     b.Property<DateTime>("CheckInDate")
@@ -174,16 +169,11 @@ namespace InitialProject.Migrations
                     b.Property<int>("RuleCompliance")
                         .HasColumnType("INTEGER");
 
-                    b.Property<int?>("UserId")
-                        .HasColumnType("INTEGER");
-
                     b.HasKey("Id");
 
                     b.HasIndex("AccomodationReservationId");
 
                     b.HasIndex("OwnerUserId");
-
-                    b.HasIndex("UserId");
 
                     b.ToTable("GuestRatings");
                 });
@@ -410,9 +400,6 @@ namespace InitialProject.Migrations
                 {
                     b.HasBaseType("InitialProject.Model.User");
 
-                    b.Property<bool>("SuperOwner")
-                        .HasColumnType("INTEGER");
-
                     b.HasDiscriminator().HasValue("Owner");
                 });
 
@@ -508,10 +495,6 @@ namespace InitialProject.Migrations
                         .WithMany("GuestRatings")
                         .HasForeignKey("OwnerUserId")
                         .OnDelete(DeleteBehavior.Cascade);
-
-                    b.HasOne("InitialProject.Model.User", null)
-                        .WithMany()
-                        .HasForeignKey("UserId");
 
                     b.Navigation("AccomodationReservation");
                 });

@@ -34,7 +34,15 @@ namespace InitialProject.Model
 
         public DbSet<TourImages> TourImages { get; set; }
 
+<<<<<<< Updated upstream
         public DbSet<AccomodationReservation> AccomodationReservations { get; set; }
+=======
+        public DbSet<AccomodationReservation> AccomodationReservations { get; set; } 
+
+        public DbSet<OwnerReview> OwnerReviews { get; set; }
+
+        public DbSet<ReservationReschedulingRequest> ReservationReschedulingRequests { get; set; }
+>>>>>>> Stashed changes
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
@@ -70,10 +78,10 @@ namespace InitialProject.Model
                .WithMany(t => t.AccomodationReservations)
                .OnDelete(DeleteBehavior.Cascade);
 
-            modelBuilder.Entity<Guest>()
+           /* modelBuilder.Entity<Guest>()
                .HasOne<Accomodation>()
                .WithMany(t => t.Guests)
-               .OnDelete(DeleteBehavior.Cascade);
+               .OnDelete(DeleteBehavior.Cascade);*/
 
             //Checkpoint
 
@@ -125,17 +133,17 @@ namespace InitialProject.Model
             //AccomodationReservation 
             modelBuilder.Entity<Accomodation>()
             .HasOne<AccomodationReservation>()
-            .WithMany(t => t.Accomodations)
-            .OnDelete(DeleteBehavior.Cascade);
-
-            modelBuilder.Entity<User>()
-           .HasOne<AccomodationReservation>()
-           .WithMany(t => t.Users)
+           .WithMany(t => t.Accomodations)
            .OnDelete(DeleteBehavior.Cascade);
 
+            //modelBuilder.Entity<User>()
+            //.HasOne<AccomodationReservation>()
+            // .WithMany(t => t.Users)
+            //.OnDelete(DeleteBehavior.Cascade);
+
             //GuestRating 
-            //modelBuilder.Entity<AccomodationReservation>()
-            //.HasOne<GuestRating>()
+            modelBuilder.Entity<GuestRating>()
+            .HasOne<User>();
             //.WithMany(t => t.AccomodationReservations)
             //.OnDelete(DeleteBehavior.Cascade);
 

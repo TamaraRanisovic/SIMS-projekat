@@ -51,7 +51,7 @@ namespace InitialProject.Repository
         {
             using (var db = new DataContext())
             {
-                var user = db.Users.FirstOrDefault(t => t.Id == updatedUser.Id);
+                var user = db.Users.FirstOrDefault(t => t.UserId == updatedUser.UserId);
                 if (user != null)
                 {
                     user.Username = updatedUser.Username;
@@ -66,10 +66,24 @@ namespace InitialProject.Repository
         {
             using (var db = new DataContext())
             {
-                var user = db.Users.FirstOrDefault(t => t.Id == userId);
+                var user = db.Users.FirstOrDefault(t => t.UserId == userId);
                 if (user != null)
                 {
                     db.Users.Remove(user);
+                    db.SaveChanges();
+                }
+            }
+        }
+
+        public void UpdateStatus(bool titleFlag) // nije radjeno za ulogovanog korisnika, naknadno ce biti ubaceno
+        {
+
+            using var db = new DataContext();
+            foreach (Owner owner in db.Users)
+            {
+                if (owner.Username.Equals("owner"))
+                {
+                    owner.SuperOwner = titleFlag;
                     db.SaveChanges();
                 }
             }

@@ -17,7 +17,7 @@ namespace InitialProject.Service
         
 
         
-        public List<AccomodationReservation> GetGradedReservations()
+        public List<AccomodationReservation> GetGradedReservations() //clean code: GetGraded?
         {
             
             List<AccomodationReservation> accomodationReservations = new List<AccomodationReservation>(); 
@@ -30,9 +30,9 @@ namespace InitialProject.Service
                 accomodationReservations.Add(ratings.AccomodationReservation);
             }
             return accomodationReservations;
-        }
+        } 
 
-        public List<AccomodationReservation> GetNotGradedExpiredReservations()
+        public List<AccomodationReservation> GetNotGradedExpiredReservations() //clean code: GetNotGradedExpired?
         {
 
             List<AccomodationReservation> expiredReservations = accomodationReservationService.GetAllExpired();
@@ -60,6 +60,6 @@ namespace InitialProject.Service
                 }
             }
             return nonGradedExpired;
-        }
-    }
+        } 
+    } 
 }

@@ -17,7 +17,9 @@ namespace InitialProject.Model
         public int NumberOfGuests { get; set; } 
 
         public List<Accomodation> Accomodations { get; set; } 
-        public List<User> Users { get; set; }
+        public User User { get; set; } 
+
+        public bool Cancelled { get; set; }
 
         public override string ToString()
         {
@@ -26,7 +28,7 @@ namespace InitialProject.Model
 
         public AccomodationReservation() 
         { 
-            Users = new List<User>(); 
+            
             Accomodations = new List<Accomodation>();
         }
 
@@ -36,7 +38,7 @@ namespace InitialProject.Model
             CheckInDate = checkInDate;
             CheckOutDate = checkOutDate;
             NumberOfGuests = numberOfGuests;
-            Users = new List<User>();
+            
             Accomodations = new List<Accomodation>();
 
         }
@@ -46,7 +48,7 @@ namespace InitialProject.Model
             CheckInDate = checkInDate;
             CheckOutDate = checkOutDate;
             NumberOfGuests = numberOfGuests;
-            Users = new List<User>();
+            
             Accomodations = new List<Accomodation>();
         }
 
