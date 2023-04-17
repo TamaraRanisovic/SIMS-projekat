@@ -13,7 +13,7 @@ public class Tour
     public int TourId { get; set; }
     public string Name { get; set; }
 
-   // public int GuideId { get; set; }
+    public int GuideId { get; set; }
     public string Description { get; set; }
 
     public string Language { get; set; }
@@ -42,9 +42,10 @@ public class Tour
         StartingDates = new List<Dates>();
     }
 
-    public Tour( string name, string description, string language, int maxGuests,int duration)
+    public Tour(int guideId, string name, string description, string language, int maxGuests,int duration)
     {
         Name = name;
+        GuideId = guideId;
         Description = description;
         Language = language;
         MaxGuests = maxGuests;

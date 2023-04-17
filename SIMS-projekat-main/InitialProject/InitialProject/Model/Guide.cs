@@ -12,6 +12,7 @@ namespace InitialProject.Model
 
         public List<Tour> Tours { get; set; }
 
+        
         public Guide()
         {
             Tours = new List<Tour>();

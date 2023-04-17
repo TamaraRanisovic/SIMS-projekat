@@ -116,13 +116,16 @@ namespace InitialProject.Controller
             Console.WriteLine("MaxGuests:");
             maxGuests = Int32.Parse(Console.ReadLine());
 
-           // Console.WriteLine("StartTime(yyyy-mm-dd hh:mm:ss):");
+            Console.WriteLine("GuideId:");
+            int GuideId = Int32.Parse(Console.ReadLine());
+
+            // Console.WriteLine("StartTime(yyyy-mm-dd hh:mm:ss):");
             //starTime = DateTime.Parse(Console.ReadLine());
 
             Console.WriteLine("TourDuration:");
             duration = Int32.Parse(Console.ReadLine());
 
-            Tour newTour = new Tour(name, Description, language,maxGuests,duration);
+            Tour newTour = new Tour(GuideId,name,Description, language,maxGuests,duration);
 
             return newTour;
         }
