@@ -261,7 +261,7 @@ namespace InitialProject.Service
             }
             if (numOfTourists <= 0) { return 0; }
             double result = numOfCoupons / numOfTourists;
-             return result * 100;
+            return result * 100;
             ;
         }
     }
