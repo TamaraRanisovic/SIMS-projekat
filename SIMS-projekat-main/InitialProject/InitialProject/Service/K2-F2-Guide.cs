@@ -132,11 +132,13 @@ namespace InitialProject.Service
         {
 
             Tour tour = tourRepository.GetById(tourId);
+            
+            int percentUnder18 = CountUnder18(date);
+            int percent18and50 = CountBeetween18and50(date);
+            int percentAbove50 = CountAbove50(date);
 
-            double percentUnder18 = CountUnder18(date);
-            double percent18and50 = CountBeetween18and50(date);
-            double percentAbove50 = CountAbove50(date);
-
+            
+            
 
             GuestAgeStatisticDTO guestStatisticDTO = new GuestAgeStatisticDTO(tourId, tour.Name, percentUnder18, percent18and50, percentAbove50);
         
@@ -144,7 +146,9 @@ namespace InitialProject.Service
         
         }
 
-        public double CountUnder18(Dates date)
+        //public 
+
+        public int CountUnder18(Dates date)
         {
             int under18 = 0;
             int allTourists = 0;
@@ -162,11 +166,11 @@ namespace InitialProject.Service
                 return 0;
             }
 
-            return allTourists / under18;
+            return under18;
 
         }
 
-        public double CountBeetween18and50(Dates date)
+        public int CountBeetween18and50(Dates date)
         {
             int under50 = 0;
             int allTourists = 0;
@@ -185,11 +189,11 @@ namespace InitialProject.Service
                 return 0;
             }
 
-            return allTourists / under50;
+            return under50;
 
         }
 
-        public double CountAbove50(Dates date)
+        public int CountAbove50(Dates date)
         {
             int above50 = 0;
             int allTourists = 0;
@@ -208,7 +212,7 @@ namespace InitialProject.Service
                 return 0;
             }
 
-            return allTourists / above50;
+            return above50;
 
         }
     }

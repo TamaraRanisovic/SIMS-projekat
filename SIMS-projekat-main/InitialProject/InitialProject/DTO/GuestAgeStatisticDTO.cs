@@ -12,14 +12,14 @@ namespace InitialProject.DTO
         public int TourId { get; set; }
         public string Name { get; set; }
 
-        public double Under18 { get; set; }
+        public int Under18 { get; set; }
 
-        public double Beetween18and50 { get; set; }
+        public int Beetween18and50 { get; set; }
 
-        public double Above50 { get; set; }
+        public int Above50 { get; set; }
         public GuestAgeStatisticDTO() { }
 
-        public GuestAgeStatisticDTO(int tourId, string name, double under18, double beetween18and50, double above50)
+        public GuestAgeStatisticDTO(int tourId, string name, int under18, int beetween18and50, int above50)
         {
             TourId = tourId;
             Name = name;
