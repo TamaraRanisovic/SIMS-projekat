@@ -14,20 +14,32 @@ namespace InitialProject.Model
 
         public bool IsPresent { get; set; }
 
-        public List<TourReservation> TourReservations { get; set; }
+        public int Age { get; set; }
 
+        public List<TourReservation> TourReservations { get; set; }
         public List<Coupon> Coupons { get; set; }
+
+
 
         public Tourist(string username, string password, UserType userType = UserType.Tourist) : base(username, password, userType)
         {
             TourReservations = new List<TourReservation>();
+            Coupons = new List<Coupon>();
         }
+
         public Tourist(string username, string password, bool isPresent, UserType userType = UserType.Tourist) : base(username, password, userType)
         {
             IsPresent = isPresent;
             TourReservations = new List<TourReservation>();
+            Coupons = new List<Coupon>();
         }
 
+        public Tourist(string username, string password, int age, UserType userType = UserType.Tourist) : base(username, password, userType)
+        {
+            Age = age;
+            TourReservations = new List<TourReservation>();
+            Coupons = new List<Coupon>();
+        }
         public override string ToString()
         {
             return $"Id: {Id}\n, Username: {Username}\n, Password: {Password}\n, UserType: {UserType}\n, IsPresent: {IsPresent}\n";

@@ -17,6 +17,7 @@ namespace InitialProject.ViewModel
         private string _username;
         private string _password;
         private string _message;
+        private User loggedInUser;
 
         public event PropertyChangedEventHandler PropertyChanged;
 
@@ -65,8 +66,26 @@ namespace InitialProject.ViewModel
 
                 if (user != null)
                 {
-                    MessageBox.Show("Login successful!");
-                    CloseWindow();
+                    UserSession.LoggedInUser = user;
+
+                    if (user.UserType == UserType.Owner)
+                    {
+                        var ownerWindow = new OwnerWindow();
+                        ownerWindow.ShowDialog();
+                    } else if (user.UserType == UserType.Guest)
+                    {
+                        var guestWindow = new GuestWindow();
+                        guestWindow.ShowDialog();
+                    } else if (user.UserType == UserType.Guide)
+                    {
+                        var guideWindow = new GuideWindow();
+                        guideWindow.ShowDialog();
+                    }
+                    else if (user.UserType == UserType.Tourist)
+                    {
+                        var touristWindow = new TouristWindow();
+                        touristWindow.ShowDialog();
+                    }
                 }
                 else
                 {
@@ -83,8 +102,7 @@ namespace InitialProject.ViewModel
 
         private void Register()
         {
-            RegisterWindow registerWindow = new RegisterWindow();
-            
+            var registerWindow = new RegisterWindow();
             registerWindow.ShowDialog();
         }
 

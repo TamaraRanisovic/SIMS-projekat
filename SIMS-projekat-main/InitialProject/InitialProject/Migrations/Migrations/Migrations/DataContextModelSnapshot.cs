@@ -3,7 +3,6 @@ using System;
 using InitialProject.Model;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
-using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -11,10 +10,9 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace InitialProject.Migrations
 {
     [DbContext(typeof(DataContext))]
-    [Migration("20230413223929_Ture_u_datumima2")]
-    partial class Ture_u_datumima2
+    partial class DataContextModelSnapshot : ModelSnapshot
     {
-        protected override void BuildTargetModel(ModelBuilder modelBuilder)
+        protected override void BuildModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder.HasAnnotation("ProductVersion", "6.0.0");
@@ -353,9 +351,6 @@ namespace InitialProject.Migrations
                         .ValueGeneratedOnAdd()
                         .HasColumnType("INTEGER");
 
-                    b.Property<int?>("DatesId")
-                        .HasColumnType("INTEGER");
-
                     b.Property<string>("Description")
                         .IsRequired()
                         .HasColumnType("TEXT");
@@ -363,7 +358,7 @@ namespace InitialProject.Migrations
                     b.Property<int>("Duration")
                         .HasColumnType("INTEGER");
 
-                    b.Property<int?>("GuideId")
+                    b.Property<int>("GuideId")
                         .HasColumnType("INTEGER");
 
                     b.Property<string>("Language")
@@ -381,8 +376,6 @@ namespace InitialProject.Migrations
                         .HasColumnType("TEXT");
 
                     b.HasKey("TourId");
-
-                    b.HasIndex("DatesId");
 
                     b.HasIndex("GuideId");
 
@@ -420,6 +413,9 @@ namespace InitialProject.Migrations
             modelBuilder.Entity("InitialProject.Model.Tourist", b =>
                 {
                     b.HasBaseType("InitialProject.Model.User");
+
+                    b.Property<int>("Age")
+                        .HasColumnType("INTEGER");
 
                     b.Property<int?>("CheckpointId")
                         .HasColumnType("INTEGER");
@@ -570,15 +566,11 @@ namespace InitialProject.Migrations
 
             modelBuilder.Entity("WebApi.Entities.Tour", b =>
                 {
-                    b.HasOne("InitialProject.Model.Dates", null)
-                        .WithMany("tours")
-                        .HasForeignKey("DatesId")
-                        .OnDelete(DeleteBehavior.Cascade);
-
                     b.HasOne("InitialProject.Model.Guide", null)
                         .WithMany("Tours")
                         .HasForeignKey("GuideId")
-                        .OnDelete(DeleteBehavior.Cascade);
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
 
                     b.HasOne("WebApi.Entities.Location", null)
                         .WithMany("Tours")
@@ -631,8 +623,6 @@ namespace InitialProject.Migrations
             modelBuilder.Entity("InitialProject.Model.Dates", b =>
                 {
                     b.Navigation("tourists");
-
-                    b.Navigation("tours");
                 });
 
             modelBuilder.Entity("WebApi.Entities.Checkpoint", b =>

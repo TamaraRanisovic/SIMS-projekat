@@ -1,6 +1,7 @@
 ﻿using InitialProject.Commands;
 using InitialProject.Model;
 using InitialProject.Repository;
+using InitialProject.View;
 using Microsoft.Win32;
 using System;
 using System.Collections.Generic;
@@ -10,6 +11,7 @@ using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
+using System.Windows.Controls;
 
 namespace InitialProject.ViewModel
 {
@@ -20,6 +22,9 @@ namespace InitialProject.ViewModel
         private string _confirmPassword;
         private UserType _userType;
         private string _message;
+        private int _age;
+        private bool _isAgeEnabled;
+        
 
         public event PropertyChangedEventHandler PropertyChanged;
 
@@ -68,26 +73,75 @@ namespace InitialProject.ViewModel
             set { _message = value; RaisePropertyChanged(nameof(Message)); }
         }
 
+        public int Age
+        {
+            get { return _age; }
+            set
+            {
+                _age = value;
+                RaisePropertyChanged(nameof(Age));
+            }
+        }
+
+        public bool IsAgeEnabled
+        {
+            get { return _isAgeEnabled; }
+            set
+            {
+                _isAgeEnabled = value;
+                RaisePropertyChanged(nameof(IsAgeEnabled));
+            }
+        }
+
         private bool CanRegister()
         {
             // Enable Register button only if all required fields are filled
-            return !string.IsNullOrEmpty(Username) &&
-                   !string.IsNullOrEmpty(Password) &&
-                   !string.IsNullOrEmpty(ConfirmPassword) &&
-                   UserType != null &&
-                   Password == ConfirmPassword;
+            if (!string.IsNullOrEmpty(Username) &&
+                !string.IsNullOrEmpty(Password) &&
+                !string.IsNullOrEmpty(ConfirmPassword) &&
+                Password == ConfirmPassword) {
+                if (UserType == UserType.Tourist)
+                {
+                    IsAgeEnabled = true;
+                    if (Age != 0)
+                    {
+                        return true;
+                    }
+                    return false;
+                } else
+                {
+                    IsAgeEnabled = false;
+                }
+                return true;
+            }
+            return false;
         }
 
         private void Register()
         {          
-
-                User user = new User(Username, Password, UserType);
-                UserRepository userRepository = new UserRepository();
+            User user = new User(Username, Password, UserType);
+            UserRepository userRepository = new UserRepository();
+            if (UserType == UserType.Tourist) {
+                userRepository.AddUser(user, Age);
+            }
+            else {
                 userRepository.AddUser(user);
-                            
-                MessageBox.Show("Registration successful!");
-                CloseWindow();
-                
+            }
+
+            if (UserType == UserType.Owner) {
+                var ownerWindow = new OwnerWindow();
+                ownerWindow.ShowDialog();
+            } else if (UserType == UserType.Guide) {
+                var guideWindow = new GuideWindow();
+                guideWindow.ShowDialog();
+            } else if (UserType == UserType.Guest) {
+                var guestWindow = new GuestWindow();
+                guestWindow.ShowDialog();
+            } else if (UserType == UserType.Tourist) {
+                var touristWindow = new TouristWindow();
+                touristWindow.ShowDialog();
+            }
+
         }
         private void Cancel()
         {

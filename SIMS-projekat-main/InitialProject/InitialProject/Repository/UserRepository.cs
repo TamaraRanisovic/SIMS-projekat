@@ -15,12 +15,33 @@ namespace InitialProject.Repository
 
         }
 
-        public void AddUser(User user)
+        public bool AddUser(User user, int touristAge = 0)
         {
             using (var db = new DataContext())
             {
-                db.Users.Add(user);
+                if (user.UserType == UserType.Owner)
+                {
+                    Owner owner = new Owner(user.Username, user.Password, user.UserType);
+                    db.Users.Add(owner);
+                }
+                else if (user.UserType == UserType.Guest)
+                {
+                    Guest guest = new Guest(user.Username, user.Password, user.UserType);
+                    db.Users.Add(guest);
+                }
+                else if (user.UserType == UserType.Guide)
+                {
+                    Guide guide = new Guide(user.Username, user.Password, user.UserType);
+                    db.Users.Add(guide);
+                }
+                else if (user.UserType == UserType.Tourist)
+                {
+                    Tourist tourist = new Tourist(user.Username, user.Password, touristAge, user.UserType);
+                    db.Users.Add(tourist);
+                }
+                //db.Users.Add(user);
                 db.SaveChanges();
+                return true;
             }
         }
 

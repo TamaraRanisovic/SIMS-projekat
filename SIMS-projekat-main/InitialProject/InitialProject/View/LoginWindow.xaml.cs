@@ -10,11 +10,11 @@ namespace InitialProject.View
         {
             InitializeComponent();
 
+            LoginViewModel viewModel = new LoginViewModel();
+            viewModel.CloseAction = Close;
+            DataContext = viewModel;
         }
 
-        private void txtPassword_TextChanged(object sender, System.Windows.Controls.TextChangedEventArgs e)
-        {
 
-        }
     }
 }

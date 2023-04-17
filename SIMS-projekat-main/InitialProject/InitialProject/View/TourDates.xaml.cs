@@ -56,11 +56,21 @@ namespace InitialProject.View
         }
 
         private void CancelDate_Click(object sender, RoutedEventArgs e)
-        {   
+        {
+            TourRepository tourRepository = new TourRepository();
             TourService tourService = new TourService();
             KT2_F1_Guide kT2_F1_Guide = new KT2_F1_Guide(); 
             var tourId = int.Parse(TourIdCancel.Text);
             string content = "";
+            
+            
+            Tour tour = tourRepository.GetById(tourId);
+
+            if(tour.GuideId != UserSession.LoggedInUser.Id)
+            {
+                content = "Niste kreirali ovu turu";
+                Close();
+            }
 
             bool CancelTourInfo = kT2_F1_Guide.CancelTour(tourId);
             

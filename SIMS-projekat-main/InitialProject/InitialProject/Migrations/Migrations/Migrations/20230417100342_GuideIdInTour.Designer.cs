@@ -11,8 +11,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace InitialProject.Migrations
 {
     [DbContext(typeof(DataContext))]
-    [Migration("20230413223623_Ture_u_datumima")]
-    partial class Ture_u_datumima
+    [Migration("20230417100342_GuideIdInTour")]
+    partial class GuideIdInTour
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -360,7 +360,7 @@ namespace InitialProject.Migrations
                     b.Property<int>("Duration")
                         .HasColumnType("INTEGER");
 
-                    b.Property<int?>("GuideId")
+                    b.Property<int>("GuideId")
                         .HasColumnType("INTEGER");
 
                     b.Property<string>("Language")
@@ -415,6 +415,9 @@ namespace InitialProject.Migrations
             modelBuilder.Entity("InitialProject.Model.Tourist", b =>
                 {
                     b.HasBaseType("InitialProject.Model.User");
+
+                    b.Property<int>("Age")
+                        .HasColumnType("INTEGER");
 
                     b.Property<int?>("CheckpointId")
                         .HasColumnType("INTEGER");
@@ -568,7 +571,8 @@ namespace InitialProject.Migrations
                     b.HasOne("InitialProject.Model.Guide", null)
                         .WithMany("Tours")
                         .HasForeignKey("GuideId")
-                        .OnDelete(DeleteBehavior.Cascade);
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
 
                     b.HasOne("WebApi.Entities.Location", null)
                         .WithMany("Tours")
