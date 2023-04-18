@@ -48,8 +48,6 @@ namespace InitialProject.Service
             }
 
         }
-<<<<<<< Updated upstream
-=======
 
         public void UpdateClassBy(bool superOwner)
         {
@@ -62,6 +60,6 @@ namespace InitialProject.Service
 
             this.accomodationRepository.UpdateClassBy(accomodationClass);
         }
->>>>>>> Stashed changes
+
     }
 }

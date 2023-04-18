@@ -26,11 +26,11 @@ namespace InitialProject.Model
 
         public List<AccomodationImage> Images { get; set; }
      
-<<<<<<< Updated upstream
+
         public List<Guest> Guests { get; set; } 
-=======
+
         public string Class { get; set; }
->>>>>>> Stashed changes
+
 
         public List<AccomodationReservation> AccomodationReservations { get; set; }
 
@@ -56,11 +56,11 @@ namespace InitialProject.Model
             MinReservationDays = minReservationDays;
             DaysBeforeCanceling = daysBeforeCanceling;
             Images = new List<AccomodationImage>();
-<<<<<<< Updated upstream
+
             Guests = new List<Guest>();
-=======
+
             
->>>>>>> Stashed changes
+
             AccomodationReservations = new List<AccomodationReservation>();
         }
 

@@ -1,5 +1,6 @@
 ﻿
 using InitialProject.Model;
+using InitialProject.Repository;
 using InitialProject.Service;
 using System;
 using System.Collections.Generic;
@@ -82,10 +83,9 @@ namespace InitialProject.Controller
                     }
                     break;
                 case "5":
-<<<<<<< Updated upstream:InitialProject/InitialProject/Controller/ControllerMenu.cs
                     
                     break;
-=======
+
                    /* List<AccomodationReservation> accomodationReservations = new List<AccomodationReservation>();
                     accomodationReservations = guestRatingService.GetNotGradedExpiredReservations(); 
                     if (accomodationReservations.Count == 0)
@@ -137,7 +137,6 @@ namespace InitialProject.Controller
 
 
                     break;*/
->>>>>>> Stashed changes:InitialProject/InitialProject/Controller/OwnerController.cs
                 case "x":
                     break;
                 default:

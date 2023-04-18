@@ -1,8 +1,5 @@
 ﻿using InitialProject.Model;
-<<<<<<< Updated upstream
-=======
 using Microsoft.EntityFrameworkCore;
->>>>>>> Stashed changes
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -80,8 +77,7 @@ namespace InitialProject.Repository
                 }
             }
         }
-<<<<<<< Updated upstream
-=======
+
 
         public void UpdateClassBy(string accommodationClass)
         {
@@ -96,6 +92,6 @@ namespace InitialProject.Repository
                 db.SaveChanges();
             }
         }
->>>>>>> Stashed changes
+
     }
 }

@@ -26,13 +26,13 @@ namespace InitialProject
         private static void WriteMenuOptions()
         {
             Console.WriteLine("1. Owner's view");
-<<<<<<< Updated upstream
+
             Console.WriteLine("2. option B");
-=======
+
             Console.WriteLine("2. Guide's view");
             Console.WriteLine("3. Guest's view");
             Console.WriteLine("4. Tourist's view");
->>>>>>> Stashed changes
+
             Console.WriteLine("x. exit");
             Console.Write("Your option: ");
         }
@@ -47,10 +47,10 @@ namespace InitialProject
                     controllerMenu.Menu();
                     break; 
                 case "2": 
-<<<<<<< Updated upstream
+
                     Console.WriteLine("Chosen option: B"); 
                     break; 
-=======
+
                     Console.WriteLine("Guide's view"); 
                     break;
                 case "3":
@@ -59,7 +59,7 @@ namespace InitialProject
                 case "4":
                     Console.WriteLine("Tourist's view");
                     break;
->>>>>>> Stashed changes
+
                 case "x":
                     break;
                 default:

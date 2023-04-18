@@ -34,15 +34,13 @@ namespace InitialProject.Model
 
         public DbSet<TourImages> TourImages { get; set; }
 
-<<<<<<< Updated upstream
         public DbSet<AccomodationReservation> AccomodationReservations { get; set; }
-=======
-        public DbSet<AccomodationReservation> AccomodationReservations { get; set; } 
+
 
         public DbSet<OwnerReview> OwnerReviews { get; set; }
 
         public DbSet<ReservationReschedulingRequest> ReservationReschedulingRequests { get; set; }
->>>>>>> Stashed changes
+
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
@@ -142,8 +140,8 @@ namespace InitialProject.Model
             //.OnDelete(DeleteBehavior.Cascade);
 
             //GuestRating 
-            modelBuilder.Entity<GuestRating>()
-            .HasOne<User>();
+            //modelBuilder.Entity<GuestRating>()
+            //.HasOne<User>();
             //.WithMany(t => t.AccomodationReservations)
             //.OnDelete(DeleteBehavior.Cascade);
 
