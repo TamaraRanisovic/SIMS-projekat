@@ -7,6 +7,7 @@ using System.Diagnostics;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using System.Windows.Input;
 using WebApi.Entities;
 
 namespace InitialProject.Service
@@ -15,6 +16,8 @@ namespace InitialProject.Service
     {   
         TourRepository tourRepository = new TourRepository();
         DatesRepository datesRepository = new DatesRepository();
+
+
         public TourDateDTO ShowMostVisitedTour(List<Dates> dates)
         {
             int mostVisitedDateId = FindMostVisitedDateId(dates);
@@ -23,18 +26,22 @@ namespace InitialProject.Service
 
             if (tour != null)
             {
+                return MakeMostVisitedDTO(mostVisitedDateId, tour);
 
-                Dates date = datesRepository.GetById(mostVisitedDateId);
-
-                TourDateDTO tourDateDTO = new TourDateDTO(tour.TourId, tour.Name, date.Date, date.Id, tour.Description);
-
-                return tourDateDTO;
             } else
             {
                 return null;
             }
         }
         
+        public TourDateDTO MakeMostVisitedDTO(int mostVisitedDateId, Tour tour)
+        {
+            Dates date = datesRepository.GetById(mostVisitedDateId);
+
+            TourDateDTO tourDateDTO = new TourDateDTO(tour.TourId, tour.Name, date.Date, date.Id, tour.Description);
+
+            return tourDateDTO;
+        }
         public TourDateDTO ShowMostVisitedByYear(int year)
         {
             List<Dates> dates = datesRepository.GetByYear(year);
@@ -52,37 +59,72 @@ namespace InitialProject.Service
             int maxDateId = dates[0].Id;
             foreach (var date in dates)
             {
-                int brojacTurista = 0;
-                foreach (var tourist in date.tourists)
-                {
-                    brojacTurista++;
-
-                }
-
-                if (brojacTurista > max)
-                {
-                    max = brojacTurista;
-                    maxDateId = date.Id;
-                }
+                int TouristCounter = 0;
+                TouristCount(date, ref TouristCounter);
+                FindMaxID(TouristCounter, ref max, ref maxDateId, date);
                 
             }
             return maxDateId;
         }
 
+        public void TouristCount(Dates date, ref int TouristCounter)
+        {
+            foreach (var tourist in date.tourists)
+            {
+                TouristCounter++;
+            }
+        }
+
+        public void FindMaxID(int TouristCounter, ref int max, ref int maxDateId, Dates date)
+        {
+            if (TouristCounter > max)
+            {
+                max = TouristCounter;
+                maxDateId = date.Id;
+            }
+        }
+
         public Tour FindMostVisitedTourName(List<Tour> tours, int dateId)
         {
-            foreach(var tour in tours)
+            return IterateTours(tours, dateId);
+        }
+
+        public Tour IterateTours(List<Tour> tours, int dateId)
+        {
+            foreach (var tour in tours)
             {
-                foreach (var date in tour.StartingDates)
+                var result = IterateDates(dateId, tour);
+
+                if (result != null)
                 {
-                    if(date.Id == dateId)
-                    {
-                        return tour;
-                    }
+                    return result;
                 }
             }
             return null;
         }
+
+        public Tour IterateDates(int dateId, Tour tour)
+        {
+            foreach (var date in tour.StartingDates)
+            {
+                var result = FindByID(date, dateId, tour);
+
+                if (result != null)
+                {
+                    return result;
+                }
+            }
+            return null;
+        }
+        public Tour FindByID(Dates date, int dateId, Tour tour)
+        {
+            if (date.Id == dateId)
+            {
+                return tour;
+            }
+            return null;
+        }
+
         public List<TourDateDTO> FinishedTours()
         {
             
@@ -156,17 +198,21 @@ namespace InitialProject.Service
             int allTourists = 0;
 
             foreach(var tourist in date.tourists)
-            {   
-                allTourists++;
-                if (tourist.Age < 18)
-                {
-                    under18++;
-                }
+            {
+                CheckAgeUnder18(ref allTourists, tourist, ref under18);
             }
             if(under18 <= 0) {return 0;}
 
             return under18;
 
+        }
+        public void CheckAgeUnder18(ref int allTourists, Tourist tourist, ref int count)
+        {
+            allTourists++;
+            if (tourist.Age < 18)
+            {
+                count++;
+            }
         }
 
         public int CountBeetween18and50(Dates date)
@@ -176,17 +222,22 @@ namespace InitialProject.Service
 
             foreach (var tourist in date.tourists)
             {
-                allTourists++;
-                if (tourist.Age > 18 && tourist.Age < 50)
-                {
-                    under50++;
-                }
+                CheckAgeBeetween(ref allTourists, tourist, ref under50);
             }
 
             if (under50 <= 0){return 0;}
 
             return under50;
 
+        }
+
+        public void CheckAgeBeetween(ref int allTourists, Tourist tourist, ref int count)
+        {
+            allTourists++;
+            if (tourist.Age < 50 && tourist.Age >18)
+            {
+                count++;
+            }
         }
 
         public int CountAbove50(Dates date)
@@ -196,17 +247,22 @@ namespace InitialProject.Service
 
             foreach (var tourist in date.tourists)
             {
-                allTourists++;
-                if (tourist.Age > 50)
-                {
-                    above50++;
-                }
+               CheckAgeAbove50(ref allTourists, tourist, ref above50);
             }
 
             if (above50 <= 0){ return 0;}
 
             return above50;
 
+        }
+
+        public void CheckAgeAbove50(ref int allTourists, Tourist tourist, ref int count)
+        {
+            allTourists++;
+            if (tourist.Age > 50)
+            {
+                count++;
+            }
         }
 
         public double WithCouponsPercent(Dates dates, int tourId)
