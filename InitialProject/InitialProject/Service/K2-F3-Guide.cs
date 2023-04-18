@@ -50,7 +50,7 @@ namespace InitialProject.Service
 
         public void IterateToMakeRating(Tourist tourist, ref List<TourRating> ratings)
         {
-            foreach (var rating in tourist.Ratings)
+            foreach (var rating in tourist.TourRatings)
             {
                 MakeRating(tourist, rating, ref ratings);
             }

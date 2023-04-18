@@ -47,7 +47,7 @@ namespace InitialProject.Repository
             using (var db = new DataContext())
             {
                 return db.Dates.Include(d => d.tourists)
-                        .ThenInclude(t => t.Ratings)
+                        .ThenInclude(t => t.TourRatings)
                         .FirstOrDefault(d => d.Id == id);
             }
 

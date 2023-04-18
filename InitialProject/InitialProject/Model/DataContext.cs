@@ -42,7 +42,7 @@ namespace InitialProject.Model
 
         public DbSet<Coupon> Coupons { get; set; }
 
-        public DbSet<TourRating> Rating { get; set; }
+        public DbSet<TourRating> TourRatings { get; set; }
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             //Tura
@@ -185,7 +185,7 @@ namespace InitialProject.Model
             //TourRating
             modelBuilder.Entity<TourRating>()
            .HasOne<Tourist>()
-           .WithMany(t => t.Ratings)
+           .WithMany(t => t.TourRatings)
            .OnDelete(DeleteBehavior.Cascade);
         }
         public string path = @"C:\Users\Strahinja\Desktop\SIMS_DB\database.db";
