@@ -9,6 +9,7 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows.Media;
 
+
 namespace InitialProject.Service
 {
     public class K2_F3_Guide
@@ -21,7 +22,7 @@ namespace InitialProject.Service
         {
             
             DatesRepository datesRepository = new DatesRepository();
-            Dates date = datesRepository.GetById(dateId);
+            Dates date = datesRepository.GetByIdRatings(dateId);
             List<Checkpoint> checkpoints = checkpointRepository.GetAllCheckpoints();
             List<TourRating> ratings = new List<TourRating>();
             List<TourRatingCheckpointDTO> toursToReturn = new List<TourRatingCheckpointDTO>();
@@ -30,7 +31,7 @@ namespace InitialProject.Service
 
             foreach (var tourist in date.tourists)
             {
-                foreach(var rating in tourist.Ratings)
+                foreach (var rating in tourist.Ratings)
                 {
                     TourRating tourRating = new TourRating(tourist.Id, rating.GuideKnowledge, rating.GuideLanguage, rating.TourAmusement, rating.Comment);
                     ratings.Add(tourRating);
@@ -39,11 +40,11 @@ namespace InitialProject.Service
 
             foreach(var checkpoint in checkpoints)
             {
-                foreach(var tourist in checkpoint.Tourists)
+                foreach (var tourist in checkpoint.Tourists)
                 {
-                    foreach(var tourRating in ratings)
+                    foreach (var tourRating in ratings)
                     {
-                        if(tourRating.TouristId == tourist.Id)
+                        if (tourRating.TouristId == tourist.Id)
                         {
                             TourRatingCheckpointDTO tourRatingCheckpointDTO = new TourRatingCheckpointDTO(tourRating.GuideKnowledge, tourRating.GuideLanguage, tourRating.TourAmusement, tourRating.Comment, checkpoint.Name);
                             toursToReturn.Add(tourRatingCheckpointDTO);
@@ -51,7 +52,7 @@ namespace InitialProject.Service
                     }
                 }
             }
-
+            
             return toursToReturn;
         }
 

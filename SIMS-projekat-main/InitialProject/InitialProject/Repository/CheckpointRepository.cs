@@ -18,7 +18,15 @@ namespace InitialProject.Repository
         {
             using (var db = new DataContext())
             {
-                return db.Checkpoints.Include(t=>t.Tourists).Include(t=>t.TourReservations).ToList();
+                return db.Checkpoints.Include(t=>t.Tourists).ThenInclude(c=>c.Ratings).Include(t=>t.TourReservations).ToList();
+            }
+        }
+
+        public Checkpoint GetCheckpointById(int id)
+        {
+            using (var db = new DataContext())
+            {
+                return db.Checkpoints.Where(t=>t.CheckpointId == id).Include(t => t.Tourists).ThenInclude(c => c.Ratings).Include(t => t.TourReservations).FirstOrDefault();
             }
         }
 

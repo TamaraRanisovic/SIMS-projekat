@@ -42,6 +42,7 @@ namespace InitialProject.Model
         }
         public TourRating(int touristId, int guideKnowledge, int guideLanguage, int tourAmusement, string comment)
         {
+            TouristId = touristId;
             GuideKnowledge = guideKnowledge;
             GuideLanguage = guideLanguage;
             TourAmusement = tourAmusement;

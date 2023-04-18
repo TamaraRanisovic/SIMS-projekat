@@ -42,6 +42,18 @@ namespace InitialProject.Repository
             
         }
 
+        public Dates GetByIdRatings(int id)
+        {
+            using (var db = new DataContext())
+            {
+                return db.Dates.Include(d => d.tourists)
+                        .ThenInclude(t => t.Ratings)
+                        .FirstOrDefault(d => d.Id == id);
+            }
+
+
+        }
+
         public List<Dates> GetByYear(int year)
         {
             using (var db = new DataContext())
