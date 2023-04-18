@@ -159,13 +159,7 @@ namespace InitialProject.Service
                 DateTime finishDate = date.Date.AddHours(tour.Duration);
                 if (DateTime.Compare(finishDate, currentTime) < 0)
                 {
-                    TourDateDTO tourDate = new TourDateDTO();
-                    tourDate.TourId = tour.TourId;
-                    tourDate.TourName = tour.Name;
-                    tourDate.DateId = date.Id;
-                    tourDate.Date = date.Date;
-                    tourDate.Description = tour.Description;
-
+                    TourDateDTO tourDate = new TourDateDTO(tour.TourId, tour.Name, date.Date, date.Id, tour.Description);
                     toursToReturn.Add(tourDate);
                 }
                 
