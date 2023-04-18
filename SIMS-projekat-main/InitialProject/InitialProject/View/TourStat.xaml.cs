@@ -56,5 +56,13 @@ namespace InitialProject.View
             guestStat.Show();
             Close();
         }
+
+        private void ShowReview_Click(object sender, RoutedEventArgs e)
+        {   
+            int dateId = Int32.Parse(DateToReview.Text);
+            Review review = new Review(dateId);
+            review.Show();
+            Close ();
+        }
     }
 }

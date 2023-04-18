@@ -40,7 +40,9 @@ namespace InitialProject.View
 
         private void K2_F3_CLick(object sender, RoutedEventArgs e)
         {
-
+            TourStat tourStat = new TourStat();
+            tourStat.Show();
+            Close();
         }
     }
 }

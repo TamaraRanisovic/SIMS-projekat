@@ -34,6 +34,9 @@
             <Button
                 x:Name="GuestStat"
                 Click="GuestStat_Click" Content="Guest Stat" Margin="350,0,150,0"/>
+            <Button
+                x:Name="ShowReview"
+                Click="ShowReview_Click" Content="ShowReview" Margin="0,126,0,-126" Grid.Column="1" Grid.ColumnSpan="2"/>
         </Grid>
 
 
@@ -51,6 +54,10 @@
                 Orientation="Vertical">
 
                 <Label Content=""/>
+                <Label Content="Date Id"/>
+                <TextBox
+                    x:Name="DateToReview"
+                    />
             </StackPanel>
 
             <ListBox x:Name="ListOfTours" Margin="10,29,10,10" d:ItemsSource="{d:SampleData ItemCount=5}">

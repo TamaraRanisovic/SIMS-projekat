@@ -3,6 +3,7 @@ using System;
 using InitialProject.Model;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -10,9 +11,10 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace InitialProject.Migrations
 {
     [DbContext(typeof(DataContext))]
-    partial class DataContextModelSnapshot : ModelSnapshot
+    [Migration("20230417230438_TourRatingTouristId")]
+    partial class TourRatingTouristId
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder.HasAnnotation("ProductVersion", "6.0.0");
@@ -262,12 +264,12 @@ namespace InitialProject.Migrations
                     b.Property<int>("TourAmusement")
                         .HasColumnType("INTEGER");
 
-                    b.Property<int>("TouristId")
+                    b.Property<int>("touristId")
                         .HasColumnType("INTEGER");
 
                     b.HasKey("Id");
 
-                    b.HasIndex("TouristId");
+                    b.HasIndex("touristId");
 
                     b.ToTable("Rating");
                 });
@@ -575,7 +577,7 @@ namespace InitialProject.Migrations
                 {
                     b.HasOne("InitialProject.Model.Tourist", null)
                         .WithMany("Ratings")
-                        .HasForeignKey("TouristId")
+                        .HasForeignKey("touristId")
                         .OnDelete(DeleteBehavior.Cascade)
                         .IsRequired();
                 });

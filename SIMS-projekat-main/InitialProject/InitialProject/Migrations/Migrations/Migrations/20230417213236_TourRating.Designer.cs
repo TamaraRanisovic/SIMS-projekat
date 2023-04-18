@@ -3,6 +3,7 @@ using System;
 using InitialProject.Model;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -10,9 +11,10 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace InitialProject.Migrations
 {
     [DbContext(typeof(DataContext))]
-    partial class DataContextModelSnapshot : ModelSnapshot
+    [Migration("20230417213236_TourRating")]
+    partial class TourRating
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder.HasAnnotation("ProductVersion", "6.0.0");
@@ -262,7 +264,7 @@ namespace InitialProject.Migrations
                     b.Property<int>("TourAmusement")
                         .HasColumnType("INTEGER");
 
-                    b.Property<int>("TouristId")
+                    b.Property<int?>("TouristId")
                         .HasColumnType("INTEGER");
 
                     b.HasKey("Id");
@@ -576,8 +578,7 @@ namespace InitialProject.Migrations
                     b.HasOne("InitialProject.Model.Tourist", null)
                         .WithMany("Ratings")
                         .HasForeignKey("TouristId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
+                        .OnDelete(DeleteBehavior.Cascade);
                 });
 
             modelBuilder.Entity("InitialProject.Model.TourReservation", b =>

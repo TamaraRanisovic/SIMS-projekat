@@ -19,6 +19,7 @@ namespace InitialProject.Model
         public List<TourReservation> TourReservations { get; set; }
         public List<Coupon> Coupons { get; set; }
 
+        public List<TourRating> Ratings { get; set; }
 
 
         public Tourist(string username, string password, UserType userType = UserType.Tourist) : base(username, password, userType)
