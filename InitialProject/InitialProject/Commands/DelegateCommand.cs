@@ -13,10 +13,7 @@ namespace InitialProject.Commands
         private readonly Action _execute;
         private readonly Func<bool> _executed;
         private readonly Action<object> _executed2;
-
         private readonly Func<bool> _canExecute;
-
-        public DelegateCommand(Action execute) : this(execute, null)
         {
         }
 

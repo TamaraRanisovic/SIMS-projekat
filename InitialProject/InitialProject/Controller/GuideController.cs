@@ -39,6 +39,7 @@ namespace InitialProject.Controller
         {
             Console.WriteLine("1.kreiraj turu i ubaci u bazu");
             Console.WriteLine("2. prati turu");
+            Console.WriteLine("3. testiraj");
             Console.WriteLine("x. exit");
             Console.Write("Your option: ");
         }
@@ -60,6 +61,10 @@ namespace InitialProject.Controller
                     Console.WriteLine("Izabrali ste pracenje ture");
                     tourService.TourTracking();
                     break;
+                case "3": 
+                    K2_F2_Guide k2_F2_Guide = new K2_F2_Guide();
+                    k2_F2_Guide.FinishedTours();
+                    break;
                 case "x":
                     break;
                 default:
@@ -71,7 +76,7 @@ namespace InitialProject.Controller
 
         public static List<Dates> CreateDates()
         {
-
+            
             List<Dates> StartingDates = new List<Dates>();
 
             Console.WriteLine("koliko tura ima datuma");
@@ -116,13 +121,13 @@ namespace InitialProject.Controller
             Console.WriteLine("MaxGuests:");
             maxGuests = Int32.Parse(Console.ReadLine());
 
-            // Console.WriteLine("StartTime(yyyy-mm-dd hh:mm:ss):");
+           // Console.WriteLine("StartTime(yyyy-mm-dd hh:mm:ss):");
             //starTime = DateTime.Parse(Console.ReadLine());
 
             Console.WriteLine("TourDuration:");
             duration = Int32.Parse(Console.ReadLine());
 
-            Tour newTour = new Tour(name, Description, language, maxGuests, duration);
+            Tour newTour = new Tour(name, Description, language,maxGuests,duration);
 
             return newTour;
         }

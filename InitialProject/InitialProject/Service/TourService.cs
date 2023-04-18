@@ -163,12 +163,12 @@ namespace InitialProject.Service
                     tour.Checkpoints.Add(checkpoint);
                 }
 
-                foreach (var date in dates)
+                foreach(var date in dates)
                 {
                     context.Dates.Add(date);
                     tour.StartingDates.Add(date);
                 }
-
+                
 
                 context.SaveChanges();
             }
@@ -199,7 +199,7 @@ namespace InitialProject.Service
             using (var context = new DataContext())
             {
                 TourRepository tourRepository = new TourRepository();
-                DateTime todayDate = new DateTime(DateTime.Now.Year, DateTime.Now.Month, DateTime.Now.Day, 0, 0, 0);
+                DateTime todayDate = new DateTime(DateTime.Now.Year, DateTime.Now.Month, DateTime.Now.Day, 0 , 0 , 0);
                 Console.WriteLine("Danasnji datum: " + todayDate);
                 List<Tour> todaysTours = tourRepository.GetByStartDate(todayDate);
                 UnmarkCheckpoints(todaysTours);
@@ -499,7 +499,7 @@ namespace InitialProject.Service
                 Console.WriteLine("***********************************");
                 Console.WriteLine("Ime turiste: " + tourist.Username);
                 Console.WriteLine("da li je turista prisutan: " + (tourist.IsPresent == false ? "nije prisutan" : "jeste prisutan" + "\n\n\n"));
-
+            
             }
 
             string choice;
@@ -513,24 +513,24 @@ namespace InitialProject.Service
                 Console.WriteLine("vasa opcija: ");
 
                 choice = Console.ReadLine();
-                MarkTourist(choice, trackingTour, currentCheckpoint);
+                MarkTourist(choice, trackingTour,currentCheckpoint);
 
-            } while (!choice.Equals("x"));
+            } while(!choice.Equals("x"));
 
         }
 
-        public void MarkTourist(string name, Tour trackingTour, Checkpoint currentCheckpoint)
+        public void MarkTourist (string name, Tour trackingTour, Checkpoint currentCheckpoint)
         {
             using (var db = new DataContext())
             {
-                foreach (var tourist in trackingTour.Tourists)
+                foreach(var tourist in trackingTour.Tourists)
                 {
-                    if (tourist.Username == name)
+                    if(tourist.Username == name)
                     {
                         if (tourist.IsPresent)
                         {
                             Console.WriteLine($"Turista {tourist.Username} je prisutan");
-
+                            
                         }
                         else
                         {
@@ -579,11 +579,5 @@ namespace InitialProject.Service
                 }
             }
         }
-
-        /*public bool IsTourActive(int tourId)
-        {
-
-        }*/
- 
     }
 }

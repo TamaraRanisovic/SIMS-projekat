@@ -12,11 +12,19 @@ namespace InitialProject.Model
 
         public DateTime Date { get; set; }
 
+        public int? TourId { get; set; }
         public bool IsUsed { get; set; }
-        public Coupon()
+        public Coupon() 
+        {   
+            Date = DateTime.Now;
+            IsUsed = false;
+        }
+
+        public Coupon (int id)
         {
             Date = DateTime.Now;
             IsUsed = false;
+            TourId = id;
         }
 
     }

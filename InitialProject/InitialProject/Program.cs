@@ -16,12 +16,15 @@ namespace InitialProject
 
         public static void Main()
         {
-            var mainWindow = new LoginWindow();
-            mainWindow.Show();
-
-            var app = new App();
-            app.Run();
-
+            string chosenOption;
+            do
+            {
+                WriteMenuOptions();
+                chosenOption = Console.ReadLine();
+                Console.Clear();
+                ProcessChosenOption(chosenOption);
+            } while (!chosenOption.Equals("x"));
+            
         }
 
         private static void WriteMenuOptions()
@@ -59,7 +62,7 @@ namespace InitialProject
                 case "4":
                     Console.WriteLine("Chosen option: 4");
                     Console.WriteLine("Chosen option: Prikaz i pretraga tura");
-                    TourController TouristController = new TourController();
+                    TourController TourController = new TourController();
                     TouristController.GetMenu();
                     break;
                 case "x":

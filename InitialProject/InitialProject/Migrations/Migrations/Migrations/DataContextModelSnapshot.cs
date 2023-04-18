@@ -153,6 +153,9 @@ namespace InitialProject.Migrations
                     b.Property<bool>("IsUsed")
                         .HasColumnType("INTEGER");
 
+                    b.Property<int?>("TourId")
+                        .HasColumnType("INTEGER");
+
                     b.Property<int?>("TouristId")
                         .HasColumnType("INTEGER");
 
@@ -240,27 +243,6 @@ namespace InitialProject.Migrations
                     b.ToTable("TourImages");
                 });
 
-            modelBuilder.Entity("InitialProject.Model.TouristNotifications", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("INTEGER");
-
-                    b.Property<int?>("TourReservationId")
-                        .HasColumnType("INTEGER");
-
-                    b.Property<int?>("TouristId")
-                        .HasColumnType("INTEGER");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("TourReservationId");
-
-                    b.HasIndex("TouristId");
-
-                    b.ToTable("TouristNotifications");
-                });
-
             modelBuilder.Entity("InitialProject.Model.TourRating", b =>
                 {
                     b.Property<int>("Id")
@@ -280,19 +262,14 @@ namespace InitialProject.Migrations
                     b.Property<int>("TourAmusement")
                         .HasColumnType("INTEGER");
 
-                    b.Property<int?>("TourId")
-                        .HasColumnType("INTEGER");
-
-                    b.Property<int?>("TouristId")
+                    b.Property<int>("TouristId")
                         .HasColumnType("INTEGER");
 
                     b.HasKey("Id");
 
-                    b.HasIndex("TourId");
-
                     b.HasIndex("TouristId");
 
-                    b.ToTable("TourRatings");
+                    b.ToTable("Rating");
                 });
 
             modelBuilder.Entity("InitialProject.Model.TourReservation", b =>
@@ -418,7 +395,7 @@ namespace InitialProject.Migrations
                     b.Property<int>("Duration")
                         .HasColumnType("INTEGER");
 
-                    b.Property<int?>("GuideId")
+                    b.Property<int>("GuideId")
                         .HasColumnType("INTEGER");
 
                     b.Property<string>("Language")
@@ -591,34 +568,16 @@ namespace InitialProject.Migrations
 
                     b.HasOne("InitialProject.Model.TourRating", null)
                         .WithMany("TourImages")
-                        .HasForeignKey("TourRatingId")
-                        .OnDelete(DeleteBehavior.Cascade);
-                });
-
-            modelBuilder.Entity("InitialProject.Model.TouristNotifications", b =>
-                {
-                    b.HasOne("InitialProject.Model.TourReservation", null)
-                        .WithMany("Notifications")
-                        .HasForeignKey("TourReservationId")
-                        .OnDelete(DeleteBehavior.Cascade);
-
-                    b.HasOne("InitialProject.Model.Tourist", null)
-                        .WithMany("TouristNotifications")
-                        .HasForeignKey("TouristId")
-                        .OnDelete(DeleteBehavior.Cascade);
+                        .HasForeignKey("TourRatingId");
                 });
 
             modelBuilder.Entity("InitialProject.Model.TourRating", b =>
                 {
-                    b.HasOne("WebApi.Entities.Tour", null)
-                        .WithMany("TourRatings")
-                        .HasForeignKey("TourId")
-                        .OnDelete(DeleteBehavior.Cascade);
-
                     b.HasOne("InitialProject.Model.Tourist", null)
-                        .WithMany("TourRatings")
+                        .WithMany("Ratings")
                         .HasForeignKey("TouristId")
-                        .OnDelete(DeleteBehavior.Cascade);
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
                 });
 
             modelBuilder.Entity("InitialProject.Model.TourReservation", b =>
@@ -660,7 +619,8 @@ namespace InitialProject.Migrations
                     b.HasOne("InitialProject.Model.Guide", null)
                         .WithMany("Tours")
                         .HasForeignKey("GuideId")
-                        .OnDelete(DeleteBehavior.Cascade);
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
 
                     b.HasOne("WebApi.Entities.Location", null)
                         .WithMany("Tours")
@@ -684,7 +644,7 @@ namespace InitialProject.Migrations
                         .OnDelete(DeleteBehavior.Cascade);
 
                     b.HasOne("InitialProject.Model.Dates", null)
-                        .WithMany("Tourists")
+                        .WithMany("tourists")
                         .HasForeignKey("DatesId")
                         .OnDelete(DeleteBehavior.Cascade);
 
@@ -712,17 +672,12 @@ namespace InitialProject.Migrations
 
             modelBuilder.Entity("InitialProject.Model.Dates", b =>
                 {
-                    b.Navigation("Tourists");
+                    b.Navigation("tourists");
                 });
 
             modelBuilder.Entity("InitialProject.Model.TourRating", b =>
                 {
                     b.Navigation("TourImages");
-                });
-
-            modelBuilder.Entity("InitialProject.Model.TourReservation", b =>
-                {
-                    b.Navigation("Notifications");
                 });
 
             modelBuilder.Entity("WebApi.Entities.Checkpoint", b =>
@@ -746,8 +701,6 @@ namespace InitialProject.Migrations
                     b.Navigation("Images");
 
                     b.Navigation("StartingDates");
-
-                    b.Navigation("TourRatings");
 
                     b.Navigation("TourReservations");
 
@@ -779,11 +732,9 @@ namespace InitialProject.Migrations
                 {
                     b.Navigation("Coupons");
 
-                    b.Navigation("TourRatings");
+                    b.Navigation("Ratings");
 
                     b.Navigation("TourReservations");
-
-                    b.Navigation("TouristNotifications");
                 });
 #pragma warning restore 612, 618
         }

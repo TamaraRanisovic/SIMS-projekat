@@ -7,7 +7,14 @@
         mc:Ignorable="d"
         Title="GuideWindow" Height="450" Width="800">
     <Grid>
-        <Label Content="Guide" HorizontalAlignment="Center" VerticalAlignment="Center" FontSize="36"/>
-
+        <Button
+            x:Name="K2_F1"
+            Click="K2_F1_Click" Content="K2_F1" Margin="335,54,365,330"/>
+        <Button
+            x:Name="K2_F2"
+            Click="K2_F2_Click" Content="K2_F2" Margin="335,175,365,208"/>
+        <Button
+            x:Name="K2_F3"
+            Click="K2_F3_CLick" Content="K2_F3" Margin="335,309,365,75"/>
     </Grid>
 </Window>

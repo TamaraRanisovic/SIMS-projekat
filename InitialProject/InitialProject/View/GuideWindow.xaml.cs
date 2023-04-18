@@ -21,5 +21,25 @@ namespace InitialProject.View
             InitializeComponent();
         }
 
+        private void K2_F1_Click(object sender, RoutedEventArgs e)
+        {
+            CancelTour cancelTour = new CancelTour();
+            cancelTour.Show();
+            Close();
+        }
+
+        private void K2_F2_Click(object sender, RoutedEventArgs e)
+        {
+            TourStat tourStat = new TourStat();
+            tourStat.Show();
+            Close();
+        }
+
+        private void K2_F3_CLick(object sender, RoutedEventArgs e)
+        {
+            TourStat tourStat = new TourStat();
+            tourStat.Show();
+            Close();
+        }
     }
 }

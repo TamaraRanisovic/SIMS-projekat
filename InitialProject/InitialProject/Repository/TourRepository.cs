@@ -1,11 +1,9 @@
-﻿using InitialProject.DTO;
+using InitialProject.DTO;
 using InitialProject.Model;
 using Microsoft.EntityFrameworkCore;
 using System;
 using System.CodeDom;
-﻿using InitialProject.Model;
 using Microsoft.EntityFrameworkCore;
-using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -17,11 +15,9 @@ namespace InitialProject.Repository
     public class TourRepository
     {
 
-        TourReservationRepository tourReservationRepository = new TourReservationRepository();
-
         public TourRepository() { }
 
-        public void Add(Tour tourToAdd)
+        public void AddTour(Tour tourToAdd)
         {
             using (var db = new DataContext())
             {
@@ -30,16 +26,109 @@ namespace InitialProject.Repository
             }
         }
 
-        public List<Tour> GetAll()
+        public List<Tour> GetAllTours()
         {
             using (var db = new DataContext())
             {
-
                 return db.Tours.ToList();
             }
         }
 
-        public List<Tour> GetByLocation(int locationId)
+
+        public Tour GetTourById(int id)
+        {
+            using (var db = new DataContext())
+            {
+                return db.Tours.FirstOrDefault(t => t.TourId == id);
+            }
+        }
+
+        public Tour GetTourByName(string name)
+        {
+            using (var db = new DataContext())
+            {
+                return db.Tours.FirstOrDefault(t => t.Name == name);
+            }
+        }
+
+        public void UpdateTour(int id, Tour updatedTour)
+        {
+            using (var context = new DataContext())
+            {
+                var tourToUpdate = context.Tours.FirstOrDefault(t => t.TourId == id);
+                if (tourToUpdate != null)
+                {
+                    tourToUpdate.Name = updatedTour.Name;
+                    tourToUpdate.Description = updatedTour.Description;
+                    tourToUpdate.Language = updatedTour.Language;
+                    tourToUpdate.MaxGuests = updatedTour.MaxGuests;
+                    tourToUpdate.StartTime = updatedTour.StartTime;
+                    tourToUpdate.EndTime = updatedTour.EndTime;
+                    tourToUpdate.Duration = updatedTour.Duration;
+                    tourToUpdate.Checkpoints = updatedTour.Checkpoints;
+                    tourToUpdate.Images = updatedTour.Images;
+                    tourToUpdate.Tourists = updatedTour.Tourists;
+                    context.SaveChanges();
+                }
+            }
+        }
+
+        public void DeleteTour(int id)
+        {
+            using (var db = new DataContext())
+            {
+                var tourToDelete = db.Tours.FirstOrDefault(t => t.TourId == id);
+
+                if (tourToDelete != null)
+                {
+                    db.Tours.Remove(tourToDelete);
+                    db.SaveChanges();
+                }
+            }
+        }
+
+        public List<Tour> GetToursByStartDate(DateTime startTime)
+        {
+            List<Tour> todaysTour = new List<Tour>();
+            using (var db = new DataContext())
+            {
+                todaysTour = db.Tours.Where(t => t.StartTime == startTime).Include(t => t.Checkpoints).Include(t=>t.Tourists).Include(t => t.Images).ToList();
+
+            }
+            return todaysTour;
+        }
+
+        public List<Tour> GetToursList()
+        {
+            List<Tour> toursWithCheckpoints = new List<Tour>();
+            using (var db = new DataContext())
+            {
+               toursWithCheckpoints = db.Tours.Include(t => t.Checkpoints).Include(t => t.Tourists).Include(t => t.Images).ToList();
+            }
+            return toursWithCheckpoints; 
+        }
+
+        public List<Tourist> GetTourists(Tour tour)
+        {
+            using (var db = new DataContext())
+            {
+                {
+                  
+                    var tourToReturn = db.Tours.Include(t => t.Tourists).FirstOrDefault(t => t.TourId == tour.TourId);
+
+                    
+                    if (tour == null)
+                    {
+                        return new List<Tourist>();
+                    }
+
+                    
+                    return tour.Tourists;
+                }
+            }
+        }
+
+        public List<Tour> GetToursByLocation(int locationId)
         {
             List<Tour> toursByLocation = new List<Tour>();
             using (var db = new DataContext())
@@ -53,25 +142,26 @@ namespace InitialProject.Repository
             return toursByLocation;
         }
 
-        public int GetTouristsNumber(int tourId)
+        public int GetNumberOfTouristsInATour(int tourId)
         {
+            TourReservationRepository tourReservationRepository = new TourReservationRepository();
             using (var db = new DataContext())
             {
                 var tour = db.Tours.Include(t => t.TourReservations).SingleOrDefault(t => t.TourId == tourId);
                 
-                int tourists = 0;
+                int numberOfTouristsInATour = 0;
                 List<TourReservation> tourReservations = tour.TourReservations.ToList();
                 foreach (TourReservation tourReservation in tourReservations)
                 {
-                    tourists += tourReservation.TouristsNumber;
+                    numberOfTouristsInATour += tourReservation.TouristsNumber;
                 }
-                return tourists;
+                return numberOfTouristsInATour;
             }
         }
 
-        public void BookTour(int tourId, int touristId, int tourists)
+        public void BookATour(int tourId, int touristId, int touristsNumber)
         {
-            TourReservation tourReservation = new TourReservation(tourists);
+            TourReservation tourReservation = new TourReservation(touristsNumber);
             using (var db = new DataContext())
             {
                 Tourist tourist = db.Tourists.Find(touristId);
@@ -86,33 +176,29 @@ namespace InitialProject.Repository
                 
             }
             Console.WriteLine("Uspesno ste rezervisali turu.");
+
         }
 
-        public Tour GetById(int id)
+        public static List<Tour> GetByGuestsNumber(int guestsNumber)  //IME SREDITI FUNKCIJE
         {
+            List<Tour> toursByNumber = new List<Tour>();
             using (var db = new DataContext())
             {
-                return db.Tours.FirstOrDefault(t => t.TourId == id);
+                foreach (Tour tour in db.Tours)
+                {
+                    if (tour.MaxGuests - tour.Tourists.Count >= guestsNumber)
+                    {
+                        toursByNumber.Add(tour);
+                    }
+                }
             }
+            return toursByNumber;
+
         }
 
-        /*public Tour GetByName(string tourName)
-        {
-            using (var db = new DataContext())
-            {
-                return db.Tours.FirstOrDefault(t => t.Name == tourName);
-            }
-        }*/
 
-        public Tour GetByName(string name)
-        {
-            using (var db = new DataContext())
-            {
-                return db.Tours.Include(t => t.StartingDates).Where(t => t.Name == name).FirstOrDefault();
-            }
-        }
 
-        public void Update(int id, Tour updatedTour)
+        public void UpdateTour(int id, Tour updatedTour)
         {
             using (var context = new DataContext())
             {
@@ -123,6 +209,8 @@ namespace InitialProject.Repository
                     tourToUpdate.Description = updatedTour.Description;
                     tourToUpdate.Language = updatedTour.Language;
                     tourToUpdate.MaxGuests = updatedTour.MaxGuests;
+                    tourToUpdate.StartTime = updatedTour.StartTime;
+                    tourToUpdate.EndTime = updatedTour.EndTime;
                     tourToUpdate.Duration = updatedTour.Duration;
                     tourToUpdate.Checkpoints = updatedTour.Checkpoints;
                     tourToUpdate.Images = updatedTour.Images;
@@ -132,7 +220,7 @@ namespace InitialProject.Repository
             }
         }
 
-        public void Delete(int id)
+        public void DeleteTour(int id)
         {
             using (var db = new DataContext())
             {
@@ -146,82 +234,45 @@ namespace InitialProject.Repository
             }
         }
 
-        public List<Tour> GetByStartDate(DateTime startingDate)
+        public List<Tour> GetToursByStartDate(DateTime startTime)
         {
             List<Tour> todaysTour = new List<Tour>();
             using (var db = new DataContext())
             {
-                List<Tour> tours = db.Tours.Include(t => t.Checkpoints).Include(t => t.Tourists).Include(t => t.Images).Include(t => t.StartingDates).ToList();
-                foreach (var tour in tours)
-                {
-                    todaysTour = db.Tours.Include(t => t.Checkpoints).Include(t => t.Tourists).Include(t => t.Images).Include(t => t.StartingDates).
-                        Where(t => t.StartingDates.Any(d => d.Date.Date == startingDate.Date)).ToList();
-                }
+                todaysTour = db.Tours.Where(t => t.StartTime == startTime).Include(t => t.Checkpoints).Include(t=>t.Tourists).Include(t => t.Images).ToList();
 
             }
             return todaysTour;
         }
 
-        public List<Tour> GetList()
+        public List<Tour> GetToursList()
         {
             List<Tour> toursWithCheckpoints = new List<Tour>();
             using (var db = new DataContext())
             {
-                toursWithCheckpoints = db.Tours.Include(t => t.Checkpoints).Include(t => t.Tourists).Include(t => t.Images).ToList();
+               toursWithCheckpoints = db.Tours.Include(t => t.Checkpoints).Include(t => t.Tourists).Include(t => t.Images).ToList();
             }
-            return toursWithCheckpoints;
+            return toursWithCheckpoints; 
         }
 
-        /*public List<Tourist> GetTourists(Tour tour)
+        public List<Tourist> GetTourists(Tour tour)
         {
             using (var db = new DataContext())
             {
                 {
-
+                  
                     var tourToReturn = db.Tours.Include(t => t.Tourists).FirstOrDefault(t => t.TourId == tour.TourId);
 
-
+                    
                     if (tour == null)
                     {
                         return new List<Tourist>();
                     }
 
-
+                    
                     return tour.Tourists;
                 }
             }
-        }*/
-        public List<Tourist> GetTourists(Tour tour)
-        {
-            using (var db = new DataContext())
-            {
-                var tourToReturn = db.Tours.Include(t => t.Tourists).FirstOrDefault(t => t.TourId == tour.TourId);
-
-                List<Tourist> tourists = new List<Tourist>();
-                tourists.AddRange(tourToReturn.Tourists);
-                return tourists;
-            }
         }
-
-        public Tour GetByTourReservation(int tourReservationId)
-        {
-            using (var db = new DataContext())
-            {
-                List<Tour> tours = db.Tours.Include(t => t.TourReservations).ToList();
-
-                foreach (Tour tour in tours)
-                {
-                    foreach (TourReservation tourReservation in tour.TourReservations)
-                    {
-                        if (tourReservation.TourReservationId == tourReservationId)
-                        {
-                            return tour;
-                        }
-                    }
-                }
-                return null;
-            }
-        }
-
     }
 }

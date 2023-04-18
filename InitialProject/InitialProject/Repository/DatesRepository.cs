@@ -11,30 +11,54 @@ namespace InitialProject.Repository
 {
     public class DatesRepository
     {
-        public DatesRepository() { }
+        public DatesRepository() { }   
 
         public void Delete(Dates date)
         {
-            using (var db = new DataContext())
+            using(var db = new DataContext())
             {
-                db.Dates.Remove(date);
-                db.SaveChanges();
+                 db.Dates.Remove(date);
+                 db.SaveChanges();
             }
         }
-
-        /*public List<Dates> GetAll()
+         
+        public List<Dates> GetAll ()
         {
             using (var db = new DataContext())
             {
-                return db.Dates.Include(t => t.Tours).ToList();
+                return db.Dates.Include(t=>t.tourists).ToList();
             }
-        }*/
-
+        }
+        
         public Dates GetById(int id)
         {
             using (var db = new DataContext())
             {
-                return db.Dates.FirstOrDefault(t => t.Id == id);
+                return  db.Dates.Include(d => d.tourists)
+                        .ThenInclude(t => t.Coupons)
+                        .FirstOrDefault(d => d.Id == id);
+            }
+
+            
+        }
+
+        public Dates GetByIdRatings(int id)
+        {
+            using (var db = new DataContext())
+            {
+                return db.Dates.Include(d => d.tourists)
+                        .ThenInclude(t => t.TourRatings)
+                        .FirstOrDefault(d => d.Id == id);
+            }
+
+
+        }
+
+        public List<Dates> GetByYear(int year)
+        {
+            using (var db = new DataContext())
+            {
+                return db.Dates.Include(t => t.tourists).Where(t=>t.Date.Year == year).ToList();
             }
         }
     }

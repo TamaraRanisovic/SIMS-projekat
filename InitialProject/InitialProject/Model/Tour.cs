@@ -14,6 +14,7 @@ public class Tour
     public int TourId { get; set; }
     public string Name { get; set; }
 
+    public int GuideId { get; set; }
     public string Description { get; set; }
 
     public string Language { get; set; }
@@ -25,6 +26,8 @@ public class Tour
     public List<Dates> StartingDates { get; set; }
 
     public List<TourImages> Images { get; set; }
+
+    public List<Dates> StartingDates { get; set; }
 
     public List<Checkpoint> Checkpoints { get; set; }
 
@@ -38,6 +41,7 @@ public class Tour
     public Tour()
 
     {
+        GuideId = UserSession.LoggedInUser.Id;
         Images = new List<TourImages>();
         Checkpoints = new List<Checkpoint>();
         Tourists = new List<Tourist>();

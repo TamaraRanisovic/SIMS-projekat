@@ -74,6 +74,17 @@ namespace InitialProject.Repository
                 }
 
                 return availableCoupons;
+        public void AddCoupon(int touristId, Coupon coupon)
+        {
+            using (var db = new DataContext())
+            {
+                var tourist = db.Tourists.Include(t => t.Coupons).FirstOrDefault(t => t.Id == touristId);
+
+                if (tourist != null)
+                {   
+                    tourist.Coupons.Add(coupon);
+                    db.SaveChanges();
+                }
             }
         }
     }
