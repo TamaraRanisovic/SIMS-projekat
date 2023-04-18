@@ -163,10 +163,7 @@ namespace InitialProject.Service
                     under18++;
                 }
             }
-            if(under18 <= 0)
-            {
-                return 0;
-            }
+            if(under18 <= 0) {return 0;}
 
             return under18;
 
@@ -186,10 +183,7 @@ namespace InitialProject.Service
                 }
             }
 
-            if (under50 <= 0)
-            {
-                return 0;
-            }
+            if (under50 <= 0){return 0;}
 
             return under50;
 
@@ -209,10 +203,7 @@ namespace InitialProject.Service
                 }
             }
 
-            if (above50 <= 0)
-            {
-                return 0;
-            }
+            if (above50 <= 0){ return 0;}
 
             return above50;
 
@@ -234,8 +225,8 @@ namespace InitialProject.Service
                 }
             }
             if(numOfTourists <= 0) { return 0; }
-            double result = numOfCoupons/ numOfTourists;
-            return result*100;
+            
+            return (numOfCoupons/numOfTourists)*100;
         }
 
         public double WithoutCouponsPercent(Dates dates, int tourId)
@@ -260,8 +251,8 @@ namespace InitialProject.Service
                 if (flag == 0) { numOfCoupons++; }
             }
             if (numOfTourists <= 0) { return 0; }
-            double result = numOfCoupons / numOfTourists;
-            return result * 100;
+            
+            return (numOfCoupons / numOfTourists) * 100;
             ;
         }
     }
