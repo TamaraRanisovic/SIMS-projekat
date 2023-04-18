@@ -3,6 +3,7 @@ using System;
 using InitialProject.Model;
 using Microsoft.EntityFrameworkCore;
 using Microsoft.EntityFrameworkCore.Infrastructure;
+using Microsoft.EntityFrameworkCore.Migrations;
 using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 
 #nullable disable
@@ -10,9 +11,10 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace InitialProject.Migrations
 {
     [DbContext(typeof(DataContext))]
-    partial class DataContextModelSnapshot : ModelSnapshot
+    [Migration("20230416042249_Initial")]
+    partial class Initial
     {
-        protected override void BuildModel(ModelBuilder modelBuilder)
+        protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
 #pragma warning disable 612, 618
             modelBuilder.HasAnnotation("ProductVersion", "6.0.0");
@@ -140,25 +142,7 @@ namespace InitialProject.Migrations
 
                     b.HasKey("AccomodationId");
 
-                    b.ToTable("AccomodationRating");
-                });
-
-            modelBuilder.Entity("InitialProject.Model.AccomodationReview", b =>
-                {
-                    b.Property<int>("AccomodationId")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("INTEGER");
-
-                    b.Property<int>("Rating")
-                        .HasColumnType("INTEGER");
-
-                    b.Property<string>("Recommendations")
-                        .IsRequired()
-                        .HasColumnType("TEXT");
-
-                    b.HasKey("AccomodationId");
-
-                    b.ToTable("AccomodationReviews");
+                    b.ToTable("accomodationRatings");
                 });
 
             modelBuilder.Entity("InitialProject.Model.Comment", b =>

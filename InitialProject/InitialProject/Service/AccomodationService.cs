@@ -1,5 +1,6 @@
 ﻿using InitialProject.Model;
 using InitialProject.Repository;
+using Microsoft.EntityFrameworkCore.Diagnostics;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -140,6 +141,26 @@ namespace InitialProject.Service
             return null;
         }
 
+        public void UpdateAvailability(int accId,DateTime start,DateTime end,int numberOfGuests)
+        {   using (var db = new DataContext())
+            {
+                var accomodation = GetAccomodationById(accId);
+                if (accomodation == null)
+                {
+                    Console.WriteLine("Accomodation not found.");
+                    return;
+                }
+                if (accomodation.MaxGuests < numberOfGuests)
+                {
+                    Console.WriteLine("Not enough spots available for the given number of guests");
+                    return;
+                }
+
+                accomodation.MaxGuests = numberOfGuests;
+                db.SaveChanges();
+            }
+        }
+
 
         public List<Accomodation> FindAvailableAccomodations(DateTime startDate, DateTime endDate, int numberOfGuests)
         {
@@ -174,12 +195,47 @@ namespace InitialProject.Service
             return freeSpotsNumber;
         }
 
-        public void BookAcc(int accId,int guestsId,int guestsNumber)
+        public void BookAcc(int accId,int guestsId,int guestsNumber,DateTime start,DateTime end)
         {
-            AccomodationRepository accomodationRepository = new AccomodationRepository();
-            accomodationRepository.BookAcc(accId, guestsId, guestsNumber);
+            AccomodationReservationRepository accomodationReservationRepository = new AccomodationReservationRepository();
+            accomodationReservationRepository.BookAcc(accId, guestsId, guestsNumber,start,end);
         }
 
+        
+        public void CancelReservation(int accId)//accRes po ID, ne uklapa se uvek
+        {
+            AccomodationRepository accomodationRepository = new AccomodationRepository();
+            AccomodationReservationRepository accomodationReservationRepository = new AccomodationReservationRepository();
+
+            Accomodation accomodation = accomodationRepository.GetAccomodationById(accId);
+            AccomodationReservation accomodationReservation = accomodationReservationRepository.GetAccomodationReservationById(accId);
+
+            using(var db = new DataContext()) {
+
+                if (accomodation.DaysBeforeCanceling > (accomodationReservation.CheckInDate - DateTime.Now).TotalDays)
+                {
+                    Console.WriteLine("it is impossible to cancel the reservation because the owner has given several days before cancellation");
+                    return;
+                }
+                else if (accomodationReservation.CheckInDate - DateTime.Now < new TimeSpan(24, 0, 0))
+                {
+                    Console.WriteLine("it is impossible to cancel because there are less than 24 hours until the start of the reservation");
+                    return;
+                }
+
+                else
+                {
+
+
+                    db.AccomodationReservations.Remove(accomodationReservation);
+                    Console.WriteLine("Succesfully removed accomodation reservation!");
+                    db.SaveChanges();
+                    return;
+            }
+            }
+
+        }
+        
 
     }
 }

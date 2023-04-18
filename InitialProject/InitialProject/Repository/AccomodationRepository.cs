@@ -70,24 +70,5 @@ namespace InitialProject.Repository
             }
         }
 
-        public void BookAcc(int accId, int guestId,int guestsNumber)
-        {
-            AccomodationReservation accomodationResrvation = new AccomodationReservation();
-            using(var db = new DataContext())
-            {
-                Guest guests = db.Guests.Find(guestId);
-                Accomodation accomodation = db.Accomodations.Find(accId);
-                if(guests != null && accomodation != null)
-                {
-                    guests.AccomodationReservations.Add(accomodationResrvation);
-                    accomodation.AccomodationReservations.Add(accomodationResrvation);
-                    accomodation.Guests.Add(guests);
-                    db.SaveChanges();
-                }
-            }
-            Console.WriteLine("Successfully reserved accomodation");
-        }
-
-
     }
 }

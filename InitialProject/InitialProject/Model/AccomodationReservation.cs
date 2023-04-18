@@ -12,11 +12,11 @@ public class AccomodationReservation
 
     public List<Accomodation> Accomodations { get; set; }  //
     
-    //public List<User> Users { get; set; }  
+   // public List<User> Users { get; set; }  
 
     public AccomodationReservation()
-    {
-      // Users = new List<User>();
+    { 
+       // Users = new List<User>();
         Accomodations = new List<Accomodation>();
     }
 
@@ -26,7 +26,7 @@ public class AccomodationReservation
         CheckInDate = checkInDate;
         CheckOutDate = checkOutDate;
         NumberOfGuests = numberOfGuests;
-      //  Users = new List<User>();
+      //   Users = new List<User>();
         Accomodations = new List<Accomodation>();
 
     }
@@ -36,7 +36,7 @@ public class AccomodationReservation
         CheckInDate = checkInDate;
         CheckOutDate = checkOutDate;
         NumberOfGuests = numberOfGuests;
-        //Users = new List<User>();
+      //  Users = new List<User>();
         Accomodations = new List<Accomodation>();
     }
 

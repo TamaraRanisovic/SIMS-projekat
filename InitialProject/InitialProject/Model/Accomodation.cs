@@ -38,7 +38,7 @@ namespace InitialProject.Model
             AccomodationReservations = new List<AccomodationReservation>();
         }
 
-        public Accomodation(int accId, string name, Location location, AccomodationType type, int maxGuests, int minReservationDays, int daysBeforeCanceling,bool isAvailable)
+        public Accomodation(int accId, string name, Location location, AccomodationType type, int maxGuests, int minReservationDays, int daysBeforeCanceling)
         {
             AccId = accId;
             Name = name;
@@ -46,7 +46,6 @@ namespace InitialProject.Model
             MaxGuests = maxGuests;
             MinReservationDays = minReservationDays;
             DaysBeforeCanceling = daysBeforeCanceling;
-           // isAvailable = true;
             Images = new List<AccomodationImage>();
             Guests = new List<Guest>();
             AccomodationReservations = new List<AccomodationReservation>();
@@ -55,7 +54,7 @@ namespace InitialProject.Model
 
         public override string ToString()
         {
-            return $"AccomodationId: {AccId}\n, Name: {Name}\n, AccomodationType: {AccomodationType}\n, MaxGuests: {MaxGuests}\n, MinDaysReservation: {MinReservationDays}\n, DaysBeforeCanceling: {DaysBeforeCanceling}\n";
+            return $"[==========****************===========]\nAccomodationId: {AccId}\n, Name: {Name}\n, AccomodationType: {AccomodationType}\n, MaxGuests: {MaxGuests}\n, MinDaysReservation: {MinReservationDays}\n, DaysBeforeCanceling: {DaysBeforeCanceling}\n";
         }
     }
 }

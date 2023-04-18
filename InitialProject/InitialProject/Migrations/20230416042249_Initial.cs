@@ -10,6 +10,21 @@ namespace InitialProject.Migrations
         protected override void Up(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.CreateTable(
+                name: "accomodationRatings",
+                columns: table => new
+                {
+                    AccomodationId = table.Column<int>(type: "INTEGER", nullable: false)
+                        .Annotation("Sqlite:Autoincrement", true),
+                    OwnerId = table.Column<int>(type: "INTEGER", nullable: false),
+                    Cleanliness = table.Column<int>(type: "INTEGER", nullable: false),
+                    OwnerFriendliness = table.Column<int>(type: "INTEGER", nullable: false)
+                },
+                constraints: table =>
+                {
+                    table.PrimaryKey("PK_accomodationRatings", x => x.AccomodationId);
+                });
+
+            migrationBuilder.CreateTable(
                 name: "Locations",
                 columns: table => new
                 {
@@ -31,11 +46,18 @@ namespace InitialProject.Migrations
                         .Annotation("Sqlite:Autoincrement", true),
                     Name = table.Column<string>(type: "TEXT", nullable: false),
                     URL = table.Column<string>(type: "TEXT", nullable: false),
-                    AccomodationAccId = table.Column<int>(type: "INTEGER", nullable: true)
+                    AccomodationAccId = table.Column<int>(type: "INTEGER", nullable: true),
+                    AccomodationRatingAccomodationId = table.Column<int>(type: "INTEGER", nullable: true)
                 },
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_AccomodationImages", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_AccomodationImages_accomodationRatings_AccomodationRatingAccomodationId",
+                        column: x => x.AccomodationRatingAccomodationId,
+                        principalTable: "accomodationRatings",
+                        principalColumn: "AccomodationId",
+                        onDelete: ReferentialAction.Cascade);
                 });
 
             migrationBuilder.CreateTable(
@@ -62,11 +84,18 @@ namespace InitialProject.Migrations
                         .Annotation("Sqlite:Autoincrement", true),
                     CreationTime = table.Column<DateTime>(type: "TEXT", nullable: false),
                     Text = table.Column<string>(type: "TEXT", nullable: false),
+                    AccomodationRatingAccomodationId = table.Column<int>(type: "INTEGER", nullable: true),
                     GuestId = table.Column<int>(type: "INTEGER", nullable: true)
                 },
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_Comments", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_Comments_accomodationRatings_AccomodationRatingAccomodationId",
+                        column: x => x.AccomodationRatingAccomodationId,
+                        principalTable: "accomodationRatings",
+                        principalColumn: "AccomodationId",
+                        onDelete: ReferentialAction.Cascade);
                 });
 
             migrationBuilder.CreateTable(
@@ -170,14 +199,14 @@ namespace InitialProject.Migrations
                     CheckOutDate = table.Column<DateTime>(type: "TEXT", nullable: false),
                     NumberOfGuests = table.Column<int>(type: "INTEGER", nullable: false),
                     AccomodationAccId = table.Column<int>(type: "INTEGER", nullable: true),
-                    GuestId = table.Column<int>(type: "INTEGER", nullable: true)
+                    UserId = table.Column<int>(type: "INTEGER", nullable: true)
                 },
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_AccomodationReservations", x => x.Id);
                     table.ForeignKey(
-                        name: "FK_AccomodationReservations_Users_GuestId",
-                        column: x => x.GuestId,
+                        name: "FK_AccomodationReservations_Users_UserId",
+                        column: x => x.UserId,
                         principalTable: "Users",
                         principalColumn: "Id",
                         onDelete: ReferentialAction.Cascade);
@@ -234,14 +263,19 @@ namespace InitialProject.Migrations
                 column: "AccomodationAccId");
 
             migrationBuilder.CreateIndex(
+                name: "IX_AccomodationImages_AccomodationRatingAccomodationId",
+                table: "AccomodationImages",
+                column: "AccomodationRatingAccomodationId");
+
+            migrationBuilder.CreateIndex(
                 name: "IX_AccomodationReservations_AccomodationAccId",
                 table: "AccomodationReservations",
                 column: "AccomodationAccId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_AccomodationReservations_GuestId",
+                name: "IX_AccomodationReservations_UserId",
                 table: "AccomodationReservations",
-                column: "GuestId");
+                column: "UserId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_Accomodations_AccomodationReservationId",
@@ -267,6 +301,11 @@ namespace InitialProject.Migrations
                 name: "IX_Checkpoints_TourId",
                 table: "Checkpoints",
                 column: "TourId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_Comments_AccomodationRatingAccomodationId",
+                table: "Comments",
+                column: "AccomodationRatingAccomodationId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_Comments_GuestId",
@@ -398,6 +437,9 @@ namespace InitialProject.Migrations
 
             migrationBuilder.DropTable(
                 name: "TourImages");
+
+            migrationBuilder.DropTable(
+                name: "accomodationRatings");
 
             migrationBuilder.DropTable(
                 name: "AccomodationReservations");
