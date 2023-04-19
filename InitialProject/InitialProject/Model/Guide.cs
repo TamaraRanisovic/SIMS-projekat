@@ -12,7 +12,14 @@ namespace InitialProject.Model
 
         public List<Tour> Tours { get; set; }
 
-        public Guide(string username, string password, UserType userType) : base(username, password, userType) { }
+        public Guide()
+        {
+            Tours = new List<Tour>();
+        }
+
+        public Guide(string username, string password, UserType userType) : base(username, password, userType) {
+            Tours = new List<Tour>();
+        }
 
     }
 }

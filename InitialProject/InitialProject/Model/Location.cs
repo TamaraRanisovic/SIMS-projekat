@@ -4,6 +4,7 @@ using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Threading.Tasks;
+using System.Xml.Linq;
 
 namespace WebApi.Entities;
 
@@ -18,18 +19,12 @@ public class Location
     public List<Tour> Tours { get; set; }
 
     public List<Accomodation> Accomodations { get; set; }
-    public Location() 
-    {
-        Accomodations = new List<Accomodation>();
-    }
 
-    public Location(int locationId, string city, string country)
+
+    public Location()
     {
-        LocationId = locationId;
-        City = city;
-        Country = country;
-        Tours = new List<Tour>(); 
-        Accomodations = new List<Accomodation>();  
+        Tours = new List<Tour>();
+        Accomodations = new List<Accomodation>();
     }
 
     public Location(string city, string country)
@@ -40,5 +35,12 @@ public class Location
         Accomodations = new List<Accomodation>();
     }
 
+    public override string ToString()
+    {
+        return $"LocationId: {LocationId}\n, City: {City}\n, Country: {Country}\n";
 
+
+    }
 }
+
+  

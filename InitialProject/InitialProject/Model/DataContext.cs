@@ -47,7 +47,14 @@ namespace InitialProject.Model
 
         public DbSet<AccomodationRating> AccomodationRating { get; set; } //
 
+        public DbSet<TourReservation> TourReservations { get; set; }
+        public DbSet<Dates> Dates { get; set; }
 
+        public DbSet<Coupon> Coupons { get; set; }
+
+        public DbSet<TourRating> TourRatings { get; set; }
+
+        public DbSet<TouristNotifications> TouristNotifications { get; set; }
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
@@ -65,6 +72,41 @@ namespace InitialProject.Model
             modelBuilder.Entity<Tourist>()
                 .HasOne<Tour>()
                 .WithMany(t => t.Tourists)
+                .OnDelete(DeleteBehavior.Cascade);
+
+            modelBuilder.Entity<Dates>()
+                .HasOne<Tour>()
+                .WithMany(t => t.StartingDates)
+                .OnDelete(DeleteBehavior.Cascade);
+
+            modelBuilder.Entity<TourReservation>()
+                .HasOne<Tour>()
+                .WithMany(t => t.TourReservations)
+                .OnDelete(DeleteBehavior.Cascade);
+
+            modelBuilder.Entity<TourReservation>()
+                .HasOne<Checkpoint>()
+                .WithMany(t => t.TourReservations)
+                .OnDelete(DeleteBehavior.Cascade);
+
+            modelBuilder.Entity<TourReservation>()
+                .HasOne<Tourist>()
+                .WithMany(t => t.TourReservations)
+                .OnDelete(DeleteBehavior.Cascade);
+
+            modelBuilder.Entity<TourRating>()
+                .HasOne<Tour>()
+                .WithMany(t => t.TourRatings)
+                .OnDelete(DeleteBehavior.Cascade);
+
+            modelBuilder.Entity<TourRating>()
+                .HasOne<Tourist>()
+                .WithMany(t => t.TourRatings)
+                .OnDelete(DeleteBehavior.Cascade);
+
+            modelBuilder.Entity<TourImages>()
+                .HasOne<TourRating>()
+                .WithMany(t => t.TourImages)
                 .OnDelete(DeleteBehavior.Cascade);
 
             //Accomodations
@@ -125,6 +167,23 @@ namespace InitialProject.Model
 
             //Guest
            modelBuilder.Entity<Accomodation>()
+            modelBuilder.Entity<Guest>()
+               .HasOne<Accomodation>()
+               .WithMany(t => t.Guests)
+               .OnDelete(DeleteBehavior.Cascade);
+
+            //Checkpoint
+
+
+
+            //Checkpoint
+            modelBuilder.Entity<Tourist>()
+               .HasOne<Checkpoint>()
+               .WithMany(t => t.Tourists)
+               .OnDelete(DeleteBehavior.Cascade);
+
+            //Guest
+            modelBuilder.Entity<Accomodation>()
                 .HasOne<Guest>()
                 .WithMany(t => t.Accomodations)
                 .OnDelete(DeleteBehavior.Cascade);
@@ -171,25 +230,47 @@ namespace InitialProject.Model
             //AccomodationReservation 
             modelBuilder.Entity<Accomodation>()
             .HasOne<AccomodationReservation>()
-           .WithMany(t => t.Accomodations)
+            .WithMany(t => t.Accomodations)
+            .OnDelete(DeleteBehavior.Cascade);
+
+            modelBuilder.Entity<User>()
+           .HasOne<AccomodationReservation>()
+           .WithMany(t => t.Users)
            .OnDelete(DeleteBehavior.Cascade);
 
-            //modelBuilder.Entity<User>()
-            //.HasOne<AccomodationReservation>()
-            // .WithMany(t => t.Users)
-            //.OnDelete(DeleteBehavior.Cascade);
-
             //GuestRating 
-            //modelBuilder.Entity<GuestRating>()
-            //.HasOne<User>();
+            //modelBuilder.Entity<AccomodationReservation>()
+            //.HasOne<GuestRating>()
             //.WithMany(t => t.AccomodationReservations)
             //.OnDelete(DeleteBehavior.Cascade);
+
+            //Dates
+            modelBuilder.Entity<Tourist>()
+           .HasOne<Dates>()
+           .WithMany(t => t.Tourists)
+           .OnDelete(DeleteBehavior.Cascade);
+
+            modelBuilder.Entity<TouristNotifications>()
+           .HasOne<Tourist>()
+           .WithMany(t => t.TouristNotifications)
+           .OnDelete(DeleteBehavior.Cascade);
+
+            modelBuilder.Entity<TouristNotifications>()
+           .HasOne<TourReservation>()
+           .WithMany(t => t.Notifications)
+           .OnDelete(DeleteBehavior.Cascade);
+
+            //Coupons
+            modelBuilder.Entity<Coupon>()
+           .HasOne<Tourist>()
+           .WithMany(t => t.Coupons)
+           .OnDelete(DeleteBehavior.Cascade);
 
 
 
         }
+        public string path = @"C:\Users\Strahinja\Desktop\SIMS_DB\database.db";
 
-        public string path = @"C:\Temp\SIMSdatabase.db";
         protected override void OnConfiguring(DbContextOptionsBuilder options) => options.UseSqlite($"Data Source = {path}");
 
     }

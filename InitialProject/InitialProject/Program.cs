@@ -1,9 +1,12 @@
 ﻿using InitialProject.Controller;
+using InitialProject.View;
 using System;
 using System.Collections.Generic;
 using System.Linq;
+using System.Linq.Expressions;
 using System.Text;
 using System.Threading.Tasks;
+
 
 namespace InitialProject
 {
@@ -21,6 +24,7 @@ namespace InitialProject
                 Console.Clear();
                 ProcessChosenOption(chosenOption);
             } while (!chosenOption.Equals("x"));
+            
         }
 
         private static void WriteMenuOptions()
@@ -39,6 +43,7 @@ namespace InitialProject
 
         private static void ProcessChosenOption(string chosenOption) 
         {
+            
             switch(chosenOption)
             {
                 case "1":
