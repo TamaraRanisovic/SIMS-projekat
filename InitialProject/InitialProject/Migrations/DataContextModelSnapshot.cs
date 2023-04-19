@@ -29,14 +29,10 @@ namespace InitialProject.Migrations
                     b.Property<int>("AccomodationType")
                         .HasColumnType("INTEGER");
 
-                    b.Property<string>("Class")
-                        .IsRequired()
-                        .HasColumnType("TEXT");
-
                     b.Property<int>("DaysBeforeCanceling")
                         .HasColumnType("INTEGER");
 
-                    b.Property<int?>("GuestUserId")
+                    b.Property<int?>("GuestId")
                         .HasColumnType("INTEGER");
 
                     b.Property<int?>("LocationId")
@@ -52,18 +48,18 @@ namespace InitialProject.Migrations
                         .IsRequired()
                         .HasColumnType("TEXT");
 
-                    b.Property<int?>("OwnerUserId")
+                    b.Property<int?>("OwnerId")
                         .HasColumnType("INTEGER");
 
                     b.HasKey("AccId");
 
                     b.HasIndex("AccomodationReservationId");
 
-                    b.HasIndex("GuestUserId");
+                    b.HasIndex("GuestId");
 
                     b.HasIndex("LocationId");
 
-                    b.HasIndex("OwnerUserId");
+                    b.HasIndex("OwnerId");
 
                     b.ToTable("Accomodations");
                 });
@@ -101,31 +97,23 @@ namespace InitialProject.Migrations
                     b.Property<int?>("AccomodationAccId")
                         .HasColumnType("INTEGER");
 
-                    b.Property<bool>("Cancelled")
-                        .HasColumnType("INTEGER");
-
                     b.Property<DateTime>("CheckInDate")
                         .HasColumnType("TEXT");
 
                     b.Property<DateTime>("CheckOutDate")
                         .HasColumnType("TEXT");
 
-                    b.Property<int?>("GuestUserId")
+                    b.Property<int?>("GuestId")
                         .HasColumnType("INTEGER");
 
                     b.Property<int>("NumberOfGuests")
-                        .HasColumnType("INTEGER");
-
-                    b.Property<int>("UserId")
                         .HasColumnType("INTEGER");
 
                     b.HasKey("AccomodationReservationId");
 
                     b.HasIndex("AccomodationAccId");
 
-                    b.HasIndex("GuestUserId");
-
-                    b.HasIndex("UserId");
+                    b.HasIndex("GuestId");
 
                     b.ToTable("AccomodationReservations");
                 });
@@ -139,7 +127,7 @@ namespace InitialProject.Migrations
                     b.Property<DateTime>("CreationTime")
                         .HasColumnType("TEXT");
 
-                    b.Property<int?>("GuestUserId")
+                    b.Property<int?>("GuestId")
                         .HasColumnType("INTEGER");
 
                     b.Property<string>("Text")
@@ -148,9 +136,53 @@ namespace InitialProject.Migrations
 
                     b.HasKey("Id");
 
-                    b.HasIndex("GuestUserId");
+                    b.HasIndex("GuestId");
 
                     b.ToTable("Comments");
+                });
+
+            modelBuilder.Entity("InitialProject.Model.Coupon", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("INTEGER");
+
+                    b.Property<DateTime>("Date")
+                        .HasColumnType("TEXT");
+
+                    b.Property<bool>("IsUsed")
+                        .HasColumnType("INTEGER");
+
+                    b.Property<int?>("TourId")
+                        .HasColumnType("INTEGER");
+
+                    b.Property<int?>("TouristId")
+                        .HasColumnType("INTEGER");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("TouristId");
+
+                    b.ToTable("Coupons");
+                });
+
+            modelBuilder.Entity("InitialProject.Model.Dates", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("INTEGER");
+
+                    b.Property<DateTime>("Date")
+                        .HasColumnType("TEXT");
+
+                    b.Property<int?>("TourId")
+                        .HasColumnType("INTEGER");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("TourId");
+
+                    b.ToTable("Dates");
                 });
 
             modelBuilder.Entity("InitialProject.Model.GuestRating", b =>
@@ -165,7 +197,7 @@ namespace InitialProject.Migrations
                     b.Property<int>("Cleanliness")
                         .HasColumnType("INTEGER");
 
-                    b.Property<int?>("OwnerUserId")
+                    b.Property<int?>("OwnerId")
                         .HasColumnType("INTEGER");
 
                     b.Property<DateTime>("RatingExperationDate")
@@ -174,85 +206,18 @@ namespace InitialProject.Migrations
                     b.Property<int>("RuleCompliance")
                         .HasColumnType("INTEGER");
 
-                    b.Property<int?>("UserId")
-                        .HasColumnType("INTEGER");
-
                     b.HasKey("Id");
 
                     b.HasIndex("AccomodationReservationId");
 
-                    b.HasIndex("OwnerUserId");
-
-                    b.HasIndex("UserId");
+                    b.HasIndex("OwnerId");
 
                     b.ToTable("GuestRatings");
                 });
 
-            modelBuilder.Entity("InitialProject.Model.OwnerReview", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("INTEGER");
-
-                    b.Property<int>("AccomodationReservationId")
-                        .HasColumnType("INTEGER");
-
-                    b.Property<int>("Cleanliness")
-                        .HasColumnType("INTEGER");
-
-                    b.Property<string>("Comment")
-                        .IsRequired()
-                        .HasColumnType("TEXT");
-
-                    b.Property<string>("Images")
-                        .IsRequired()
-                        .HasColumnType("TEXT");
-
-                    b.Property<int>("OwnerFairness")
-                        .HasColumnType("INTEGER");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("AccomodationReservationId");
-
-                    b.ToTable("OwnerReviews");
-                });
-
-            modelBuilder.Entity("InitialProject.Model.ReservationReschedulingRequest", b =>
-                {
-                    b.Property<int>("Id")
-                        .ValueGeneratedOnAdd()
-                        .HasColumnType("INTEGER");
-
-                    b.Property<bool>("Achievable")
-                        .HasColumnType("INTEGER");
-
-                    b.Property<string>("Comment")
-                        .IsRequired()
-                        .HasColumnType("TEXT");
-
-                    b.Property<DateTime>("NewEndingDate")
-                        .HasColumnType("TEXT");
-
-                    b.Property<DateTime>("NewStartingDate")
-                        .HasColumnType("TEXT");
-
-                    b.Property<int>("ReservationAccomodationReservationId")
-                        .HasColumnType("INTEGER");
-
-                    b.Property<int>("State")
-                        .HasColumnType("INTEGER");
-
-                    b.HasKey("Id");
-
-                    b.HasIndex("ReservationAccomodationReservationId");
-
-                    b.ToTable("ReservationReschedulingRequests");
-                });
-
             modelBuilder.Entity("InitialProject.Model.TourImages", b =>
                 {
-                    b.Property<int>("Id")
+                    b.Property<int?>("Id")
                         .ValueGeneratedOnAdd()
                         .HasColumnType("INTEGER");
 
@@ -263,21 +228,115 @@ namespace InitialProject.Migrations
                     b.Property<int?>("TourId")
                         .HasColumnType("INTEGER");
 
+                    b.Property<int?>("TourRatingId")
+                        .HasColumnType("INTEGER");
+
                     b.Property<string>("URL")
-                        .IsRequired()
                         .HasColumnType("TEXT");
 
                     b.HasKey("Id");
 
                     b.HasIndex("TourId");
 
+                    b.HasIndex("TourRatingId");
+
                     b.ToTable("TourImages");
+                });
+
+            modelBuilder.Entity("InitialProject.Model.TouristNotifications", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("INTEGER");
+
+                    b.Property<int?>("TourReservationId")
+                        .HasColumnType("INTEGER");
+
+                    b.Property<int?>("TouristId")
+                        .HasColumnType("INTEGER");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("TourReservationId");
+
+                    b.HasIndex("TouristId");
+
+                    b.ToTable("TouristNotifications");
+                });
+
+            modelBuilder.Entity("InitialProject.Model.TourRating", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("INTEGER");
+
+                    b.Property<string>("Comment")
+                        .IsRequired()
+                        .HasColumnType("TEXT");
+
+                    b.Property<int>("GuideKnowledge")
+                        .HasColumnType("INTEGER");
+
+                    b.Property<int>("GuideLanguage")
+                        .HasColumnType("INTEGER");
+
+                    b.Property<int>("TourAmusement")
+                        .HasColumnType("INTEGER");
+
+                    b.Property<int?>("TourId")
+                        .HasColumnType("INTEGER");
+
+                    b.Property<int>("TouristId")
+                        .HasColumnType("INTEGER");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("TourId");
+
+                    b.HasIndex("TouristId");
+
+                    b.ToTable("TourRatings");
+                });
+
+            modelBuilder.Entity("InitialProject.Model.TourReservation", b =>
+                {
+                    b.Property<int>("TourReservationId")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("INTEGER");
+
+                    b.Property<bool>("Attendance")
+                        .HasColumnType("INTEGER");
+
+                    b.Property<int?>("CheckpointId")
+                        .HasColumnType("INTEGER");
+
+                    b.Property<int?>("TourId")
+                        .HasColumnType("INTEGER");
+
+                    b.Property<int?>("TouristId")
+                        .HasColumnType("INTEGER");
+
+                    b.Property<int>("TouristsNumber")
+                        .HasColumnType("INTEGER");
+
+                    b.HasKey("TourReservationId");
+
+                    b.HasIndex("CheckpointId");
+
+                    b.HasIndex("TourId");
+
+                    b.HasIndex("TouristId");
+
+                    b.ToTable("TourReservations");
                 });
 
             modelBuilder.Entity("InitialProject.Model.User", b =>
                 {
-                    b.Property<int>("UserId")
+                    b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
+                        .HasColumnType("INTEGER");
+
+                    b.Property<int?>("AccomodationReservationId")
                         .HasColumnType("INTEGER");
 
                     b.Property<string>("Discriminator")
@@ -295,7 +354,9 @@ namespace InitialProject.Migrations
                         .IsRequired()
                         .HasColumnType("TEXT");
 
-                    b.HasKey("UserId");
+                    b.HasKey("Id");
+
+                    b.HasIndex("AccomodationReservationId");
 
                     b.ToTable("Users");
 
@@ -360,10 +421,7 @@ namespace InitialProject.Migrations
                     b.Property<int>("Duration")
                         .HasColumnType("INTEGER");
 
-                    b.Property<DateTime>("EndTime")
-                        .HasColumnType("TEXT");
-
-                    b.Property<int?>("GuideUserId")
+                    b.Property<int>("GuideId")
                         .HasColumnType("INTEGER");
 
                     b.Property<string>("Language")
@@ -380,12 +438,9 @@ namespace InitialProject.Migrations
                         .IsRequired()
                         .HasColumnType("TEXT");
 
-                    b.Property<DateTime>("StartTime")
-                        .HasColumnType("TEXT");
-
                     b.HasKey("TourId");
 
-                    b.HasIndex("GuideUserId");
+                    b.HasIndex("GuideId");
 
                     b.HasIndex("LocationId");
 
@@ -395,6 +450,11 @@ namespace InitialProject.Migrations
             modelBuilder.Entity("InitialProject.Model.Guest", b =>
                 {
                     b.HasBaseType("InitialProject.Model.User");
+
+                    b.Property<int?>("AccomodationAccId")
+                        .HasColumnType("INTEGER");
+
+                    b.HasIndex("AccomodationAccId");
 
                     b.HasDiscriminator().HasValue("Guest");
                 });
@@ -410,9 +470,6 @@ namespace InitialProject.Migrations
                 {
                     b.HasBaseType("InitialProject.Model.User");
 
-                    b.Property<bool>("SuperOwner")
-                        .HasColumnType("INTEGER");
-
                     b.HasDiscriminator().HasValue("Owner");
                 });
 
@@ -420,7 +477,13 @@ namespace InitialProject.Migrations
                 {
                     b.HasBaseType("InitialProject.Model.User");
 
+                    b.Property<int>("Age")
+                        .HasColumnType("INTEGER");
+
                     b.Property<int?>("CheckpointId")
+                        .HasColumnType("INTEGER");
+
+                    b.Property<int?>("DatesId")
                         .HasColumnType("INTEGER");
 
                     b.Property<bool>("IsPresent")
@@ -430,6 +493,8 @@ namespace InitialProject.Migrations
                         .HasColumnType("INTEGER");
 
                     b.HasIndex("CheckpointId");
+
+                    b.HasIndex("DatesId");
 
                     b.HasIndex("TourId");
 
@@ -445,7 +510,7 @@ namespace InitialProject.Migrations
 
                     b.HasOne("InitialProject.Model.Guest", null)
                         .WithMany("Accomodations")
-                        .HasForeignKey("GuestUserId")
+                        .HasForeignKey("GuestId")
                         .OnDelete(DeleteBehavior.Cascade);
 
                     b.HasOne("WebApi.Entities.Location", null)
@@ -455,7 +520,7 @@ namespace InitialProject.Migrations
 
                     b.HasOne("InitialProject.Model.Owner", null)
                         .WithMany("Accomodations")
-                        .HasForeignKey("OwnerUserId")
+                        .HasForeignKey("OwnerId")
                         .OnDelete(DeleteBehavior.Cascade);
                 });
 
@@ -476,23 +541,31 @@ namespace InitialProject.Migrations
 
                     b.HasOne("InitialProject.Model.Guest", null)
                         .WithMany("AccomodationReservations")
-                        .HasForeignKey("GuestUserId")
+                        .HasForeignKey("GuestId")
                         .OnDelete(DeleteBehavior.Cascade);
-
-                    b.HasOne("InitialProject.Model.User", "User")
-                        .WithMany()
-                        .HasForeignKey("UserId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.Navigation("User");
                 });
 
             modelBuilder.Entity("InitialProject.Model.Comment", b =>
                 {
                     b.HasOne("InitialProject.Model.Guest", null)
                         .WithMany("Comments")
-                        .HasForeignKey("GuestUserId")
+                        .HasForeignKey("GuestId")
+                        .OnDelete(DeleteBehavior.Cascade);
+                });
+
+            modelBuilder.Entity("InitialProject.Model.Coupon", b =>
+                {
+                    b.HasOne("InitialProject.Model.Tourist", null)
+                        .WithMany("Coupons")
+                        .HasForeignKey("TouristId")
+                        .OnDelete(DeleteBehavior.Cascade);
+                });
+
+            modelBuilder.Entity("InitialProject.Model.Dates", b =>
+                {
+                    b.HasOne("WebApi.Entities.Tour", null)
+                        .WithMany("StartingDates")
+                        .HasForeignKey("TourId")
                         .OnDelete(DeleteBehavior.Cascade);
                 });
 
@@ -506,36 +579,10 @@ namespace InitialProject.Migrations
 
                     b.HasOne("InitialProject.Model.Owner", null)
                         .WithMany("GuestRatings")
-                        .HasForeignKey("OwnerUserId")
+                        .HasForeignKey("OwnerId")
                         .OnDelete(DeleteBehavior.Cascade);
 
-                    b.HasOne("InitialProject.Model.User", null)
-                        .WithMany()
-                        .HasForeignKey("UserId");
-
                     b.Navigation("AccomodationReservation");
-                });
-
-            modelBuilder.Entity("InitialProject.Model.OwnerReview", b =>
-                {
-                    b.HasOne("InitialProject.Model.AccomodationReservation", "AccomodationReservation")
-                        .WithMany()
-                        .HasForeignKey("AccomodationReservationId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.Navigation("AccomodationReservation");
-                });
-
-            modelBuilder.Entity("InitialProject.Model.ReservationReschedulingRequest", b =>
-                {
-                    b.HasOne("InitialProject.Model.AccomodationReservation", "Reservation")
-                        .WithMany()
-                        .HasForeignKey("ReservationAccomodationReservationId")
-                        .OnDelete(DeleteBehavior.Cascade)
-                        .IsRequired();
-
-                    b.Navigation("Reservation");
                 });
 
             modelBuilder.Entity("InitialProject.Model.TourImages", b =>
@@ -543,6 +590,64 @@ namespace InitialProject.Migrations
                     b.HasOne("WebApi.Entities.Tour", null)
                         .WithMany("Images")
                         .HasForeignKey("TourId")
+                        .OnDelete(DeleteBehavior.Cascade);
+
+                    b.HasOne("InitialProject.Model.TourRating", null)
+                        .WithMany("TourImages")
+                        .HasForeignKey("TourRatingId")
+                        .OnDelete(DeleteBehavior.Cascade);
+                });
+
+            modelBuilder.Entity("InitialProject.Model.TouristNotifications", b =>
+                {
+                    b.HasOne("InitialProject.Model.TourReservation", null)
+                        .WithMany("Notifications")
+                        .HasForeignKey("TourReservationId")
+                        .OnDelete(DeleteBehavior.Cascade);
+
+                    b.HasOne("InitialProject.Model.Tourist", null)
+                        .WithMany("TouristNotifications")
+                        .HasForeignKey("TouristId")
+                        .OnDelete(DeleteBehavior.Cascade);
+                });
+
+            modelBuilder.Entity("InitialProject.Model.TourRating", b =>
+                {
+                    b.HasOne("WebApi.Entities.Tour", null)
+                        .WithMany("TourRatings")
+                        .HasForeignKey("TourId")
+                        .OnDelete(DeleteBehavior.Cascade);
+
+                    b.HasOne("InitialProject.Model.Tourist", null)
+                        .WithMany("TourRatings")
+                        .HasForeignKey("TouristId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+                });
+
+            modelBuilder.Entity("InitialProject.Model.TourReservation", b =>
+                {
+                    b.HasOne("WebApi.Entities.Checkpoint", null)
+                        .WithMany("TourReservations")
+                        .HasForeignKey("CheckpointId")
+                        .OnDelete(DeleteBehavior.Cascade);
+
+                    b.HasOne("WebApi.Entities.Tour", null)
+                        .WithMany("TourReservations")
+                        .HasForeignKey("TourId")
+                        .OnDelete(DeleteBehavior.Cascade);
+
+                    b.HasOne("InitialProject.Model.Tourist", null)
+                        .WithMany("TourReservations")
+                        .HasForeignKey("TouristId")
+                        .OnDelete(DeleteBehavior.Cascade);
+                });
+
+            modelBuilder.Entity("InitialProject.Model.User", b =>
+                {
+                    b.HasOne("InitialProject.Model.AccomodationReservation", null)
+                        .WithMany("Users")
+                        .HasForeignKey("AccomodationReservationId")
                         .OnDelete(DeleteBehavior.Cascade);
                 });
 
@@ -558,12 +663,21 @@ namespace InitialProject.Migrations
                 {
                     b.HasOne("InitialProject.Model.Guide", null)
                         .WithMany("Tours")
-                        .HasForeignKey("GuideUserId")
-                        .OnDelete(DeleteBehavior.Cascade);
+                        .HasForeignKey("GuideId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
 
                     b.HasOne("WebApi.Entities.Location", null)
                         .WithMany("Tours")
                         .HasForeignKey("LocationId")
+                        .OnDelete(DeleteBehavior.Cascade);
+                });
+
+            modelBuilder.Entity("InitialProject.Model.Guest", b =>
+                {
+                    b.HasOne("InitialProject.Model.Accomodation", null)
+                        .WithMany("Guests")
+                        .HasForeignKey("AccomodationAccId")
                         .OnDelete(DeleteBehavior.Cascade);
                 });
 
@@ -572,6 +686,11 @@ namespace InitialProject.Migrations
                     b.HasOne("WebApi.Entities.Checkpoint", null)
                         .WithMany("Tourists")
                         .HasForeignKey("CheckpointId")
+                        .OnDelete(DeleteBehavior.Cascade);
+
+                    b.HasOne("InitialProject.Model.Dates", null)
+                        .WithMany("Tourists")
+                        .HasForeignKey("DatesId")
                         .OnDelete(DeleteBehavior.Cascade);
 
                     b.HasOne("WebApi.Entities.Tour", null)
@@ -584,16 +703,37 @@ namespace InitialProject.Migrations
                 {
                     b.Navigation("AccomodationReservations");
 
+                    b.Navigation("Guests");
+
                     b.Navigation("Images");
                 });
 
             modelBuilder.Entity("InitialProject.Model.AccomodationReservation", b =>
                 {
                     b.Navigation("Accomodations");
+
+                    b.Navigation("Users");
+                });
+
+            modelBuilder.Entity("InitialProject.Model.Dates", b =>
+                {
+                    b.Navigation("Tourists");
+                });
+
+            modelBuilder.Entity("InitialProject.Model.TourRating", b =>
+                {
+                    b.Navigation("TourImages");
+                });
+
+            modelBuilder.Entity("InitialProject.Model.TourReservation", b =>
+                {
+                    b.Navigation("Notifications");
                 });
 
             modelBuilder.Entity("WebApi.Entities.Checkpoint", b =>
                 {
+                    b.Navigation("TourReservations");
+
                     b.Navigation("Tourists");
                 });
 
@@ -609,6 +749,12 @@ namespace InitialProject.Migrations
                     b.Navigation("Checkpoints");
 
                     b.Navigation("Images");
+
+                    b.Navigation("StartingDates");
+
+                    b.Navigation("TourRatings");
+
+                    b.Navigation("TourReservations");
 
                     b.Navigation("Tourists");
                 });
@@ -632,6 +778,17 @@ namespace InitialProject.Migrations
                     b.Navigation("Accomodations");
 
                     b.Navigation("GuestRatings");
+                });
+
+            modelBuilder.Entity("InitialProject.Model.Tourist", b =>
+                {
+                    b.Navigation("Coupons");
+
+                    b.Navigation("TourRatings");
+
+                    b.Navigation("TourReservations");
+
+                    b.Navigation("TouristNotifications");
                 });
 #pragma warning restore 612, 618
         }

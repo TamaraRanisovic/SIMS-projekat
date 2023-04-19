@@ -257,7 +257,7 @@ namespace InitialProject.Controller
         {
             AccomodationService accomodationService = new AccomodationService();
             LocationService locationService = new LocationService();
-            Location location = locationService.GetLocationByCityAndCountry(city, country);
+            Location location = locationService.GetByCityAndCountry(city, country);
             List<Accomodation> accomodationsByLocation = accomodationService.GetAccomodationsByLocation(location.LocationId);
 
             foreach (Accomodation accomodation in accomodationsByLocation)

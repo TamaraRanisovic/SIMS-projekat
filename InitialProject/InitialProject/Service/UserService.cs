@@ -14,35 +14,29 @@ namespace InitialProject.Service
 {
     public class UserService
     {
-
+        
+        UserRepository userRepository = new UserRepository();
         public UserService() { }    
 
-        private readonly UserRepository UserRepository;
+        
 
-
-        UserRepository userRepository = new UserRepository();
+        
         public void UpdateStatus(bool titleFlag)
         {
             userRepository.UpdateStatus(titleFlag);
         }
-
-        private readonly UserRepository UserRepository;
-
-
-        public UserService(UserRepository userRepository)
+        public bool AddUser(User user, int touristAge = 0)
         {
-            UserRepository = userRepository;
+            return userRepository.AddUser(user, touristAge);
         }
 
         public User Login(string username, string password)
         {
-            UserRepository userRepository = new UserRepository();
             return userRepository.Login(username, password);
         }
 
         public User GetByUsername(string username)
         {
-            UserRepository userRepository = new UserRepository();
             return userRepository.GetByUsername(username);
 
         }

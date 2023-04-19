@@ -16,6 +16,7 @@ namespace InitialProject.Model
 
         public string Password { get; set; }
 
+        [JsonConverter(typeof(JsonStringEnumConverter))]
         public UserType UserType { get; set; }
 
         public List<AccomodationReservation> AccomodationReservations { get; set; }

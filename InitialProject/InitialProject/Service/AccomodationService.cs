@@ -51,7 +51,7 @@ namespace InitialProject.Service
             foreach (Accomodation accomodation in allAccomodations)
 
             {
-                Location existingLocation = locationRepository.GetLocationByCityAndCountry(location.City, location.Country);
+                Location existingLocation = locationRepository.GetByCityAndCountry(location.City, location.Country);
 
                 if (existingLocation != null)
                 {

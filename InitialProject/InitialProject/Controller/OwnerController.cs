@@ -83,7 +83,30 @@ namespace InitialProject.Controller
                     }
                     break;
                 case "5":
-                    
+                    /*List<AccomodationReservation> accomodationReservations = new List<AccomodationReservation>();
+                    accomodationReservations = guestRatingService.GetNotGradedExpiredReservations();
+                    if (accomodationReservations.Count == 0)
+                    {
+                        Console.WriteLine("No new notifications!");
+                        return;
+                    }
+
+                    DateTime todaysDate = DateTime.UtcNow.Date;
+
+
+
+                    foreach (var reservation in accomodationReservations)
+                    {
+                        int daysLeft = 5 - (todaysDate.Day - reservation.CheckOutDate.Day);
+
+                        if (daysLeft == 1)
+                        {
+                            Console.WriteLine("Reservation " + reservation.AccomodationReservationId + " has expired: \n   " + daysLeft.ToString() + " day left to rate guest: " + reservation.User.Username);
+                        }
+
+
+                        Console.WriteLine("Reservation " + reservation.AccomodationReservationId + " has expired: \n   " + daysLeft.ToString() + " days left to rate guest: " + reservation.User.Username);
+                    }
                     break;
 
                    /* List<AccomodationReservation> accomodationReservations = new List<AccomodationReservation>();
@@ -124,6 +147,7 @@ namespace InitialProject.Controller
 
                     Console.WriteLine("Enter Reservation ID: ");
      
+
                     int option = Int32.Parse(Console.ReadLine());
 
                     Console.WriteLine("Enter Cleanlines");

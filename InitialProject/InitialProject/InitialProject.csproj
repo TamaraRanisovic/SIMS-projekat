@@ -13,6 +13,7 @@
     <None Remove="Resources\Images\delete.png" />
     <None Remove="Resources\Images\edit.png" />
     <None Remove="Resources\Images\view.png" />
+    <None Remove="ViewModel\TourReservationViewModel.cs~RF2b0fa0d.TMP" />
   </ItemGroup>
 
   <ItemGroup>

@@ -15,12 +15,30 @@ namespace InitialProject.Repository
 
         }
 
-        public static void AddUser(User user)
+        public bool AddUser(User user, int touristAge = 0)
         {
             using (var db = new DataContext())
             {
-                db.Users.Add(user);
+                if (user.UserType == UserType.Owner)
+                {
+                    Owner owner = new Owner(user.Username, user.Password, user.UserType);
+                    db.Users.Add(owner);
+                } else if (user.UserType == UserType.Guest)
+                {
+                    Guest guest = new Guest(user.Username, user.Password, user.UserType);
+                    db.Users.Add(guest);
+                } else if (user.UserType == UserType.Guide)
+                {
+                    Guide guide = new Guide(user.Username, user.Password, user.UserType);
+                    db.Users.Add(guide);
+                }
+                else if (user.UserType == UserType.Tourist)
+                {
+                    Tourist tourist = new Tourist(user.Username, user.Password, touristAge, user.UserType);
+                    db.Users.Add(tourist);
+                }
                 db.SaveChanges();
+                return true;
             }
         }
 
@@ -38,7 +56,22 @@ namespace InitialProject.Repository
             {
                 foreach (User user in db.Users)
                 {
-                    if (user.Username == username)
+                    if (user.Username.Equals(username))
+                    {
+                        return user;
+                    }
+                }
+            }
+            return null;
+        }
+
+        public User Login(string username, string password)
+        {
+            using (var db = new DataContext())
+            {
+                foreach (User user in db.Users)
+                {
+                    if (user.Username.Equals(username) && user.Password.Equals(password))
                     {
                         return user;
                     }
@@ -87,22 +120,9 @@ namespace InitialProject.Repository
                     db.SaveChanges();
                 }
             }
-
-        public User Login(string username, string password)
-        {
-            using (var db = new DataContext())
-            {
-                foreach (User user in db.Users)
-                {
-                    if (user.Username == username && user.Password == password)
-                    {
-                        return user;
-                    }
-                }
-            }
-            return null;
-
         }
+
+        
 
     }
 }
