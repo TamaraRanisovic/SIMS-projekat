@@ -87,6 +87,21 @@ namespace InitialProject.Repository
                     db.SaveChanges();
                 }
             }
+
+        public User Login(string username, string password)
+        {
+            using (var db = new DataContext())
+            {
+                foreach (User user in db.Users)
+                {
+                    if (user.Username == username && user.Password == password)
+                    {
+                        return user;
+                    }
+                }
+            }
+            return null;
+
         }
 
     }

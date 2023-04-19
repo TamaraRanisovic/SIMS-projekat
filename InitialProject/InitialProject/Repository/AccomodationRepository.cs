@@ -33,6 +33,24 @@ namespace InitialProject.Repository
         }
 
         public Accomodation GetAccomodationById(int accId)
+
+        {
+            using(var db = new DataContext())
+            {
+                List<Accomodation> allAccomodations = GetAllAccomodations();
+                foreach(Accomodation accomodation in allAccomodations)
+                {
+                    if(accomodation.AccId == accId)
+                    {
+                        return accomodation;
+                    }
+                }
+            }
+            return null;
+        }
+
+        public List<Accomodation> GetAccomodationsByLocation(int locationId)
+
         {
             using (var db = new DataContext())
             {
@@ -78,6 +96,23 @@ namespace InitialProject.Repository
             }
         }
 
+        public int GetNumberOfGuestsInAccomodation(int accId)
+        {
+            AccomodationRepository accomodationRepository = new AccomodationRepository();
+            using(var db = new DataContext())
+            {
+                var acc = db.Accomodations.Include(a => a.AccomodationReservations).SingleOrDefault(a => a.AccId == accId);
+
+                int numberOfGuestsInAccomodation = 0;
+                List<AccomodationReservation> accomodationReservations = acc.AccomodationReservations.ToList();
+                foreach(AccomodationReservation accomodationReservation in accomodationReservations)
+                {
+                    numberOfGuestsInAccomodation += accomodationReservation.NumberOfGuests;
+
+                }
+                return numberOfGuestsInAccomodation;
+            }
+        }
 
         public void UpdateClassBy(string accommodationClass)
         {

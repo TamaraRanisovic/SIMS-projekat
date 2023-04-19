@@ -24,11 +24,11 @@ namespace InitialProject.Model
 
         public int DaysBeforeCanceling { get; set; }
 
+      //  public bool IsAvailable { get; set; }
+
         public List<AccomodationImage> Images { get; set; }
-     
 
-        public List<Guest> Guests { get; set; } 
-
+      
         public string Class { get; set; }
 
 
@@ -44,7 +44,6 @@ namespace InitialProject.Model
             Images = new List<AccomodationImage>(); 
              
             AccomodationReservations = new List<AccomodationReservation>(); 
-
         }
 
         public Accomodation(int accId, string name, Location location, AccomodationType type, int maxGuests, int minReservationDays, int daysBeforeCanceling)
@@ -58,6 +57,7 @@ namespace InitialProject.Model
             Images = new List<AccomodationImage>();
 
             Guests = new List<Guest>();
+            AccomodationReservations = new List<AccomodationReservation>();
 
             
 
@@ -66,6 +66,7 @@ namespace InitialProject.Model
 
         public Accomodation(string name, Location location, AccomodationType type, int maxGuests, int minReservationDays, int daysBeforeCanceling)
         {
+
             Name = name;
             AccomodationType = type;
             MaxGuests = maxGuests;
@@ -74,6 +75,6 @@ namespace InitialProject.Model
             Images = new List<AccomodationImage>(); 
             
             AccomodationReservations = new List<AccomodationReservation>();
-        }
-    }
+       }
+    } 
 }

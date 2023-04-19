@@ -18,12 +18,17 @@ namespace InitialProject.Model
         }
 
         public Comment(DateTime creationTime, string text, User user)
+
         {
+            Id = commentId;
             CreationTime = creationTime;
-            Text = text;
+            Text = commentText;
         }
 
-
+        public override string ToString()
+        {
+            return $"CommentID: {Id}\n, CreationTime: {CreationTime}\n, Text: {Text}\n";
+        }
 
 
     }
