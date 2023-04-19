@@ -51,7 +51,7 @@ namespace InitialProject.Repository
         {
             using (var db = new DataContext())
             {
-                var user = db.Users.FirstOrDefault(t => t.UserId == updatedUser.UserId);
+                var user = db.Users.FirstOrDefault(t => t.Id == updatedUser.Id);
                 if (user != null)
                 {
                     user.Username = updatedUser.Username;
@@ -66,7 +66,7 @@ namespace InitialProject.Repository
         {
             using (var db = new DataContext())
             {
-                var user = db.Users.FirstOrDefault(t => t.UserId == userId);
+                var user = db.Users.FirstOrDefault(t => t.Id == userId);
                 if (user != null)
                 {
                     db.Users.Remove(user);

@@ -12,8 +12,8 @@ namespace InitialProject.Service
     {
         private readonly IOwnerReviewRepository IOwnerReviewRepository;
         private GuestRatingService GuestRatingService;
-        private UserService UserService;
-        private AccomodationService AccomodationService;
+        private UserService UserService = new UserService();
+        private AccomodationService AccomodationService = new AccomodationService();
 
         public OwnerReviewService(IOwnerReviewRepository iOwnerReviewRepository)
         {
@@ -38,7 +38,7 @@ namespace InitialProject.Service
             {
                 foreach(var reservation in gradedReservations)
                 {
-                    if (reservation.AccomodationReservationId == review.AccomodationReservation.AccomodationReservationId)
+                    if (reservation.Id == review.AccomodationReservation.Id)
                     {
                         ownerReviews.Add(review);
                     }

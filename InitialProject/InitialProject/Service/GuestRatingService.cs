@@ -48,7 +48,7 @@ namespace InitialProject.Service
                 foreach (AccomodationReservation g in gradedReservations)
                 {
 
-                    if (r.AccomodationReservationId == g.AccomodationReservationId)
+                    if (r.Id == g.Id)
                     {
                         exists = true;
                     }

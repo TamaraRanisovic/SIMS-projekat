@@ -38,7 +38,7 @@ namespace InitialProject.Repository
             {
                 foreach (Accomodation accomodation in db.Accomodations)
                 {
-                    if (accomodation.AccId == accId)
+                    if (accomodation.Id == accId)
                     {
                         return accomodation;
                     }
@@ -51,7 +51,7 @@ namespace InitialProject.Repository
         {
             using (var db = new DataContext())
             {
-                var accomodation = db.Accomodations.FirstOrDefault(t => t.AccId == updatedAccomodation.AccId);
+                var accomodation = db.Accomodations.FirstOrDefault(t => t.Id == updatedAccomodation.Id);
                 if (accomodation != null)
                 {
                     accomodation.Name = updatedAccomodation.Name;
@@ -69,7 +69,7 @@ namespace InitialProject.Repository
         {
             using (var db = new DataContext())
             {
-                var accomodation = db.Accomodations.FirstOrDefault(t => t.AccId == AccId);
+                var accomodation = db.Accomodations.FirstOrDefault(t => t.Id == AccId);
                 if (accomodation != null)
                 {
                     db.Accomodations.Remove(accomodation);

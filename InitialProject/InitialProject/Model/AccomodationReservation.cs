@@ -1,5 +1,6 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.ComponentModel.DataAnnotations;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
@@ -9,8 +10,9 @@ using System.Xml.Linq;
 namespace InitialProject.Model
 {
     public class AccomodationReservation
-    {   
-        public int AccomodationReservationId { get; set; }
+    {
+        [Key]
+        public int Id { get; set; }
         public DateTime CheckInDate { get; set; } 
         public DateTime CheckOutDate { get; set; } 
 
@@ -30,17 +32,6 @@ namespace InitialProject.Model
         { 
             
             Accomodations = new List<Accomodation>();
-        }
-
-        public AccomodationReservation(int id, DateTime checkInDate, DateTime checkOutDate, int numberOfGuests) 
-        {
-            AccomodationReservationId = id; 
-            CheckInDate = checkInDate;
-            CheckOutDate = checkOutDate;
-            NumberOfGuests = numberOfGuests;
-            
-            Accomodations = new List<Accomodation>();
-
         }
 
         public AccomodationReservation(DateTime checkInDate, DateTime checkOutDate, int numberOfGuests)

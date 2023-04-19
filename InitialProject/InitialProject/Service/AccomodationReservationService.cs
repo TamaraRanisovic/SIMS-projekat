@@ -17,6 +17,8 @@ namespace InitialProject.Service
         private int accomodationId;
         private int reservedAccomodationId;
 
+        ReservationReschedulingRequest reservationReschedulingRequest = new ReservationReschedulingRequest();
+
         AccomodationReservationRepository accomodationReservationRepository = new AccomodationReservationRepository();
 
         DateTime todaysDate = DateTime.UtcNow.Date;
@@ -41,7 +43,7 @@ namespace InitialProject.Service
             List<AccomodationReservation> reservations = new List<AccomodationReservation>();
 
             int accomodationId = GetAccomodationId(reschedulingRequest);
-            int reservationId = reschedulingRequest.Reservation.AccomodationReservationId;
+            int reservationId = reschedulingRequest.Reservation.Id;
 
             reservations = this.accomodationReservationRepository.GetAllBetween(reschedulingRequest.NewStartingDate, reschedulingRequest.NewEndingDate);
 
@@ -49,7 +51,7 @@ namespace InitialProject.Service
             {
                 reservedAccomodationId = GetReservationAccomodationId(reservation); 
 
-                if (!reservation.Cancelled && reservedAccomodationId == accomodationId && reservationId != reservation.AccomodationReservationId) 
+                if (!reservation.Cancelled && reservedAccomodationId == accomodationId && reservationId != reservation.Id) 
                 {
                     preservedReservations.Add(reservation);
                 }
@@ -66,10 +68,11 @@ namespace InitialProject.Service
 
         public int GetAccomodationId(ReservationReschedulingRequest reservationReschedulingRequest)
         {
-
-            foreach (var accomodations in reservationReschedulingRequest.Reservation.Accomodations)
+            List<Accomodation> accomodationsList = new List<Accomodation>();
+            accomodationsList = reservationReschedulingRequest.Reservation.Accomodations;
+            foreach (var accomodations in accomodationsList)
             {
-                accomodationId = accomodations.AccId;
+                accomodationId = accomodations.Id;
                 break;
             }
             return accomodationId;
@@ -80,7 +83,7 @@ namespace InitialProject.Service
 
             foreach (var accomodations in accomodationReservation.Accomodations)
             {
-                accomodationId = accomodations.AccId;
+                accomodationId = accomodations.Id;
                 break;
             }
             return accomodationId;

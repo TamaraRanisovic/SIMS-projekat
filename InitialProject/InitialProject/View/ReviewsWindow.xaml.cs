@@ -37,6 +37,7 @@ namespace InitialProject
             InitializeReviewReports();
 
             this.ownerReviews = OwnerReviewService.GetAllOwnerReviews();
+            DeclareTitle();
         }
 
         public List<OwnerReviewDto> GetAllGraded()

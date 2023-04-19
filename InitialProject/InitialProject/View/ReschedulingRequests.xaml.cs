@@ -39,7 +39,8 @@ namespace InitialProject.View
 
         private void Button_Click(object sender, RoutedEventArgs e)
         {
-            ReservationReschedulingRequest selectedRequest = reschedulingRequsts.SelectedItem as ReservationReschedulingRequest;
+            ReservationReschedulingRequest selectedRequest = new ReservationReschedulingRequest();
+            selectedRequest = reschedulingRequsts.SelectedItem as ReservationReschedulingRequest;
 
             if(PostponmentWarning(selectedRequest))
             {

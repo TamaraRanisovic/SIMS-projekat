@@ -12,7 +12,7 @@ namespace InitialProject.Model
     public class Accomodation
     {
         [Key]
-        public int AccId { get; set; }
+        public int Id { get; set; }
 
         public string Name { get; set; }
 
@@ -26,9 +26,6 @@ namespace InitialProject.Model
 
         public List<AccomodationImage> Images { get; set; }
      
-
-        public List<Guest> Guests { get; set; } 
-
         public string Class { get; set; }
 
 
@@ -36,7 +33,7 @@ namespace InitialProject.Model
 
         public override string ToString()
         {
-            return "Name" + Name + "AccomodationType" + AccomodationType + "MaxGuests" + MaxGuests + "MinReservationDays" + MinReservationDays + "DaysBeforeCacneling" + DaysBeforeCanceling + "Images" + Images + "Guests" + Guests + "AccReservations" + AccomodationReservations;
+            return "Name" + Name + "AccomodationType" + AccomodationType + "MaxGuests" + MaxGuests + "MinReservationDays" + MinReservationDays + "DaysBeforeCacneling" + DaysBeforeCanceling + "Images" + Images +  "AccReservations" + AccomodationReservations;
         }
 
         public Accomodation() 
@@ -47,22 +44,10 @@ namespace InitialProject.Model
 
         }
 
-        public Accomodation(int accId, string name, Location location, AccomodationType type, int maxGuests, int minReservationDays, int daysBeforeCanceling)
-        {
-            AccId = accId;
-            Name = name;
-            AccomodationType = type;
-            MaxGuests = maxGuests;
-            MinReservationDays = minReservationDays;
-            DaysBeforeCanceling = daysBeforeCanceling;
-            Images = new List<AccomodationImage>();
-
-            Guests = new List<Guest>();
+    
 
             
-
-            AccomodationReservations = new List<AccomodationReservation>();
-        }
+        
 
         public Accomodation(string name, Location location, AccomodationType type, int maxGuests, int minReservationDays, int daysBeforeCanceling)
         {

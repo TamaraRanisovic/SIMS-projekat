@@ -24,7 +24,7 @@ namespace InitialProject.DTO
 
         public OwnerReviewDto(OwnerReview ownerReview) 
         {
-            this.ReservationId = ownerReview.AccomodationReservation.AccomodationReservationId;
+            this.ReservationId = ownerReview.AccomodationReservation.Id;
             this.Cleanliness = ownerReview.Cleanliness;
             this.OwnerFairness = ownerReview.OwnerFairness;
             this.Comment = ownerReview.Comment;

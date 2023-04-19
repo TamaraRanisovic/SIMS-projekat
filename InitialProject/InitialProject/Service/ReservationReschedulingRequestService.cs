@@ -30,7 +30,8 @@ namespace InitialProject.Service
         private void UpdateReservationDates(int requestId)
         {
             ReservationReschedulingRequest existingRequest = new ReservationReschedulingRequest();
-            int reservationId = existingRequest.Reservation.AccomodationReservationId;
+            existingRequest = reservationReschedulingRequestRepository.GetById(requestId);
+            int reservationId = existingRequest.Reservation.Id;
 
             if (existingRequest.State == RequestState.Approved) 
             {
