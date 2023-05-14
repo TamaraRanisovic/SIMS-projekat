@@ -30,10 +30,10 @@ namespace InitialProject.View
 
         private void ShowTour_Click(object sender, RoutedEventArgs e)
         {
-            K2_F2_Guide k2_F2_Guide = new K2_F2_Guide();
+            TourStatService tourStatService = new TourStatService();
 
 
-            List<TourDateDTO> tourDateDTO = k2_F2_Guide.FinishedTours();
+            List<TourDateDTO> tourDateDTO = tourStatService.FinishedTours();
 
             ListOfTours.ItemsSource = tourDateDTO;
         }
@@ -43,14 +43,14 @@ namespace InitialProject.View
             int dateID = Int32.Parse(DateId.Text);
             int tourId = Int32.Parse(TourId.Text);
 
-            K2_F2_Guide k2_F2_Guide = new K2_F2_Guide();
+            TourStatService tourStatService = new TourStatService();
 
             GuestAgeStatisticDTO guestAgeStatisticDTO = new GuestAgeStatisticDTO();
             List<GuestAgeStatisticDTO> list = new List<GuestAgeStatisticDTO>();
             DatesRepository datesRepository = new DatesRepository();
             Dates date = datesRepository.GetById(dateID);
 
-            guestAgeStatisticDTO = k2_F2_Guide.GuestAgeStatisticDTO(date, tourId);
+            guestAgeStatisticDTO = tourStatService.GuestAgeStatisticDTO(date, tourId);
             list.Add(guestAgeStatisticDTO);
 
             ListOfStat.ItemsSource= list;

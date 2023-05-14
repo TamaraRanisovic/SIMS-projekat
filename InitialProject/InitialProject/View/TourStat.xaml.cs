@@ -30,11 +30,11 @@ namespace InitialProject.View
 
         private void FinishedTours_Click(object sender, RoutedEventArgs e)
         {
-            
-                K2_F2_Guide k2_F2_Guide = new K2_F2_Guide();
+
+            TourStatService tourStatService = new TourStatService();
 
 
-                List<TourDateDTO> tourDateDTO = k2_F2_Guide.FinishedTours();
+                List<TourDateDTO> tourDateDTO = tourStatService.FinishedTours();
 
                 ListOfTours.ItemsSource = tourDateDTO;
             

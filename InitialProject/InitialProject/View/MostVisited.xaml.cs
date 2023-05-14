@@ -32,14 +32,14 @@ namespace InitialProject.View
 
         private void ShowTour_Click(object sender, RoutedEventArgs e)
         {
-            K2_F2_Guide k2_F2_Guide = new K2_F2_Guide();
+            TourStatService tourStatService = new TourStatService();
             DatesRepository datesRepository = new DatesRepository();
 
             List<Dates> dates = datesRepository.GetAll();
 
             List<TourDateDTO> dto = new List<TourDateDTO>();
             TourDateDTO tourDateDTO = new TourDateDTO();
-            tourDateDTO = k2_F2_Guide.ShowMostVisitedTour(dates);
+            tourDateDTO = tourStatService.ShowMostVisitedTour(dates);
             if (tourDateDTO != null)
             {
                 dto.Add(tourDateDTO);
@@ -52,7 +52,7 @@ namespace InitialProject.View
 
         private void TourDates_Click(object sender, RoutedEventArgs e)
         {
-            K2_F2_Guide k2_F2_Guide = new K2_F2_Guide();
+            TourStatService tourStatService = new TourStatService();
             DatesRepository datesRepository = new DatesRepository();
 
 
@@ -61,7 +61,7 @@ namespace InitialProject.View
             
             int year = Int32.Parse(TourNameCancel.Text);
             List<Dates> dates = datesRepository.GetByYear(year);
-            tourDateDTO = k2_F2_Guide.ShowMostVisitedTour(dates);
+            tourDateDTO = tourStatService.ShowMostVisitedTour(dates);
             if (tourDateDTO != null)
             {
                 dto.Add(tourDateDTO);

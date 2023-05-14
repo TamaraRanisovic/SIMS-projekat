@@ -11,7 +11,7 @@ namespace InitialProject.Service
     public class CouponService
     {
         CouponRepository couponRepository = new CouponRepository();
-
+        TouristsRepository touristsRepository = new TouristsRepository();
         public CouponService()
         {
             
@@ -39,6 +39,15 @@ namespace InitialProject.Service
         {
             couponRepository.RemoveExpiredCoupons();
         }
+        public void AssignCoupon(Dates tourDate)
+        {
+            foreach (var tourist in tourDate.Tourists)
+            {
+                Coupon coupon = new Coupon();
 
+                touristsRepository.AddCoupon(tourist.Id, coupon);
+
+            }
+        }
     }
 }

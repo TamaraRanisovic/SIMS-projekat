@@ -66,7 +66,7 @@ namespace InitialProject.View
         {
             TourRepository tourRepository = new TourRepository();
             TourService tourService = new TourService();
-            KT2_F1_Guide kT2_F1_Guide = new KT2_F1_Guide(); 
+            
             var tourId = int.Parse(TourIdCancel.Text);
             string content = "";
             
@@ -84,7 +84,7 @@ namespace InitialProject.View
             else
             {
 
-                bool CancelTourInfo = kT2_F1_Guide.CancelTour(tourId);
+                bool CancelTourInfo = tourService.CancelTour(tourId);
 
                 if (CancelTourInfo == false)
                 {

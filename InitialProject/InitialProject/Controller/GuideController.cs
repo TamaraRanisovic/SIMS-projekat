@@ -61,8 +61,8 @@ namespace InitialProject.Controller
                     Console.WriteLine("Izabrali ste pracenje ture");
                     tourService.TourTracking();
                     break;
-                case "3": 
-                    K2_F2_Guide k2_F2_Guide = new K2_F2_Guide();
+                case "3":
+                    TourStatService k2_F2_Guide = new TourStatService();
                     k2_F2_Guide.FinishedTours();
                     break;
                 case "x":

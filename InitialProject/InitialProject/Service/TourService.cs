@@ -18,7 +18,8 @@ namespace InitialProject.Service
 
         public LocationRepository locationRepository = new LocationRepository();
         public TourRepository tourRepository = new TourRepository();
-
+        public CouponService couponService = new CouponService();
+        public DatesRepository datesRepository = new DatesRepository();
         public TourService() {
 
         }
@@ -578,6 +579,41 @@ namespace InitialProject.Service
                     }
                 }
             }
+        }
+
+        public bool CancelTour(int dateId)
+        {
+            Dates date = datesRepository.GetById(dateId);
+            //Dates dateToCancel = PickTour(tour, date.Date);
+            if (CheckDate(date))
+            {
+                couponService.AssignCoupon(date);
+                datesRepository.Delete(date);
+                return true;
+            }
+            return false;
+        }
+
+        public Dates PickTour(Tour tourToCancel, DateTime tourDate)
+        {
+
+            foreach (var date in tourToCancel.StartingDates)
+            {
+                if (date.Date.Equals(tourDate)) return date;
+            }
+
+            return null;
+        }
+
+        public bool CheckDate(Dates date)
+        {
+            DateTime todaysDate = DateTime.Now;
+            if ((date.Date - todaysDate).TotalHours >= 48)
+            {
+                return true;
+            }
+
+            return false;
         }
     }
 }

@@ -12,7 +12,7 @@ using WebApi.Entities;
 
 namespace InitialProject.Service
 {
-    public class K2_F2_Guide
+    public class TourStatService
     {   
         TourRepository tourRepository = new TourRepository();
         DatesRepository datesRepository = new DatesRepository();
