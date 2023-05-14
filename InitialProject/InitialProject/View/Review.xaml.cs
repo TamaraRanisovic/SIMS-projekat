@@ -35,5 +35,10 @@ namespace InitialProject.View
             List<TourRatingCheckpointDTO> list = reviewService.ShowReview(DateId);
             ListOfTours.ItemsSource = list;
         }
+
+        private void Button_Click(object sender, RoutedEventArgs e)
+        {
+            var selectedItem = ListOfTours.SelectedItem as TourRatingCheckpointDTO;
+        }
     }
 }

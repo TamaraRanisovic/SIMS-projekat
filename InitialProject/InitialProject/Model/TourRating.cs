@@ -22,7 +22,8 @@ namespace InitialProject.Model
 
         public string Comment { get; set; } = "";
 
-        //public bool IsValid { get; set; }
+        public bool IsValid { get; set; }   
+
         public List<TourImages> TourImages { get; set; }
 
         public TourRating()
@@ -36,6 +37,7 @@ namespace InitialProject.Model
             TourAmusement = tourAmusement;
             Comment = comment;
             TourImages = tourImages;
+            IsValid = true;
             
         }
         public TourRating(int touristId,int guideKnowledge, int guideLanguage, int tourAmusement, string comment, List<TourImages> tourImages)
@@ -46,9 +48,10 @@ namespace InitialProject.Model
             TourAmusement = tourAmusement;
             Comment = comment;
             TourImages = tourImages;
-            
+            IsValid = true;
+
         }
-        public TourRating(int touristId, int guideKnowledge, int guideLanguage, int tourAmusement, string comment)
+        public TourRating(int touristId, int guideKnowledge, int guideLanguage, int tourAmusement, string comment, bool valid)
         {
             TouristId = touristId;
             GuideKnowledge = guideKnowledge;
@@ -56,6 +59,7 @@ namespace InitialProject.Model
             TourAmusement = tourAmusement;
             Comment = comment;
             TourImages = new List<TourImages>();
+            IsValid = valid;
 
         }
 

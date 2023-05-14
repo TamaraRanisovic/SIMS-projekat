@@ -58,7 +58,7 @@ namespace InitialProject.Service
 
         public void MakeRating(Tourist tourist, TourRating rating, ref List<TourRating> ratings)
         {
-            TourRating tourRating = new TourRating(tourist.Id, rating.GuideKnowledge, rating.GuideLanguage, rating.TourAmusement, rating.Comment);
+            TourRating tourRating = new TourRating(tourist.Id, rating.GuideKnowledge, rating.GuideLanguage, rating.TourAmusement, rating.Comment, rating.IsValid);
             ratings.Add(tourRating);
         }
 
@@ -96,8 +96,16 @@ namespace InitialProject.Service
 
         public void MakeTourRating(TourRating tourRating, Checkpoint checkpoint, ref List<TourRatingCheckpointDTO> toursToReturn)
         {
-            TourRatingCheckpointDTO tourRatingCheckpointDTO = new TourRatingCheckpointDTO(tourRating.GuideKnowledge, tourRating.GuideLanguage, tourRating.TourAmusement, tourRating.Comment, checkpoint.Name);
-            toursToReturn.Add(tourRatingCheckpointDTO);
+            if (tourRating.IsValid)
+            {
+                TourRatingCheckpointDTO tourRatingCheckpointDTO = new TourRatingCheckpointDTO(tourRating.GuideKnowledge, tourRating.GuideLanguage, tourRating.TourAmusement, tourRating.Comment, checkpoint.Name, "validna");
+                toursToReturn.Add(tourRatingCheckpointDTO);
+            } else
+            {
+                TourRatingCheckpointDTO tourRatingCheckpointDTO = new TourRatingCheckpointDTO(tourRating.GuideKnowledge, tourRating.GuideLanguage, tourRating.TourAmusement, tourRating.Comment, checkpoint.Name, "nevalidna");
+                toursToReturn.Add(tourRatingCheckpointDTO);
+            }
+            
         }
     }
 }
