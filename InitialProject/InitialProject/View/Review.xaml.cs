@@ -30,9 +30,9 @@ namespace InitialProject.View
 
         private void ShowTour_Click(object sender, RoutedEventArgs e)
         {
-            K2_F3_Guide k2_F3_Guide = new K2_F3_Guide();
+            ReviewService reviewService = new ReviewService();
 
-            List<TourRatingCheckpointDTO> list = k2_F3_Guide.ShowReview(DateId);
+            List<TourRatingCheckpointDTO> list = reviewService.ShowReview(DateId);
             ListOfTours.ItemsSource = list;
         }
     }

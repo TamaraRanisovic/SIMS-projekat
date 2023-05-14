@@ -13,12 +13,12 @@ using System.Windows.Media;
 
 namespace InitialProject.Service
 {
-    public class K2_F3_Guide
+    public class ReviewService
     {
-        TourRepository tourRepository = new TourRepository();
-        DatesRepository datesRepository = new DatesRepository();
-        TouristsRepository touristsRepository = new TouristsRepository();
-        CheckpointRepository checkpointRepository = new CheckpointRepository();
+        public TourRepository tourRepository = new TourRepository();
+        public DatesRepository datesRepository = new DatesRepository();
+        public TouristsRepository touristsRepository = new TouristsRepository();
+        public CheckpointRepository checkpointRepository = new CheckpointRepository();
         public List<TourRatingCheckpointDTO> ShowReview(int dateId)
         {
             
