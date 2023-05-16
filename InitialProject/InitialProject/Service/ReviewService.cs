@@ -19,6 +19,7 @@ namespace InitialProject.Service
         public DatesRepository datesRepository = new DatesRepository();
         public TouristsRepository touristsRepository = new TouristsRepository();
         public CheckpointRepository checkpointRepository = new CheckpointRepository();
+        public TourRatingRepository tourRatingRepository = new TourRatingRepository();
         public List<TourRatingCheckpointDTO> ShowReview(int dateId)
         {
             
@@ -34,7 +35,7 @@ namespace InitialProject.Service
 
             Ratings(date, ref ratings);
 
-            MakeRatingsToReturn(checkpoints, ratings, ref toursToReturn);
+            MakeRatingsToReturn(checkpoints, ratings, ref toursToReturn, date);
             
             
             return toursToReturn;
@@ -62,50 +63,64 @@ namespace InitialProject.Service
             ratings.Add(tourRating);
         }
 
-        public void MakeRatingsToReturn(List<Checkpoint> checkpoints, List<TourRating> ratings, ref List<TourRatingCheckpointDTO> toursToReturn)
+        public void MakeRatingsToReturn(List<Checkpoint> checkpoints, List<TourRating> ratings, ref List<TourRatingCheckpointDTO> toursToReturn, Dates date)
         {
 
             foreach (var checkpoint in checkpoints)
             {
-                IterateTourists(checkpoint.Tourists, ref toursToReturn, checkpoint, ratings);
+                IterateTourists(checkpoint.Tourists, ref toursToReturn, checkpoint, ratings, date);
                 
             }
 
             
         }
 
-        public void IterateTourists(List<Tourist> tourists, ref List<TourRatingCheckpointDTO> toursToReturn, Checkpoint checkpoint, List<TourRating> ratings)
+        public void IterateTourists(List<Tourist> tourists, ref List<TourRatingCheckpointDTO> toursToReturn, Checkpoint checkpoint, List<TourRating> ratings, Dates date)
         {
             foreach (var tourist in checkpoint.Tourists)
             {
-                IterateRatings(ref toursToReturn, ratings, tourist, checkpoint);
+                IterateRatings(ref toursToReturn, ratings, tourist, checkpoint, date);
             }
             
         }
 
-        public void IterateRatings(ref List<TourRatingCheckpointDTO> toursToReturn, List<TourRating> ratings, Tourist tourist, Checkpoint checkpoint)
+        public void IterateRatings(ref List<TourRatingCheckpointDTO> toursToReturn, List<TourRating> ratings, Tourist tourist, Checkpoint checkpoint, Dates date)
         {
             foreach (var tourRating in ratings)
             {
                 if (tourRating.TouristId == tourist.Id)
                 {
-                    MakeTourRating(tourRating, checkpoint, ref toursToReturn);
+                    MakeTourRating(tourRating, checkpoint, ref toursToReturn, date, tourist);
                 }
             }
         }
 
-        public void MakeTourRating(TourRating tourRating, Checkpoint checkpoint, ref List<TourRatingCheckpointDTO> toursToReturn)
+        public void MakeTourRating(TourRating tourRating, Checkpoint checkpoint, ref List<TourRatingCheckpointDTO> toursToReturn, Dates date, Tourist tourist)
         {
             if (tourRating.IsValid)
             {
-                TourRatingCheckpointDTO tourRatingCheckpointDTO = new TourRatingCheckpointDTO(tourRating.GuideKnowledge, tourRating.GuideLanguage, tourRating.TourAmusement, tourRating.Comment, checkpoint.Name, "validna");
+                TourRatingCheckpointDTO tourRatingCheckpointDTO = new TourRatingCheckpointDTO(tourRating.GuideKnowledge, tourRating.GuideLanguage, tourRating.TourAmusement, tourRating.Comment, checkpoint.Name, "validna", date.Id, tourist.Username, tourist.Id);
                 toursToReturn.Add(tourRatingCheckpointDTO);
             } else
             {
-                TourRatingCheckpointDTO tourRatingCheckpointDTO = new TourRatingCheckpointDTO(tourRating.GuideKnowledge, tourRating.GuideLanguage, tourRating.TourAmusement, tourRating.Comment, checkpoint.Name, "nevalidna");
+                TourRatingCheckpointDTO tourRatingCheckpointDTO = new TourRatingCheckpointDTO(tourRating.GuideKnowledge, tourRating.GuideLanguage, tourRating.TourAmusement, tourRating.Comment, checkpoint.Name, "nevalidna", date.Id, tourist.Username, tourist.Id);
                 toursToReturn.Add(tourRatingCheckpointDTO);
             }
             
+        }
+
+        public bool UnvalidRating(TourRatingCheckpointDTO rating)
+        {
+            if (rating.IsValid == "validna")
+            {
+                int dateId = rating.DateId;
+                bool valid = false;
+
+                tourRatingRepository.Update(rating, dateId, valid);
+                return true;
+
+            }
+            return false;
         }
     }
 }

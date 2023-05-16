@@ -22,6 +22,7 @@ namespace InitialProject.View
     public partial class Review : Window
     {   
         public int DateId { get; set; }
+        ReviewService reviewService = new ReviewService();
         public Review(int dateId)
         {
             InitializeComponent();
@@ -30,15 +31,20 @@ namespace InitialProject.View
 
         private void ShowTour_Click(object sender, RoutedEventArgs e)
         {
-            ReviewService reviewService = new ReviewService();
+            
 
             List<TourRatingCheckpointDTO> list = reviewService.ShowReview(DateId);
             ListOfTours.ItemsSource = list;
         }
 
         private void Button_Click(object sender, RoutedEventArgs e)
-        {
+        {   
+
             var selectedItem = ListOfTours.SelectedItem as TourRatingCheckpointDTO;
+
+            reviewService.UnvalidRating(selectedItem);
+            List<TourRatingCheckpointDTO> list = reviewService.ShowReview(DateId);
+            ListOfTours.ItemsSource = list;
         }
     }
 }

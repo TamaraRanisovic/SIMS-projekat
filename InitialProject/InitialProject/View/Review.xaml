@@ -6,19 +6,22 @@
         xmlns:local="clr-namespace:InitialProject.View"
         mc:Ignorable="d"
         Title="Review" Height="450" Width="800">
-    <Grid>
-        <ListBox x:Name="ListOfTours" Margin="24,35,289,4" d:ItemsSource="{d:SampleData ItemCount=5}">
+    <Grid RenderTransformOrigin="0.558,0.476">
+        <ListBox x:Name="ListOfTours" Margin="24,35,169,4" d:ItemsSource="{d:SampleData ItemCount=5}">
             <ListBox.ItemTemplate>
                 <DataTemplate>
                     <Button>
                         <StackPanel Orientation="Horizontal">
                             <Button></Button>
+                            <TextBlock Text="{Binding TouristId}" FontWeight="Bold" Margin="0,0,5,0"/>
+                            <TextBlock Text="{Binding Tourist}" FontWeight="Bold" Margin="0,0,5,0"/>
                             <TextBlock Text="{Binding GuideKnowledge}" FontWeight="Bold" Margin="0,0,5,0"/>
                             <TextBlock Text="{Binding GuideLanguage}" FontWeight="Bold" Margin="0,0,5,0"/>
                             <TextBlock Text="{Binding TourAmusement}" FontWeight="Bold" Margin="0,0,5,0"/>
                             <TextBlock Text="{Binding Comment}" FontWeight="Bold" Margin="0,0,5,0"/>
                             <TextBlock Text="{Binding CheckpointName}" FontWeight="Bold" Margin="0,0,5,0"/>
-                            <TextBlock Text="{Binding IsValid}" FontWeight="Bold"/>
+                            <TextBlock Text="{Binding IsValid}" FontWeight="Bold" Margin="0,0,5,0"/>
+                            <TextBlock Text="{Binding DateId}" FontWeight="Bold" Margin="0,0,5,0"/>
                         </StackPanel>
                     </Button>
                 </DataTemplate>

@@ -1,4 +1,5 @@
-﻿using InitialProject.Model;
+﻿using InitialProject.DTO;
+using InitialProject.Model;
 using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
@@ -42,6 +43,34 @@ namespace InitialProject.Repository
             using (var db = new DataContext())
             {
                 return db.TourRatings.FirstOrDefault(t => t.Id == id);
+            }
+        }
+
+        public void Update(TourRatingCheckpointDTO rating, int id, bool valid)
+        {
+            using(var db = new DataContext())
+            {
+                List<TourRating> List = db.TourRatings.Where(t => t.TouristId == rating.TouristId).ToList();
+                TourRating ratingToUpdate = new TourRating();
+                foreach (var t in List)
+                {
+                    if(t.Comment == rating.Comment)
+                    {
+                        ratingToUpdate = t;
+                    }
+                }
+
+                if (ratingToUpdate != null)
+                {
+                    ratingToUpdate.TourAmusement = rating.TourAmusement;
+                    ratingToUpdate.GuideKnowledge = rating.GuideKnowledge;
+                    ratingToUpdate.GuideLanguage = rating.GuideLanguage;
+                    ratingToUpdate.IsValid = valid;
+                    ratingToUpdate.Comment = rating.Comment;
+
+                    db.TourRatings.Update(ratingToUpdate);
+                    db.SaveChanges();
+                }
             }
         }
 
