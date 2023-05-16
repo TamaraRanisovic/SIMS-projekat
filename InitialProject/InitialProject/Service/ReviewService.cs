@@ -116,7 +116,7 @@ namespace InitialProject.Service
                 int dateId = rating.DateId;
                 bool valid = false;
 
-                tourRatingRepository.Update(rating, dateId, valid);
+                tourRatingRepository.Update(rating, valid);
                 return true;
 
             }

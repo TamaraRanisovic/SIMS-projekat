@@ -46,7 +46,7 @@ namespace InitialProject.Repository
             }
         }
 
-        public void Update(TourRatingCheckpointDTO rating, int id, bool valid)
+        public void Update(TourRatingCheckpointDTO rating, bool valid)
         {
             using(var db = new DataContext())
             {
