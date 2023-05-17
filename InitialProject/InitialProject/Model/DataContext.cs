@@ -47,6 +47,8 @@ namespace InitialProject.Model
 
         public DbSet<TouristNotifications> TouristNotifications { get; set; }
 
+        public DbSet<TourRequest> TourRequests { get; set; }
+
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             //Tura

@@ -1,0 +1,38 @@
+﻿<Window x:Class="InitialProject.View.TourRequestStat"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:InitialProject.View"
+        mc:Ignorable="d"
+        Title="TourRequestStat" Height="450" Width="800">
+    <Grid>
+        <DataGrid x:Name="Zahtevi" d:ItemsSource="{d:SampleData ItemCount=5}" Margin="0,0,0,261"/>
+        <Button Content="Filtriraj po lokaciji" Margin="40,192,614,192" Click="Button_Click"/>
+        <Button Content="Filtriraj po jeziku" Margin="252,191,434,193" Click="Button_Click_1"/>
+        <TextBox x:Name="City" TextWrapping="Wrap" Text="" Margin="60,247,635,127"/>
+        <TextBox x:Name="Country" TextWrapping="Wrap" Text="" Margin="60,312,635,62"/>
+        <TextBlock TextWrapping="Wrap" Text="City:" Margin="3,247,745,132"/>
+        <TextBlock TextWrapping="Wrap" Text="Country:" Margin="3,325,703,-27"/>
+        <TextBox x:Name="Language" TextWrapping="Wrap" Text="" Margin="252,246,434,133" TextChanged="Language_TextChanged"/>
+        <TextBlock TextWrapping="Wrap" Text="language:" Margin="183,245,548,63"/>
+        <TextBox x:Name="NumOfRequests" TextWrapping="Wrap" TextAlignment="Center" FontSize="34" FontWeight="Bold" Text="" Margin="343,354,343,0" TextChanged="Language_TextChanged"/>
+        <TextBlock TextWrapping="Wrap" Text="br zahteva:"  Margin="366,325,366,-27"/>
+        <TextBox x:Name="Year" TextWrapping="Wrap" Text="" Margin="469,247,217,132" TextChanged="Language_TextChanged"/>
+        <TextBlock TextWrapping="Wrap" Text="year:" Margin="400,246,331,62"/>
+        <Button Content="filtriraj po godini" Margin="469,181,219,192" RenderTransformOrigin="0.5,0.5" Click="Button_Click_2">
+            <Button.RenderTransform>
+                <TransformGroup>
+                    <ScaleTransform ScaleY="-1"/>
+                    <SkewTransform/>
+                    <RotateTransform/>
+                    <TranslateTransform/>
+                </TransformGroup>
+            </Button.RenderTransform>
+        </Button>
+        <Button Content="Filtr po mesecu" Margin="659,190,27,194" Click="Button_Click_3"/>
+        <TextBox x:Name="Month" TextWrapping="Wrap" Text="" Margin="659,245,27,134" TextChanged="Language_TextChanged"/>
+        <TextBlock TextWrapping="Wrap" Text="Month:" Margin="617,247,125,61"/>
+
+    </Grid>
+</Window>

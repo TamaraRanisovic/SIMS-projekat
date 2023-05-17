@@ -25,4 +25,9 @@ namespace InitialProject.Model
     {
         Start, End, Middle
     }
+
+    public enum RequestStatus
+    {
+        Pending, Accepted, Invalid
+    }
 }
