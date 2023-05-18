@@ -1,3 +1,4 @@
+using InitialProject.Interfaces;
 using InitialProject.Model;
 using Microsoft.EntityFrameworkCore;
 using System;
@@ -9,10 +10,10 @@ using WebApi.Entities;
 
 namespace InitialProject.Repository
 {
-    public class LocationRepository
+    public class LocationRepository : ILocationRepository
     {
         public LocationRepository() { }
-        public void AddLocation(Location locationToAdd)
+        public void Add(Location locationToAdd)
         {
             using (var db = new DataContext())
             {
@@ -22,7 +23,7 @@ namespace InitialProject.Repository
 
         }
 
-        public List<Location> GetAllLocations()
+        public List<Location> GetAll()
         {
             using (var db = new DataContext())
             {
@@ -30,7 +31,7 @@ namespace InitialProject.Repository
             }
         }
 
-        public void DeleteLocation(int id)
+        public void Delete(int id)
         {
             using (var db = new DataContext())
             {
@@ -44,7 +45,7 @@ namespace InitialProject.Repository
             }
         }
 
-        public void UpdateLocation(int id, Location locationToUpdate)
+        public void Update(int id, Location locationToUpdate)
         {
             using (var db = new DataContext())
             {
@@ -61,7 +62,7 @@ namespace InitialProject.Repository
             }
         }
 
-        public Location GetLocationById(int id)
+        public Location GetById(int id)
         {
             using (var db = new DataContext())
             {
@@ -73,7 +74,7 @@ namespace InitialProject.Repository
         {
             using (var db = new DataContext())
             {
-                List<Location> allLocations = GetAllLocations();
+                List<Location> allLocations = GetAll();
                 foreach (Location location in allLocations)
                 {
                     if (location.City.Equals(city) && location.Country.Equals(country))

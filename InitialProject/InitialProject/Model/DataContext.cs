@@ -49,6 +49,7 @@ namespace InitialProject.Model
 
         public DbSet<TourRequest> TourRequests { get; set; }
 
+
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             //Tura
@@ -212,7 +213,6 @@ namespace InitialProject.Model
            .WithMany(t => t.Coupons)
            .OnDelete(DeleteBehavior.Restrict);
 
-            //
 
 
 

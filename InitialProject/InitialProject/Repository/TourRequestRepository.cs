@@ -65,5 +65,13 @@ namespace InitialProject.Repository
             }
         }
 
+        public List<TourRequest> GetAllByNumOfTourists(int numberOfTourists)
+        {
+            using (var db = new DataContext())
+            {
+                return db.TourRequests.Where(t => t.Tourists == numberOfTourists).ToList();
+            }
+        }
+
     }
 }

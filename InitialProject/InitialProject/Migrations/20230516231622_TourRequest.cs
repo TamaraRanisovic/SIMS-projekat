@@ -5,7 +5,7 @@ using Microsoft.EntityFrameworkCore.Migrations;
 
 namespace InitialProject.Migrations
 {
-    public partial class TourRequest : Migration
+    public partial class TourRequest1 : Migration
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {

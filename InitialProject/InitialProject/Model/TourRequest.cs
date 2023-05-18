@@ -26,10 +26,14 @@ namespace InitialProject.Model
 
         public DateTime EndDate { get; set; }
 
+        public DateTime RequestDate { get; set; }
+
         public RequestStatus RequestStatus { get; set; }
+
 
         public TourRequest()
         {
+            this.RequestDate = DateTime.Now;
             this.RequestStatus = RequestStatus.Pending;
         }
 
@@ -42,6 +46,7 @@ namespace InitialProject.Model
             this.Description = description;
             this.StartDate = startDate;
             this.EndDate = endDate;
+            this.RequestDate = DateTime.Now;
             this.RequestStatus = RequestStatus.Pending;
         }
 

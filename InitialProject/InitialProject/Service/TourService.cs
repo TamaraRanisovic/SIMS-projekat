@@ -93,7 +93,7 @@ namespace InitialProject.Service
 
         public Location GetTourLocation(int tourId)
         {
-            List<Location> allLocations = locationRepository.GetAllLocations();
+            List<Location> allLocations = locationRepository.GetAll();
             List<Tour> toursByLocation = new List<Tour>();
 
             foreach (Location location in allLocations)

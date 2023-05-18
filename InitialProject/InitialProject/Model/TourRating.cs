@@ -24,7 +24,7 @@ namespace InitialProject.Model
 
         public bool IsValid { get; set; }   
 
-        public List<TourImages> TourImages { get; set; }
+        public List<TourImages>? TourImages { get; set; }
 
         public TourRating()
         {

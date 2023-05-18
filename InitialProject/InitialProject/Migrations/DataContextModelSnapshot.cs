@@ -326,6 +326,9 @@ namespace InitialProject.Migrations
                         .IsRequired()
                         .HasColumnType("TEXT");
 
+                    b.Property<DateTime>("RequestDate")
+                        .HasColumnType("TEXT");
+
                     b.Property<int>("RequestStatus")
                         .HasColumnType("INTEGER");
 

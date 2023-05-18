@@ -11,8 +11,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace InitialProject.Migrations
 {
     [DbContext(typeof(DataContext))]
-    [Migration("20230516231622_TourRequest")]
-    partial class TourRequest1
+    [Migration("20230518190229_RequestDatee")]
+    partial class RequestDatee
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -326,6 +326,9 @@ namespace InitialProject.Migrations
 
                     b.Property<string>("Language")
                         .IsRequired()
+                        .HasColumnType("TEXT");
+
+                    b.Property<DateTime>("RequestDate")
                         .HasColumnType("TEXT");
 
                     b.Property<int>("RequestStatus")

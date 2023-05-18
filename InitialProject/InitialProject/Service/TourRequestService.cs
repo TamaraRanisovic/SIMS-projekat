@@ -31,8 +31,9 @@ namespace InitialProject.Service
         }
 
         //TODO
-        public bool AcceptRequest()
+        public bool AcceptRequest(TourRequest tourRequest)
         {
+
             return false;
         }
 

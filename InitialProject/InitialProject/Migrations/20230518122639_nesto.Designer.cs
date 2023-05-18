@@ -11,8 +11,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace InitialProject.Migrations
 {
     [DbContext(typeof(DataContext))]
-    [Migration("20230516231622_TourRequest")]
-    partial class TourRequest1
+    [Migration("20230518122639_nesto")]
+    partial class nesto
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {

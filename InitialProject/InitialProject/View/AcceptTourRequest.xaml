@@ -1,0 +1,29 @@
+﻿<Window x:Class="InitialProject.View.AcceptTourRequest"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:InitialProject.View"
+        mc:Ignorable="d"
+        Title="AcceptTourRequest" Height="450" Width="800">
+    <Grid>
+        <DataGrid x:Name="TourRequests" d:ItemsSource="{d:SampleData ItemCount=5}" Margin="0,0,143,290"/>
+        <Button Content="Filtriraj po jeziku" Margin="69,150,617,234" Click="Button_Click_1"/>
+        <TextBox x:Name="Language" TextWrapping="Wrap" Text="" Margin="69,182,617,196" TextChanged="Language_TextChanged"/>
+        <TextBlock TextWrapping="Wrap" Text="language:" Margin="0,182,731,126"/>
+        <Button Content="Filtriraj po lokaciji" Margin="248,150,442,234" Click="Button_Click"/>
+        <TextBox x:Name="City" TextWrapping="Wrap" Text="" Margin="248,182,442,196" TextChanged="City_TextChanged"/>
+        <TextBox x:Name="Country" TextWrapping="Wrap" Text="" Margin="248,218,442,163" TextChanged="Country_TextChanged"/>
+        <TextBlock TextWrapping="Wrap" Text="City:" Margin="196,190,552,189"/>
+        <TextBlock TextWrapping="Wrap" Text="Country:" Margin="196,218,510,80"/>
+        <Button Content="Filter po br turista" HorizontalAlignment="Left" Margin="452,150,0,0" VerticalAlignment="Top" RenderTransformOrigin="0.563,0.245" Width="126" Height="50" Click="Button_Click_2"/>
+        <TextBox x:Name="Number" TextWrapping="Wrap" Text="" Height="43" Margin="452,205,222,0" VerticalAlignment="Top" TextChanged="TextBox_TextChanged"/>
+        <TextBlock TextWrapping="Wrap" Text="Number:" Margin="391,208,338,153"/>
+        <Button Content="Filter po datumu" HorizontalAlignment="Left" Margin="667,152,0,0" VerticalAlignment="Top" Width="109" Height="50" Click="Button_Click_3"/>
+        <DatePicker x:Name="StartDate" Margin="667,207,10,174"/>
+        <DatePicker x:Name="EndDate" Margin="667,235,10,148"/>
+        <Button Content="svi" HorizontalAlignment="Left" Margin="667,64,0,0" VerticalAlignment="Top" Width="99" Height="36" Click="Button_Click_4"/>
+        <Button Content="Prihvati zahtev" FontWeight="Bold" Foreground="White" FontSize="21" Background="CornflowerBlue" HorizontalAlignment="Left" Margin="295,335,0,0" VerticalAlignment="Top" Width="196" Height="67" Click="AcceptRequest"/>
+
+    </Grid>
+</Window>

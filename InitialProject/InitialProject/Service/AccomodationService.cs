@@ -145,7 +145,7 @@ namespace InitialProject.Service
         public Location GetAccomodationLocation(int accId)
         {
             LocationRepository locationRepository = new LocationRepository();
-            List<Location> allLocations = locationRepository.GetAllLocations();
+            List<Location> allLocations = locationRepository.GetAll();
             List<Accomodation> accomodationsByLocation = new List<Accomodation>();
 
             foreach (Location location in allLocations)

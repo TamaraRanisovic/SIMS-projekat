@@ -20,13 +20,14 @@ namespace InitialProject.Service
 
         public List<Location> GetAllLocations()
         {
-            return locationRepository.GetAllLocations();
+            return locationRepository.GetAll();
         }
 
         public Location GetByCityAndCountry(string city, string country)
         {
             return locationRepository.GetByCityAndCountry(city, country);
         }
+
 
     }
 }
