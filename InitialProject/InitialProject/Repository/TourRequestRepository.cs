@@ -73,5 +73,13 @@ namespace InitialProject.Repository
             }
         }
 
+        public List<TourRequest> GetAllByCity(string city)
+        {
+            using (var db = new DataContext())
+            {
+                return db.TourRequests.Where(t => t.City == city).ToList();
+            }
+        }
+
     }
 }

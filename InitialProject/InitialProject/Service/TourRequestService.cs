@@ -53,15 +53,15 @@ namespace InitialProject.Service
         {
             int num = 0;
 
-            foreach(TourRequest t in tourRequests)
+            foreach (TourRequest t in tourRequests)
             {
                 if (t.StartDate.Year.Equals(year))
                 {
                     num++;
-                }  
+                }
             }
             return num;
-        } 
+        }
 
         public int RequestsByMonthsInAYearStat(List<TourRequest> tourRequests, int year, int month)
         {
@@ -76,7 +76,7 @@ namespace InitialProject.Service
             foreach (TourRequest t in tourRequests)
             {
                 if (t.StartDate.Year.Equals(year) && t.StartDate.Month.Equals(month))
-                {   
+                {
                     list.Add(t);
                 }
             }
@@ -87,5 +87,83 @@ namespace InitialProject.Service
         {
             return TourRequestRepository.GetAll();
         }
-    }
+
+        public string MostWantedLocation()
+        {
+            List<TourRequest> requests = new List<TourRequest>();
+            List<TourRequest> tourRequests = TourRequestRepository.GetAll();
+
+            PreviousYearRequests(ref requests, tourRequests);
+
+            Dictionary<string, int> locationCounter = new Dictionary<string, int>();
+
+            CountLocation(ref locationCounter, tourRequests);
+
+            return locationCounter.OrderByDescending(x => x.Value).FirstOrDefault().Key;
+
+
+        }
+
+        public string MostWantedLanguage()
+        {
+            List<TourRequest> requests = new List<TourRequest>();
+            List<TourRequest> tourRequests = TourRequestRepository.GetAll();
+
+            PreviousYearRequests(ref requests, tourRequests);
+
+            Dictionary<string, int> languageCounter = new Dictionary<string, int>();
+
+            CountLanguage(ref languageCounter, tourRequests);
+
+            return languageCounter.OrderByDescending(x => x.Value).FirstOrDefault().Key;
+
+
+        }
+
+        public void PreviousYearRequests(ref List<TourRequest> requests, List<TourRequest> tourRequests)
+        {
+            DateTime dateTime = DateTime.Now;
+            dateTime = dateTime.AddYears(-1);
+            foreach (TourRequest t in tourRequests)
+            {
+                if (t.RequestDate >= dateTime)
+                {
+                    requests.Add(t);
+                }
+            }
+        }
+
+        public void CountLocation(ref Dictionary<string, int> counter, List<TourRequest> tourRequests)
+        {
+            foreach (TourRequest t in tourRequests)
+            {
+                string city = t.City;
+                if (counter.ContainsKey(city))
+                {
+                    counter[city]++;
+                }
+                else
+                {
+                    counter[city] = 1;
+                }
+            }
+        }
+
+        public void CountLanguage(ref Dictionary<string, int> counter, List<TourRequest> tourRequests)
+        {
+            foreach (TourRequest t in tourRequests)
+            {
+                string language = t.Language;
+                if (counter.ContainsKey(language))
+                {
+                    counter[language]++;
+                }
+                else
+                {
+                    counter[language] = 1;
+                }
+            }
+        }
+    }   
+
 }
