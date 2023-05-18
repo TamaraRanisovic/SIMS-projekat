@@ -119,9 +119,16 @@ namespace InitialProject.View
 
                 dates.Add(date);
                 images.Add(tourImages);
-                tour.GuideId = 1;
+                tour.GuideId = UserSession.LoggedInUser.Id;
                 tourService.MakeTour(tour, location, images, checkpoints, dates);
             }
+        }
+
+        private void home_Click(object sender, RoutedEventArgs e)
+        {
+            GuideWindow guideWindow = new GuideWindow();
+            guideWindow.Show();
+            Close();
         }
     }
 }

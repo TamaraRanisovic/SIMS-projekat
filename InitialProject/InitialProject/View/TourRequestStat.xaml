@@ -20,19 +20,12 @@
         <TextBlock TextWrapping="Wrap" Text="br zahteva:"  Margin="366,325,366,-27"/>
         <TextBox x:Name="Year" TextWrapping="Wrap" Text="" Margin="469,247,217,132" TextChanged="Language_TextChanged"/>
         <TextBlock TextWrapping="Wrap" Text="year:" Margin="400,246,331,62"/>
-        <Button Content="filtriraj po godini" Margin="469,181,219,192" RenderTransformOrigin="0.5,0.5" Click="Button_Click_2">
-            <Button.RenderTransform>
-                <TransformGroup>
-                    <ScaleTransform ScaleY="-1"/>
-                    <SkewTransform/>
-                    <RotateTransform/>
-                    <TranslateTransform/>
-                </TransformGroup>
-            </Button.RenderTransform>
-        </Button>
+        <Button Content="filtriraj po godini" Margin="469,181,219,192" RenderTransformOrigin="0.5,0.5" Click="Button_Click_2"/>
         <Button Content="Filtr po mesecu" Margin="659,190,27,194" Click="Button_Click_3"/>
         <TextBox x:Name="Month" TextWrapping="Wrap" Text="" Margin="659,245,27,134" TextChanged="Language_TextChanged"/>
         <TextBlock TextWrapping="Wrap" Text="Month:" Margin="617,247,125,61"/>
+        <Button x:Name="home" Content="Home" Background="PaleVioletRed" HorizontalAlignment="Left" Margin="680,354,0,0" VerticalAlignment="Top" Height="48" Width="95" Click="home_Click"/>
+        <Button Content="svi" HorizontalAlignment="Left" Margin="469,377,0,0" VerticalAlignment="Top" Width="99" Height="36" Click="Button_Click_4"/>
 
     </Grid>
 </Window>

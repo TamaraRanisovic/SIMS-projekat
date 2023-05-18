@@ -1,5 +1,6 @@
 ﻿using InitialProject.Interfaces;
 using InitialProject.Migrations;
+using InitialProject.Model;
 using InitialProject.Repository;
 using InitialProject.Service;
 using System;
@@ -68,6 +69,18 @@ namespace InitialProject.View
             int month = int.Parse(Month.Text);
             Zahtevi.ItemsSource = requestRepository.GetAllByYearAndMonth(year, month);
             NumOfRequests.Text = (TourRequestService.RequestsByMonthsInAYearStat(requestRepository.GetAllByYearAndMonth(year, month), year, month)).ToString();
+        }
+
+        private void home_Click(object sender, RoutedEventArgs e)
+        {
+            GuideWindow guideWindow = new GuideWindow();
+            guideWindow.Show();
+            Close();
+        }
+
+        private void Button_Click_4(object sender, RoutedEventArgs e)
+        {
+            Zahtevi.ItemsSource = requestRepository.GetAll();
         }
     }
 }

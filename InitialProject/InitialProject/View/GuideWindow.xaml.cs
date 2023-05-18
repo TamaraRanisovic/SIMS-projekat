@@ -23,22 +23,22 @@ namespace InitialProject.View
 
         private void K2_F1_Click(object sender, RoutedEventArgs e)
         {
-            CancelTour cancelTour = new CancelTour();
-            cancelTour.Show();
+            AcceptTourRequest acceptTourRequest = new AcceptTourRequest();
+            acceptTourRequest.Show();
             Close();
         }
 
         private void K2_F2_Click(object sender, RoutedEventArgs e)
         {
-            TourStat tourStat = new TourStat();
-            tourStat.Show();
+            TourRequestStat tourRequestStat = new TourRequestStat();
+            tourRequestStat.Show();
             Close();
         }
 
         private void K2_F3_CLick(object sender, RoutedEventArgs e)
         {
-            TourStat tourStat = new TourStat();
-            tourStat.Show();
+            TourProposal tourProposal = new TourProposal();
+            tourProposal.Show();
             Close();
         }
     }

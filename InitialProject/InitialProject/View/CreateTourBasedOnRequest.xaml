@@ -22,6 +22,7 @@
         <TextBox x:Name="NumOfGuests" TextWrapping="Wrap" Text="Num of Guests" TextAlignment="Center" Margin="400,170,262,214" TextChanged="TextBox_TextChanged"/>
         <DatePicker x:Name="Date" Margin="400,202,262,182"/>
         <Button Content="DeleteCheckpoint" HorizontalAlignment="Left" Margin="10,271,0,0" VerticalAlignment="Top" Width="138" Height="30" Click="Button_Click1"/>
+        <Button x:Name="home" Content="Home" Background="PaleVioletRed" HorizontalAlignment="Left" Margin="705,121,0,0" VerticalAlignment="Top" Height="48" Width="95" Click="home_Click"/>
 
     </Grid>
 </Window>

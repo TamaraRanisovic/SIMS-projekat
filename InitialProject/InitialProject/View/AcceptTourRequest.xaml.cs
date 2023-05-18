@@ -107,5 +107,12 @@ namespace InitialProject.View
             }
 
         }
+
+        private void home_Click(object sender, RoutedEventArgs e)
+        {
+            GuideWindow guideWindow = new GuideWindow();
+            guideWindow.Show();
+            Close();
+        }
     }
 }

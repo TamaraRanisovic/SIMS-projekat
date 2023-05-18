@@ -9,12 +9,12 @@
     <Grid>
         <Button
             x:Name="K2_F1"
-            Click="K2_F1_Click" Content="K2_F1" Margin="335,54,365,330"/>
+            Click="K2_F1_Click" Content="acceptTourRequest" Margin="335,54,335,330"/>
         <Button
             x:Name="K2_F2"
-            Click="K2_F2_Click" Content="K2_F2" Margin="335,175,365,208"/>
+            Click="K2_F2_Click" Content="tourRequestStat" Margin="335,175,335,208"/>
         <Button
             x:Name="K2_F3"
-            Click="K2_F3_CLick" Content="K2_F3" Margin="335,309,365,75"/>
+            Click="K2_F3_CLick" Content="tourProposal" Margin="335,309,335,75"/>
     </Grid>
 </Window>
