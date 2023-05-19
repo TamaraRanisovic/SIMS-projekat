@@ -20,10 +20,9 @@ namespace InitialProject.Service
 
         public LocationRepository locationRepository = new LocationRepository();
         public TourRepository tourRepository = new TourRepository();
-        public CouponService couponService = new CouponService();
+        public CouponService couponService = new CouponService(new CouponRepository());
         public DatesRepository datesRepository = new DatesRepository();
         private readonly ITourRepository TourRepository;
-        public TourService() {
 
         public TourService(ITourRepository tourRepository)
         {

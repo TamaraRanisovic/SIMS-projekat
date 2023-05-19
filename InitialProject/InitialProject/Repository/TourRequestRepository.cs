@@ -1,6 +1,7 @@
 ﻿using InitialProject.DTO;
 using InitialProject.Interfaces;
 using InitialProject.Model;
+using InitialProject.Service;
 using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
@@ -32,15 +33,9 @@ namespace InitialProject.Repository
         {
             using (var db = new DataContext())
             {
-
+                ChangeTourRequestStatus();
                 return db.TourRequests.ToList();
             }
-        }
-
-        public List<TourRequestDTO> GetAllByTourist(int touristId)
-        {
-            List<TourRequestDTO> list = new List<TourRequestDTO>();
-            return list;
         }
 
         public List<TourRequest> GetAllByLocation(Location location)
@@ -91,12 +86,6 @@ namespace InitialProject.Repository
             }
         }
 
-    }
-}
-                ChangeTourRequestStatus();
-                return db.TourRequests.ToList();
-            }
-        }
         public List<TourRequestDTO> GetAllByTourist(int touristId)
         {
             using (var db = new DataContext())

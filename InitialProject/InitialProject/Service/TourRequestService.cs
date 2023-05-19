@@ -87,11 +87,6 @@ namespace InitialProject.Service
             return list;
         }
 
-        public List<TourRequest> GetAll()
-        {
-            return TourRequestRepository.GetAll();
-        }
-
         public string MostWantedLocation()
         {
             List<TourRequest> requests = new List<TourRequest>();
@@ -168,7 +163,7 @@ namespace InitialProject.Service
                 }
             }
         }
-    }   
+  
 
         public void ChangeTourRequestStatus()
         {
@@ -262,3 +257,4 @@ namespace InitialProject.Service
 
     }
 }
+

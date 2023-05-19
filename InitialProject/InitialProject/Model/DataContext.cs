@@ -50,7 +50,6 @@ namespace InitialProject.Model
 
         public DbSet<TourRequest> TourRequests { get; set; }
 
-        public DbSet<TourRequest> TourRequests { get; set; }
 
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
