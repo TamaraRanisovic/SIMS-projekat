@@ -1,0 +1,51 @@
+﻿<Window x:Class="InitialProject.View.RateAccomodationWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:InitialProject.View"
+        mc:Ignorable="d"
+        Title="RateAccomodationWindow" Height="450" Width="800">
+    <Grid>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition Width="33*"/>
+            <ColumnDefinition Width="127*"/>
+        </Grid.ColumnDefinitions>
+        <GridSplitter HorizontalAlignment="Left" Height="424" Margin="1,0,0,0" VerticalAlignment="Top" Width="8" Grid.Column="1"/>
+        <Label Content="Accomodation&#xD;&#xA;       Agency!" HorizontalAlignment="Center" Margin="0,10,0,0" VerticalAlignment="Top" Height="57" Width="120" FontSize="15" FontWeight="Bold"/>
+        <Rectangle  HorizontalAlignment="Left" Height="63" Margin="16,71,0,0" Stroke="Black" VerticalAlignment="Top" Width="123"/>
+        <Button Content="Home" Command="{Binding HomeCommand}" HorizontalAlignment="Left" Margin="44,91,0,0" VerticalAlignment="Top" Width="66" Height="23"/>
+
+        <Rectangle  HorizontalAlignment="Left" Height="63" Margin="16,159,0,0" Stroke="Black" VerticalAlignment="Top" Width="123" RenderTransformOrigin="0.291,0.683"/>
+        <Rectangle  HorizontalAlignment="Left" Height="63" Margin="16,248,0,0" Stroke="Black" VerticalAlignment="Top" Width="123"/>
+        <Rectangle  HorizontalAlignment="Left" Height="62" Margin="16,344,0,0" Stroke="Black" VerticalAlignment="Top" Width="123"/>
+        <Button Content="Showing" Command="{Binding ShowingCommand}"  HorizontalAlignment="Left" Margin="44,175,0,0" VerticalAlignment="Top" Width="66" Height="26"/>
+        <Button Content="Reserve,cancel.." Command="{Binding ReservateCancelCommand}" HorizontalAlignment="Left" Margin="28,268,0,0" VerticalAlignment="Top" Width="93" Height="23"/>
+        <Button Content="Rate,Reccomend.." Command="{Binding RateReccommendationCommand}" HorizontalAlignment="Left" Margin="32,364,0,0" VerticalAlignment="Top" Width="94" Height="22"/>
+
+        <Label Content="AccID:"  HorizontalAlignment="Left" Margin="10,71,0,0" VerticalAlignment="Top" Width="101" Height="28" Grid.Column="1"/>
+        <Label Margin="10,132,0,0" VerticalAlignment="Top" Height="28" HorizontalAlignment="Left" Width="101" Content="OwnerID:" Grid.Column="1"/>
+        <Label Margin="10,0,0,0" VerticalAlignment="Center" Height="58" HorizontalAlignment="Left" Width="101" Content="Cleanless:&#xD;&#xA;(1-5_" Grid.Column="1"/>
+        <Label Margin="10,254,0,0" VerticalAlignment="Top" Height="46" HorizontalAlignment="Left" Width="101" Content="Owner frienliess:&#xD;&#xA;(1-5)" Grid.Column="1"/>
+        <Label Margin="199,122,0,0" VerticalAlignment="Top" Height="28" HorizontalAlignment="Left" Width="100" Content="CommentID:" Grid.Column="1"/>
+        <Label Margin="392,118,0,0" VerticalAlignment="Top" Height="28" HorizontalAlignment="Left" Width="101" Content="ImageID:" Grid.Column="1"/>
+        <Label Margin="392,183,0,0" VerticalAlignment="Top" Height="28" HorizontalAlignment="Left" Width="101" Content="Image Name:" Grid.Column="1"/>
+        <Label Margin="392,239,0,0" VerticalAlignment="Top" Height="29" HorizontalAlignment="Left" Width="101" Content="Image URL:" Grid.Column="1"/>
+        <Label Margin="199,208,0,0" VerticalAlignment="Top" Height="28" HorizontalAlignment="Left" Width="101" Content="Comment?" Grid.Column="1"/>
+        <Label Margin="10,334,0,0" VerticalAlignment="Top" Height="44" HorizontalAlignment="Left" Width="101" Content="Date u GONE:" Grid.Column="1"/>
+        <TextBox Text="{Binding AccId,Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}" Grid.Column="1" HorizontalAlignment="Left" Margin="126,75,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="52" Height="28"/>
+        <TextBox Text="{Binding Cleanliness,Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}" Grid.Column="1" HorizontalAlignment="Left" Margin="126,0,0,0" TextWrapping="Wrap" VerticalAlignment="Center" Width="52" Height="28"/>
+        <TextBox Text="{Binding OwnerId,Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}" Grid.Column="1" HorizontalAlignment="Left" Margin="125,136,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="52" Height="28"/>
+        <TextBox Text="{Binding OwnerFriendliness,Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}" Grid.Column="1" HorizontalAlignment="Left" Margin="125,268,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="52" Height="28"/>
+        <TextBox Text="{Binding DateUGone,Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}" Grid.Column="1" HorizontalAlignment="Left" Margin="111,327,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="95" Height="54"/>
+        <TextBox Text="{Binding IdComment,Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}" Grid.Column="1" HorizontalAlignment="Center" Margin="0,122,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="52" Height="28"/>
+        <TextBox Text="{Binding CommentText,Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}" Grid.Column="1" HorizontalAlignment="Left" Margin="272,203,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="115" Height="42"/>
+        <TextBox Text="{Binding IdImage,Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}" Grid.Column="1" HorizontalAlignment="Left" Margin="512,118,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="52" Height="28"/>
+        <TextBox Text="{Binding ImageName,Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}" Grid.Column="1" HorizontalAlignment="Left" Margin="512,185,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="79" Height="24"/>
+        <TextBox Text="{Binding ImageURL,Mode=TwoWay,UpdateSourceTrigger=PropertyChanged}" Grid.Column="1" HorizontalAlignment="Left" Margin="512,242,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="79" Height="23"/>
+        <Button Grid.Column="1" Content="Rate Accomodation" Command="{Binding RateAccomodationCommand}" HorizontalAlignment="Left" Margin="269,324,0,0" VerticalAlignment="Top" Height="40" Width="198" FontSize="20"/>
+        <Label Grid.Column="1" Content="Accomodation Rating!" HorizontalAlignment="Left" Margin="111,0,0,0" VerticalAlignment="Top" Width="341" FontSize="30" FontWeight="Bold" Height="50"/>
+        <Label Margin="249,55,0,0" VerticalAlignment="Top" Height="44" HorizontalAlignment="Left" Width="367" Content="When you rate think about beautiful things and be gentle :D" Grid.Column="1"/>
+
+    </Grid>
+</Window>

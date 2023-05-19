@@ -1,0 +1,28 @@
+﻿<Window x:Class="InitialProject.View.CreateTourBasedOnRequest"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:InitialProject.View"
+        mc:Ignorable="d"
+        Title="CreateTourBasedOnRequest" Height="450" Width="800">
+    <Grid>
+        <Button Content="CreateTour" Margin="692,376,0,0" Foreground="AliceBlue" Background="CornflowerBlue" FontWeight="Bold" Click="CreateTour"/>
+        <ComboBox x:Name="CheckpointType" Margin="10,170,662,217">
+            <ComboBoxItem Content="Start" />
+            <ComboBoxItem Content="End" />
+            <ComboBoxItem Content="Middle" />
+        </ComboBox>
+        <TextBox x:Name="CheckpointName" TextWrapping="Wrap" Text="" Margin="10,126,686,248"/>
+        <Button Content="AddCheckpoint" HorizontalAlignment="Left" Margin="10,222,0,0" VerticalAlignment="Top" Width="138" Height="30" Click="Button_Click"/>
+        <DataGrid x:Name="Data" d:ItemsSource="{d:SampleData ItemCount=5}" Margin="0,0,0,313"/>
+        <TextBox x:Name="Name" TextWrapping="Wrap" Text="Name" TextAlignment="Center" Margin="240,136,422,248" TextChanged="TextBox_TextChanged"/>
+        <TextBox x:Name="Image" TextWrapping="Wrap" Text="Image" TextAlignment="Center" Margin="240,170,422,214" TextChanged="TextBox_TextChanged"/>
+        <TextBox x:Name="Duration" TextWrapping="Wrap" Text="Duration" TextAlignment="Center" Margin="400,136,262,248" TextChanged="TextBox_TextChanged"/>
+        <TextBox x:Name="NumOfGuests" TextWrapping="Wrap" Text="Num of Guests" TextAlignment="Center" Margin="400,170,262,214" TextChanged="TextBox_TextChanged"/>
+        <DatePicker x:Name="Date" Margin="400,202,262,182"/>
+        <Button Content="DeleteCheckpoint" HorizontalAlignment="Left" Margin="10,271,0,0" VerticalAlignment="Top" Width="138" Height="30" Click="Button_Click1"/>
+        <Button x:Name="home" Content="Home" Background="PaleVioletRed" HorizontalAlignment="Left" Margin="705,121,0,0" VerticalAlignment="Top" Height="48" Width="95" Click="home_Click"/>
+
+    </Grid>
+</Window>

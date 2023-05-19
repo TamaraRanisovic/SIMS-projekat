@@ -1,0 +1,22 @@
+﻿<Window x:Class="InitialProject.View.RenovationTest"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:InitialProject.View"
+        mc:Ignorable="d"
+        Title="RenovationTest" Height="450" Width="800">
+    <Grid>
+        <Calendar x:Name="endDate" HorizontalAlignment="Left" Margin="223,244,0,0" VerticalAlignment="Top" Height="162" Width="177"/>
+        <Calendar x:Name="startDate" HorizontalAlignment="Left" Margin="20,244,0,0" VerticalAlignment="Top" Height="168" Width="182"/>
+        <Button x:Name="rescheduleButton" Content="Zakazi" HorizontalAlignment="Left" Margin="634,343,0,0" VerticalAlignment="Top" Height="51" Width="102" Click="rescheduleButton_Click"/>
+        <DataGrid Name ="accomodations" d:ItemsSource="{d:SampleData ItemCount=5}" Margin="46,31,443,217" />
+        <DataGrid Name ="dateSuggestions" d:ItemsSource="{d:SampleData ItemCount=5}" Margin="400,31,64,201"/>
+        <TextBox x:Name="duration_days" HorizontalAlignment="Left" Margin="429,266,0,0" TextWrapping="Wrap" Text="" VerticalAlignment="Top" Width="150" Height="44" TextChanged="duration_days_TextChanged"/>
+        <TextBox x:Name="description" HorizontalAlignment="Left" Margin="425,343,0,0" TextWrapping="Wrap" Text="" VerticalAlignment="Top" Width="158" Height="45"/>
+
+        <Button Grid.Row="0" Grid.Column="0" Content="BACK" Width="120" Height="75" Margin="616,250,0,0" 
+                HorizontalAlignment="Left" VerticalAlignment="Top" FontSize="24" Click="BackButton_Click" />
+
+    </Grid>
+</Window>

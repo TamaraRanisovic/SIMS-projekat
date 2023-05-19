@@ -1,0 +1,35 @@
+﻿<Window x:Class="InitialProject.View.Reviews"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        Title="Reviews" Height="768" Width="1024">
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="*" />
+        </Grid.RowDefinitions>
+
+        <!-- SIMS TRAVEL header -->
+        <TextBlock Text="SIMS TRAVEL" HorizontalAlignment="Center" VerticalAlignment="Center"
+                   FontSize="36" FontWeight="Bold" />
+
+        <!-- Back button -->
+        <Button Grid.Row="0" Grid.Column="0" Content="BACK" Width="120" Height="75" Margin="10" 
+                HorizontalAlignment="Left" VerticalAlignment="Top" FontSize="24" Click="BackButton_Click" />
+
+        <!-- Reviews title -->
+        <TextBlock Text="REVIEWS" Grid.Row="1" HorizontalAlignment="Center"
+                   FontSize="24" FontWeight="Bold" Margin="0,23,0,0" />
+
+        <StackPanel Grid.Row="2" Grid.ColumnSpan="3" VerticalAlignment="Center" HorizontalAlignment="Center">
+            <Button Content="REVIEW A GUEST" Width="354" Height="100" Margin="20"
+                    FontSize="28" Click="ReviewGuestButton_Click" />
+            <Button Content="SHOW GUEST REVIEWS" Width="354" Height="100"
+                    FontSize="28" Click="ShowReviewsButton_Click" RenderTransformOrigin="0.518,-0.095" />
+            <Button Content="SHOW OWNER REVIEWS" Width="354" Height="100" Margin="20"
+                    FontSize="28" Click="ShowOwnerReviewsButton_Click" />
+            <Button Content="NOTIFICATIONS" Width="354" Height="100"
+                    FontSize="28" Click="NotificationsButton_Click" RenderTransformOrigin="0.506,-0.249" />
+        </StackPanel>
+    </Grid>
+</Window>
