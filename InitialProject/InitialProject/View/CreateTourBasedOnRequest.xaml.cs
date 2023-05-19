@@ -27,7 +27,7 @@ namespace InitialProject.View
         public List<Checkpoint> checkpoints { get; set; }
 
         public LocationRepository locationRepository = new LocationRepository();
-        public TourService tourService = new TourService();
+        public TourService tourService = new TourService(new TourRepository());
 
         public CreateTourBasedOnRequest()
         {
@@ -50,7 +50,7 @@ namespace InitialProject.View
 
                 Tour tour = new Tour(Name.Text, TourRequest.Description, TourRequest.Language, int.Parse(NumOfGuests.Text), int.Parse(Duration.Text));
                 Dates date = new Dates(DateTime.Parse(Date.Text));
-                TourImages tourImages = new TourImages(Image.Text);
+                TourImage tourImages = new TourImage(Image.Text);
 
                 TourCreate(date, tourImages, tour, location);
             }
@@ -61,7 +61,7 @@ namespace InitialProject.View
 
                 Tour tour = new Tour(Name.Text, TourRequest.Description, TourRequest.Language, int.Parse(NumOfGuests.Text), int.Parse(Duration.Text));
                 Dates date = new Dates(DateTime.Parse(Date.Text));
-                TourImages tourImages = new TourImages(Image.Text);
+                TourImage tourImages = new TourImage(Image.Text);
 
                 TourCreate(date, tourImages, tour, newLocation);
             }
@@ -104,7 +104,7 @@ namespace InitialProject.View
             Data.ItemsSource = checkpoints;
         }
 
-        public void TourCreate(Dates date, TourImages tourImages, Tour tour, Location location)
+        public void TourCreate(Dates date, TourImage tourImages, Tour tour, Location location)
         {
             if (date.Date < TourRequest.StartDate || date.Date > TourRequest.EndDate)
             {
@@ -115,7 +115,7 @@ namespace InitialProject.View
             {
 
                 List<Dates> dates = new List<Dates>();
-                List<TourImages> images = new List<TourImages>();
+                List<TourImage> images = new List<TourImage>();
 
                 dates.Add(date);
                 images.Add(tourImages);

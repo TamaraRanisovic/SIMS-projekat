@@ -87,11 +87,6 @@ namespace InitialProject.Service
             return list;
         }
 
-        public List<TourRequest> GetAll()
-        {
-            return TourRequestRepository.GetAll();
-        }
-
         public string MostWantedLocation()
         {
             List<TourRequest> requests = new List<TourRequest>();
@@ -168,17 +163,13 @@ namespace InitialProject.Service
                 }
             }
         }
-    }   
+  
 
         public void ChangeTourRequestStatus()
         {
             TourRequestRepository.ChangeTourRequestStatus();
         }
 
-        public Guide GetTourRequestGuide(TourRequest tourRequest)
-        {
-            return TourRequestRepository.GetTourRequestGuide(tourRequest);
-        }
         public TourRequestDTO GetTourRequestDTO(TourRequest tourRequest, Guide guide)
         {
             return TourRequestRepository.GetTourRequestDTO(tourRequest, guide);
@@ -202,63 +193,222 @@ namespace InitialProject.Service
 
         }
 
-
-        public double GetAcceptanceRate(int touristId)
-        {
-            return TourRequestRepository.GetAcceptanceRate(touristId);
-        }
-        public double GetYearlyAcceptanceRate(int touristId, int year)
-        {
-            return TourRequestRepository.GetYearlyAcceptanceRate(touristId, year);
-        }
-
-        public double GetAvgNumOfTourists(int touristId)
-        {
-            return TourRequestRepository.GetAvgNumOfTourists(touristId);
-        }
-
-        public double GetAvgNumOfTouristsByYear(int touristId, int year)
-        {
-            return TourRequestRepository.GetAvgNumOfTouristsByYear(touristId, year);
-        }
-        public List<string> GetTourRequestLanguages(int touristId)
-        {
-            return TourRequestRepository.GetTourRequestLanguages(touristId);
-
-        }
-        public List<string> GetTourRequestLocations(int touristId)
-        {
-            return TourRequestRepository.GetTourRequestLocations(touristId);
-
-        }
-
-        public Dictionary<string, double> CountByLanguage(int touristId)
-        {
-            return TourRequestRepository.CountByLanguage(touristId);
-
-        }
-
-        public Dictionary<string, double> CountByLocation(int touristId)
-        {
-            return TourRequestRepository.CountByLocation(touristId);
-
-        }
-        public List<TourDateDTO> GetAcceptedToursByTourist(int touristId)
-        {
-            return TourRequestRepository.GetAcceptedToursByTourist(touristId);
-
-        }
+     
         public List<TourRequestDTO> GetAllUnaccepted(int touristId)
         {
             return TourRequestRepository.GetAllUnaccepted(touristId);
 
         }
-        public List<Tour> GetPartiallyAcceptedTours(int touristId)
+        public Guide GetTourRequestGuide(TourRequest tourRequest)
         {
-            return TourRequestRepository.GetPartiallyAcceptedTours(touristId);
+            UserRepository userRepository = new UserRepository();
+            List<Guide> guides = userRepository.GetAllGuides();
+            foreach (Guide guide in guides)
+            {
+                foreach (TourRequest request in guide.TourRequests)
+                {
+                    if (request.Id == tourRequest.Id)
+                    {
+                        return guide;
+                    }
+                }
+            }
+            return null;
+        }
+        public double GetAcceptanceRate(int touristId)
+        {
+            List<TourRequestDTO> tourRequestDTOs = GetAllByTourist(touristId);
+            List<TourRequestDTO> acceptedTourRequestDTOs = GetAllAccepted(touristId);
+            int tourRequests = tourRequestDTOs.Count;
+            int acceptedTourRequests = acceptedTourRequestDTOs.Count;
+            if (tourRequests == 0)
+            {
+                return -1;
+            }
+            return Math.Round(100 * acceptedTourRequests / (double)tourRequests, 2);
+        }
 
+        public double GetYearlyAcceptanceRate(int touristId, int year)
+        {
+            List<TourRequestDTO> tourRequestDTOs = GetAllByTouristAndYear(touristId, year);
+            List<TourRequestDTO> acceptedTourRequestDTOs = GetAllAcceptedByYear(touristId, year);
+            int tourRequests = tourRequestDTOs.Count;
+            int acceptedTourRequests = acceptedTourRequestDTOs.Count;
+            if (tourRequests == 0)
+            {
+                return -1;
+            }
+            return Math.Round(100 * acceptedTourRequests / (double)tourRequests, 2);
+        }
+
+        public double GetAvgNumOfTourists(int touristId)
+        {
+            List<TourRequestDTO> tourRequestDTOs = GetAllAccepted(touristId);
+            int acceptedTourRequests = tourRequestDTOs.Count;
+            int sum = 0;
+            foreach (TourRequestDTO tourRequestDto in tourRequestDTOs)
+            {
+                sum += tourRequestDto.Tourists;
+            }
+            return Math.Round(sum / (double)acceptedTourRequests, 2);
+        }
+
+        public double GetAvgNumOfTouristsByYear(int touristId, int year)
+        {
+            List<TourRequestDTO> tourRequestDTOs = GetAllAcceptedByYear(touristId, year);
+            int acceptedTourRequests = tourRequestDTOs.Count;
+            int sum = 0;
+            foreach (TourRequestDTO tourRequestDto in tourRequestDTOs)
+            {
+                sum += tourRequestDto.Tourists;
+            }
+            return Math.Round(sum / (double)acceptedTourRequests, 2);
+        }
+
+        public List<string> GetTourRequestLanguages(int touristId)
+        {
+            List<string> languages = new List<string>();
+            List<TourRequestDTO> tourRequestDTOs = GetAllByTourist(touristId);
+            bool isPresent = false;
+            foreach (TourRequestDTO tourRequestDTO in tourRequestDTOs)
+            {
+                isPresent = false;
+                foreach (string language in languages)
+                {
+                    if (language.Equals(tourRequestDTO.Language))
+                    {
+                        isPresent = true;
+                    }
+                }
+                if (!isPresent)
+                {
+                    languages.Add(tourRequestDTO.Language);
+                }
+
+            }
+            return languages;
+        }
+        public List<string> GetTourRequestLocations(int touristId)
+        {
+            List<string> locations = new List<string>();
+            List<TourRequestDTO> tourRequestDTOs = GetAllByTourist(touristId);
+            bool isPresent;
+            foreach (TourRequestDTO tourRequestDTO in tourRequestDTOs)
+            {
+                isPresent = false;
+                foreach (string location in locations)
+                {
+                    if (location.Equals(tourRequestDTO.City))
+                    {
+                        isPresent = true;
+                    }
+                }
+                if (!isPresent)
+                {
+                    locations.Add(tourRequestDTO.City);
+                }
+
+            }
+            return locations;
+        }
+
+        public Dictionary<string, double> CountByLanguage(int touristId)
+        {
+            Dictionary<string, double> tourRequestsByLanguage = new Dictionary<string, double>();
+            List<TourRequestDTO> tourRequestDtos = GetAllByTourist(touristId);
+            List<string> languages = GetTourRequestLanguages(touristId);
+            int countRequestsByLanguage;
+            foreach (string language in languages)
+            {
+                countRequestsByLanguage = 0;
+                foreach (TourRequestDTO tourRequestDTO in tourRequestDtos)
+                {
+                    if (tourRequestDTO.Language.Equals(language))
+                    {
+                        countRequestsByLanguage++;
+                    }
+                }
+                tourRequestsByLanguage.Add(language, countRequestsByLanguage);
+            }
+            return tourRequestsByLanguage;
+        }
+        public Dictionary<string, double> CountByLocation(int touristId)
+        {
+            Dictionary<string, double> tourRequestsByLocation = new Dictionary<string, double>();
+            List<TourRequestDTO> tourRequestDtos = GetAllByTourist(touristId);
+            List<string> locations = GetTourRequestLocations(touristId);
+            int countRequestsByLocation;
+            foreach (string location in locations)
+            {
+                countRequestsByLocation = 0;
+                foreach (TourRequestDTO tourRequestDTO in tourRequestDtos)
+                {
+                    if (tourRequestDTO.City.Equals(location))
+                    {
+                        countRequestsByLocation++;
+                    }
+                }
+                tourRequestsByLocation.Add(location, countRequestsByLocation);
+            }
+            return tourRequestsByLocation;
         }
 
 
+        public List<TourDateDTO> GetAcceptedToursByTourist(int touristId)
+        {
+            TourService tourService = new TourService(new TourRepository());
+            List<TourRequestDTO> tourRequestDTOs = GetAllAccepted(touristId);
+            List<TourDateDTO> acceptedTours = new List<TourDateDTO>();
+
+            foreach (TourRequestDTO tourRequestDTO in tourRequestDTOs)
+            {
+                TourDateDTO tourDateDTO = tourService.GetByTourRequest(tourRequestDTO);
+                if (tourDateDTO != null)
+                {
+                    acceptedTours.Add(tourDateDTO);
+                }
+            }
+
+            return acceptedTours;
+        }
+        public bool IsInList(List<Tour> tours, Tour newTour)
+        {
+            bool isPresent = false;
+            foreach (Tour tour in tours)
+            {
+                if (tour == newTour)
+                {
+                    isPresent = true;
+                }
+            }
+            return isPresent;
+        }
+        public List<Tour> GetPartiallyAcceptedTours(int touristId)
+        {
+
+            TourRepository tourRepository = new TourRepository();
+            TourService tourService = new TourService(tourRepository);
+            List<Tour> tours = tourRepository.GetAllTourData();
+            List<TourRequestDTO> unacceptedTourRequestDTOs = GetAllUnaccepted(touristId);
+            List<Tour> newTours = new List<Tour>();
+            foreach (TourRequestDTO tourRequestDTO in unacceptedTourRequestDTOs)
+            {
+                foreach (Tour tour in tours)
+                {
+                    Location location = tourService.GetTourLocation(tour.TourId);
+
+                    if ((tourRequestDTO.City.Equals(location.City) && tourRequestDTO.Country.Equals(location.Country)) || tourRequestDTO.Language.Equals(tour.Language))
+                    {
+                        if (!IsInList(newTours, tour))
+                        {
+                            newTours.Add(tour);
+                        }
+                    }
+                }
+            }
+            return newTours;
+        }
+
     }
 }
+

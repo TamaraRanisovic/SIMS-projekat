@@ -55,7 +55,7 @@ namespace InitialProject.View
         private void CancelDate_Click(object sender, RoutedEventArgs e)
         {
             TourRepository tourRepository = new TourRepository();
-            TourService tourService = new TourService();
+            TourService tourService = new TourService(new TourRepository());
             
             var tourId = int.Parse(TourIdCancel.Text);
             string content = "";

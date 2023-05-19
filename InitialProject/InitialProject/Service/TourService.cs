@@ -20,10 +20,9 @@ namespace InitialProject.Service
 
         public LocationRepository locationRepository = new LocationRepository();
         public TourRepository tourRepository = new TourRepository();
-        public CouponService couponService = new CouponService();
+        public CouponService couponService = new CouponService(new CouponRepository());
         public DatesRepository datesRepository = new DatesRepository();
         private readonly ITourRepository TourRepository;
-        public TourService() {
 
         public TourService(ITourRepository tourRepository)
         {
@@ -621,33 +620,17 @@ namespace InitialProject.Service
 
             return false;
         }
-        public TourDateDTO GetByTourRequest(TourRequestDTO tourRequestDTO)
+
+        public TourDateDTO GetRequestedTour(Tour tour, TourRequestDTO tourRequestDTO)
         {
-            return TourRepository.GetByTourRequest(tourRequestDTO);
-        }
-
-        public TourDateDTO GetByUnaceptedTourRequest(TourRequestDTO tourRequestDTO)
-        {
-            TourRepository tourRepository = new TourRepository();
-            LocationRepository locationRepository = new LocationRepository();
-
-            Location location = locationRepository.GetByCityAndCountry(tourRequestDTO.City, tourRequestDTO.Country);
-
-            if (location == null)
-            {
-                return null;
-            }
-
-            List<Tour> toursByLocation = GetByLocation(location.LocationId);
-
             List<Dates> dates = new List<Dates>();
 
-            foreach (Tour tour in toursByLocation)
+            if (tour.Language.Equals(tourRequestDTO.Language) && tour.MaxGuests >= tourRequestDTO.Tourists)
             {
-                if (tour.Language.Equals(tourRequestDTO.Language))
+                dates = tour.StartingDates;
+                foreach (Dates date in dates)
                 {
-                    dates = tour.StartingDates;
-                    foreach (Dates date in dates)
+                    if (date.Date >= tourRequestDTO.startDate && date.Date + TimeSpan.FromMinutes(tour.Duration) <= tourRequestDTO.endDate)
                     {
                         TourDateDTO tourDateDTO = new TourDateDTO(tour, date);
                         return tourDateDTO;
@@ -656,17 +639,58 @@ namespace InitialProject.Service
             }
             return null;
         }
+        public TourDateDTO GetByTourRequest(TourRequestDTO tourRequestDTO)
+        {
+
+            LocationRepository locationRepository = new LocationRepository();
+            Location location = locationRepository.GetByCityAndCountry(tourRequestDTO.City, tourRequestDTO.Country);
+
+            if (location != null)
+            {
+                List<Tour> toursByLocation = GetByLocation(location.LocationId);
+
+                foreach (Tour tour in toursByLocation)
+                {
+                    if (GetRequestedTour(tour, tourRequestDTO) != null)
+                    {
+                        return GetRequestedTour(tour, tourRequestDTO);
+                    }
+                }
+            }
+            
+            return null;
+        }
+
         public Guide GetTourGuide(int tourId)
         {
-            return TourRepository.GetTourGuide(tourId);
-
+            UserRepository userRepository = new UserRepository();
+            List<Guide> guides = userRepository.GetAllGuides();
+            foreach (Guide guide in guides)
+            {
+                foreach (Tour tour in guide.Tours)
+                {
+                    if (tour.TourId == tourId)
+                    {
+                        return guide;
+                    }
+                }
+            }
+            return null;
         }
+
         public List<Dates> GetTourDates(int tourId)
         {
-            return TourRepository.GetTourDates(tourId);
-
+            using (var db = new DataContext())
+            {
+                Tour tour = GetById(tourId);
+                List<Dates> tourDates = new List<Dates>();
+                foreach (Dates date in tour.StartingDates)
+                {
+                    tourDates.Add(date);
+                }
+                return tourDates;
+            }
         }
-
 
     }
 }

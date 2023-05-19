@@ -27,6 +27,11 @@ namespace InitialProject.Model
             URL = url;
         }
 
+        public TourImage(string url)
+        {
+            URL = url;
+        }
+
 
         public override string ToString()
         {

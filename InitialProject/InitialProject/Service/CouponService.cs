@@ -11,9 +11,10 @@ namespace InitialProject.Service
 {
     public class CouponService
     {
-        CouponRepository couponRepository = new CouponRepository();
-        TouristsRepository touristsRepository = new TouristsRepository();
-        public CouponService()
+        private readonly ICouponRepository CouponRepository;
+        TouristRepository touristsRepository = new TouristRepository();
+
+        public CouponService(ICouponRepository couponRepository)
         {
             CouponRepository = couponRepository;
         }

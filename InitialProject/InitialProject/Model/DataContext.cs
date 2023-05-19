@@ -50,7 +50,6 @@ namespace InitialProject.Model
 
         public DbSet<TourRequest> TourRequests { get; set; }
 
-        public DbSet<TourRequest> TourRequests { get; set; }
 
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
@@ -234,7 +233,7 @@ namespace InitialProject.Model
 
 
         }
-        public string path = @"C:\Users\Strahinja\Desktop\SIMS_DB\database.db";
+        public string path = @"C:\Users\Lenovo\Desktop\Sims baza\database.db";
 
         protected override void OnConfiguring(DbContextOptionsBuilder options) => options.UseSqlite($"Data Source = {path}");
 

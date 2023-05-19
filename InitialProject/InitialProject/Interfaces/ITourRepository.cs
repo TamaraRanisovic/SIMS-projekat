@@ -25,10 +25,6 @@ namespace InitialProject.Interfaces
         public List<Tour> GetList();
         public List<Tourist> GetTourists(Tour tour);
         public Tour GetByTourReservation(int tourReservationId);
-        public TourDateDTO GetByTourRequest(TourRequestDTO tourRequestDTO);
-        public Guide GetTourGuide(int tourId);
-        public List<Dates> GetTourDates(int tourId);
-
 
     }
 }

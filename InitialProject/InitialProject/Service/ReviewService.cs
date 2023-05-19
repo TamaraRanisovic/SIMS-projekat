@@ -17,7 +17,7 @@ namespace InitialProject.Service
     {
         public TourRepository tourRepository = new TourRepository();
         public DatesRepository datesRepository = new DatesRepository();
-        public TouristsRepository touristsRepository = new TouristsRepository();
+        public TouristRepository touristsRepository = new TouristRepository();
         public CheckpointRepository checkpointRepository = new CheckpointRepository();
         public TourRatingRepository tourRatingRepository = new TourRatingRepository();
         public List<TourRatingCheckpointDTO> ShowReview(int dateId)

@@ -24,7 +24,7 @@ namespace InitialProject.Model
 
         public bool IsValid { get; set; }   
 
-        public List<TourImages> TourImages { get; set; }
+        public List<TourImage> TourImages { get; set; }
 
         public TourRating()
         {
@@ -58,7 +58,7 @@ namespace InitialProject.Model
             GuideLanguage = guideLanguage;
             TourAmusement = tourAmusement;
             Comment = comment;
-            TourImages = new List<TourImages>();
+            TourImages = new List<TourImage>();
             IsValid = valid;
 
         }
