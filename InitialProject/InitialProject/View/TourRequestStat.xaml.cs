@@ -41,6 +41,8 @@ namespace InitialProject.View
             Zahtevi.ItemsSource = requestRepository.GetAllByLocation(location);
 
             NumOfRequests.Text = (TourRequestService.Stat(requestRepository.GetAllByLocation(location))).ToString();
+            City.Text = "";
+            Country.Text = "";
         }
 
         private void Button_Click_1(object sender, RoutedEventArgs e)
@@ -48,7 +50,8 @@ namespace InitialProject.View
             string language = Language.Text;
             Zahtevi.ItemsSource = requestRepository.GetAllByLanguage(language);
             NumOfRequests.Text = (TourRequestService.Stat(requestRepository.GetAllByLanguage(language))).ToString();
-            
+            Language.Text = "";
+
         }
 
         private void Button_Click_2(object sender, RoutedEventArgs e)
@@ -69,6 +72,8 @@ namespace InitialProject.View
             int month = int.Parse(Month.Text);
             Zahtevi.ItemsSource = requestRepository.GetAllByYearAndMonth(year, month);
             NumOfRequests.Text = (TourRequestService.RequestsByMonthsInAYearStat(requestRepository.GetAllByYearAndMonth(year, month), year, month)).ToString();
+            Month.Text = "";
+            Year.Text = "";
         }
 
         private void home_Click(object sender, RoutedEventArgs e)

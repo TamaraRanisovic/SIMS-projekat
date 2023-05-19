@@ -53,7 +53,7 @@ namespace InitialProject.Repository
         {
             using (var db = new DataContext())
             {
-                return db.TourRequests.Where(t => t.StartDate.Year == year).ToList();
+                return db.TourRequests.Where(t => t.RequestDate.Year == year).ToList();
             }
         }
 

@@ -19,7 +19,7 @@
         <Button Content="Filter po br turista" HorizontalAlignment="Left" Margin="452,150,0,0" VerticalAlignment="Top" RenderTransformOrigin="0.563,0.245" Width="126" Height="50" Click="Button_Click_2"/>
         <TextBox x:Name="Number" TextWrapping="Wrap" Text="" Height="43" Margin="452,205,222,0" VerticalAlignment="Top" TextChanged="TextBox_TextChanged"/>
         <TextBlock TextWrapping="Wrap" Text="Number:" Margin="391,208,338,153"/>
-        <Button HorizontalAlignment="Left" Margin="667,152,0,0" VerticalAlignment="Top" Width="109" Height="50" Click="Button_Click_3"/>
+        <Button Content="Filter opseg" HorizontalAlignment="Left" Margin="667,152,0,0" VerticalAlignment="Top" Width="109" Height="50" Click="Button_Click_3"/>
         <DatePicker x:Name="StartDate" Margin="667,207,10,174"/>
         <DatePicker x:Name="EndDate" Margin="667,235,10,148"/>
         <Button Content="svi" HorizontalAlignment="Left" Margin="667,64,0,0" VerticalAlignment="Top" Width="99" Height="36" Click="Button_Click_4"/>

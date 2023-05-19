@@ -36,6 +36,7 @@ namespace InitialProject.View
         {
             string language = Language.Text;
             TourRequests.ItemsSource = repository.GetAllByLanguage(language);
+            Language.Text = "";
         }
 
         private void Language_TextChanged(object sender, TextChangedEventArgs e)
@@ -58,13 +59,15 @@ namespace InitialProject.View
             Location location = new Location(City.Text, Country.Text);
 
             TourRequests.ItemsSource = repository.GetAllByLocation(location);
+            City.Text = "";
+            Country.Text = "";
         }
 
         private void Button_Click_2(object sender, RoutedEventArgs e)
         {
             int num = int.Parse(Number.Text);
             TourRequests.ItemsSource = repository.GetAllByNumOfTourists(num);
-
+            Number.Text = "";
         }
 
         private void TextBox_TextChanged(object sender, TextChangedEventArgs e)
@@ -78,13 +81,15 @@ namespace InitialProject.View
             var output = new List<TourRequest>();
             foreach (var item in list)
             {
-                if(item.StartDate >= DateTime.Parse(StartDate.Text) && item.StartDate < DateTime.Parse(EndDate.Text))
+                if(item.StartDate >= DateTime.Parse(StartDate.Text) || item.EndDate < DateTime.Parse(EndDate.Text))
                 {   
                     output.Add(item);
                 }
             }
 
             TourRequests.ItemsSource = output;
+            StartDate.Text = "";
+            EndDate.Text = "";
         }
 
         private void Button_Click_4(object sender, RoutedEventArgs e)
