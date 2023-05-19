@@ -1,0 +1,45 @@
+﻿<Window x:Class="InitialProject.View.ReviewGuest"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:InitialProject.View"
+        mc:Ignorable="d"
+        Title="ReviewGuest" Height="768" Width="1024">
+    <Grid>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="Auto" />
+            <RowDefinition Height="*" />
+        </Grid.RowDefinitions>
+
+        <!-- SIMS TRAVEL header -->
+        <TextBlock Text="SIMS TRAVEL" HorizontalAlignment="Center" VerticalAlignment="Center"
+                   FontSize="36" FontWeight="Bold" />
+
+        <!-- Review Guest title -->
+        <TextBlock Text="REVIEW GUEST" Grid.Row="1" HorizontalAlignment="Center"
+                   FontSize="24" FontWeight="Bold" Margin="0,20,0,0" />
+
+        <!-- Rule Compliance textbox -->
+        <TextBlock Text="RULE COMPLIANCE:"  FontSize ="24" Grid.Row="4" Margin="164,55,631,478" />
+        <TextBox x:Name="txtRuleCompliance" FontSize ="24" Grid.Row="4" Margin="416,32,412,500" />
+
+        <!-- Cleanliness textbox -->
+        <TextBlock Text="CLEANLINESS:"  FontSize ="24" Grid.Row="4" Margin="182,168,679,341" />
+        <TextBox x:Name="txtCleanliness" FontSize ="24" Grid.Row="4" Margin="414,146,414,389" />
+
+        <!-- Comment textbox -->
+        <TextBlock Text="COMMENT:" Grid.Row="4" FontSize="24" Margin="202,294,679,253" />
+        <TextBox x:Name="txtComment" Grid.Row="4" FontSize ="24" Margin="414,270,412,253" />
+
+        <!-- Submit button -->
+        <Button Content="Submit" Grid.Row="4" HorizontalAlignment="Right" Margin="0,440,394,52"
+                Click="SubmitButton_Click" Width="210" />
+
+        <Button Grid.Row="0" Grid.Column="0" Content="BACK" Width="120" Height="75" Margin="10" 
+                HorizontalAlignment="Left" VerticalAlignment="Top" FontSize="24" Click="BackButton_Click" />
+    </Grid>
+</Window>
