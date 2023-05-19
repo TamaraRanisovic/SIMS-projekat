@@ -14,6 +14,9 @@ using System.Windows.Shapes;
 
 namespace InitialProject.View
 {
+    /// <summary>
+    /// Interaction logic for OwnerWindow.xaml
+    /// </summary>
     public partial class OwnerWindow : Window
     {
         public OwnerWindow()
@@ -21,5 +24,17 @@ namespace InitialProject.View
             InitializeComponent();
         }
 
+        private void Button_Click(object sender, RoutedEventArgs e)
+        {
+            ReviewsWindow reviewsWindow = new ReviewsWindow(); 
+            reviewsWindow.Show();
+            Close();
+        }
+
+        private void Button_Click_1(object sender, RoutedEventArgs e)
+        {
+            ReschedulingRequests reschedulingRequests = new ReschedulingRequests();
+            reschedulingRequests.Show();
+        }
     }
 }

@@ -12,7 +12,7 @@ namespace InitialProject.Model
     public class Accomodation
     {
         [Key]
-        public int AccId { get; set; }
+        public int Id { get; set; }
 
         public string Name { get; set; }
 
@@ -24,26 +24,74 @@ namespace InitialProject.Model
 
         public int DaysBeforeCanceling { get; set; }
 
+      //  public bool IsAvailable { get; set; }
+
         public List<AccomodationImage> Images { get; set; }
 
         public List<Guest> Guests { get; set; }
+
      
+        public string Class { get; set; }
 
 
         public List<AccomodationReservation> AccomodationReservations { get; set; }
 
+        public List<Renovation> Renovations { get; set; }
+
+        public bool RecentlyRenovated { get; set; }
+
+        private DateTime _lastRenovation;
+        public DateTime LastRenovation
+        {
+            get { return _lastRenovation; }
+
+            set
+            {
+                _lastRenovation = value;
+
+                if (LastRenovation != default(DateTime))
+                {
+
+                    if (DateTime.UtcNow <= LastRenovation.Add(new TimeSpan(366, 0, 0, 0)))
+                    {
+                        if (LastRenovation <= DateTime.UtcNow)// < == > if(finished)
+                        {
+                            this.RecentlyRenovated = true;
+                        }
+                        else
+                        {
+                            this.RecentlyRenovated = false;
+                        }
+                    }
+                    else
+                    {
+                        this.RecentlyRenovated = false;
+                    }
+                }
+                else
+                {
+                    this.RecentlyRenovated = false;
+                }
+            }
+        }
+
         public override string ToString()
         {
-            return $"AccomodationId: {AccId}\n, Name: {Name}\n, AccomodationType: {AccomodationType}\n, MaxGuests: {MaxGuests}\n, MinDaysReservation: {MinReservationDays}\n, DaysBeforeCanceling: {DaysBeforeCanceling}\n";
+            return "Name" + Name + "AccomodationType" + AccomodationType + "MaxGuests" + MaxGuests + "MinReservationDays" + MinReservationDays + "DaysBeforeCacneling" + DaysBeforeCanceling + "Images" + Images +  "AccReservations" + AccomodationReservations;
         }
 
         public Accomodation() 
         {
             Images = new List<AccomodationImage>(); 
-            Guests = new List<Guest>(); 
+             
             AccomodationReservations = new List<AccomodationReservation>(); 
+
         }
 
+    
+
+            
+        
 
         public Accomodation(string name, Location location, AccomodationType type, int maxGuests, int minReservationDays, int daysBeforeCanceling)
         {
@@ -53,10 +101,17 @@ namespace InitialProject.Model
             MinReservationDays = minReservationDays;
             DaysBeforeCanceling = daysBeforeCanceling;
             Images = new List<AccomodationImage>(); 
-            Guests = new List<Guest>();
+            
             AccomodationReservations = new List<AccomodationReservation>();
+            
+            Guests = new List<Guest>();
+            
+
         }
 
-    
+        public override string ToString()
+        {
+            return $"[==========****************===========]\nAccomodationId: {AccId}\n, Name: {Name}\n, AccomodationType: {AccomodationType}\n, MaxGuests: {MaxGuests}\n, MinDaysReservation: {MinReservationDays}\n, DaysBeforeCanceling: {DaysBeforeCanceling}\n";
+        }
     }
 }

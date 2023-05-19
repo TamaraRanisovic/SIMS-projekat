@@ -35,9 +35,6 @@ public class Location
         Accomodations = new List<Accomodation>();
     }
 
-    public override string ToString()
-    {
-        return $"LocationId: {LocationId}\n, City: {City}\n, Country: {Country}\n";
 
 
     }

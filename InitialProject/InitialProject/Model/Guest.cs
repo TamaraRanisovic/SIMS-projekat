@@ -7,7 +7,9 @@ using System.Threading.Tasks;
 namespace InitialProject.Model
 {
     public class Guest : User
-    {
+    {   
+        public List<AccomodationReservation> AccomodationReservations { get; set; }
+
         public List<Accomodation> Accomodations { get; set; }
 
         public List<Comment> Comments { get; set; }
@@ -16,8 +18,6 @@ namespace InitialProject.Model
 
         public Guest(string username, string password, UserType userType) : base(username, password, userType) 
         {
-            Accomodations = new List<Accomodation>();
-            Comments = new List<Comment>();
 
         }
 

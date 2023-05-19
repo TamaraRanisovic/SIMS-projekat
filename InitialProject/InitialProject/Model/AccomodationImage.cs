@@ -18,8 +18,9 @@ namespace InitialProject.Model
 
         public AccomodationImage() { }
 
-        public AccomodationImage(string name, string url)
+        public AccomodationImage(int id, string name, string url)
         {
+            Id = id;
             Name = name;
             URL = url;
         }

@@ -1,4 +1,4 @@
-﻿using InitialProject.Model;
+using InitialProject.Model;
 using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
@@ -39,5 +39,23 @@ namespace InitialProject.Repository
                     .ToList();
             }
         }
+
+
+        public GuestRating GetRatingByOwnerId(int ownerId)
+        {
+            using (var db = new DataContext())
+            {
+                List<GuestRating> allGuestRatings = GetAllGuestRatings();
+                foreach (GuestRating guestRating in allGuestRatings)
+                {
+                    if (guestRating.IdOwner == ownerId)
+                    {
+                        return guestRating;
+                    }
+                }
+            }
+            return null;
+        }
+
     }
 }

@@ -1,5 +1,4 @@
 ﻿using InitialProject.Controller;
-using InitialProject.View;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -50,20 +49,14 @@ namespace InitialProject
 
                     break; 
                 case "2": 
-                    Console.WriteLine("Chosen option: 2");
-                    GuideController guideMenu = new GuideController();
-                    guideMenu.Menu();
+
+                    Console.WriteLine("Chosen option: B"); 
                     break; 
                 case "3":
-                    Console.WriteLine("Chosen option: 3");
-                    AccomodationController accomodationController = new AccomodationController();
-                    accomodationController.GetMenu();
+                    Console.WriteLine("Guest's view");
                     break;
                 case "4":
-                    Console.WriteLine("Chosen option: 4");
-                    Console.WriteLine("Chosen option: Prikaz i pretraga tura");
-                    TourController TourController = new TourController();
-                    TourController.GetMenu();
+                    Console.WriteLine("Tourist's view");
                     break;
                 case "x":
                     break;

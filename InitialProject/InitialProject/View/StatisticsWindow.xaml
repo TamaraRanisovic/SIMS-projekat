@@ -1,0 +1,20 @@
+﻿<Window x:Class="InitialProject.View.StatisticsWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:InitialProject.View"
+        mc:Ignorable="d"
+        Title="Statistics" Height="768" Width="1024">
+    <Grid>
+        <Button Grid.Row="0" Grid.Column="0" Content="BACK" Width="120" Height="75" Margin="10" 
+                HorizontalAlignment="Left" VerticalAlignment="Top" FontSize="24" Click="BackButton_Click" />
+        <DataGrid x:Name="accomodations" d:ItemsSource="{d:SampleData ItemCount=5}" Margin="276,67,112,543"/>
+        <DataGrid x:Name="annualStatistics" d:ItemsSource="{d:SampleData ItemCount=5}" Margin="312,282,112,281"/>
+        <DataGrid x:Name="monthlyStatistics" d:ItemsSource="{d:SampleData ItemCount=5}" Margin="312,527,112,40"/>
+        <Button Content="SHOW BY YEARS" HorizontalAlignment="Left" Margin="70,0,0,0" VerticalAlignment="Center" Height="116" Width="129" Click="AnnualButton_Click"/>
+        <Button Content="SHOW BY MONTHS" HorizontalAlignment="Left" Margin="70,565,0,0" VerticalAlignment="Top" Height="109" Width="129" Click="MonthlyButton_Click_1"/>
+        <TextBlock x:Name="annualOccupancy" HorizontalAlignment="Left" Margin="70,269,0,0" TextWrapping="Wrap" Text="TextBlock" VerticalAlignment="Top" Height="34" Width="129"/>
+        <TextBlock x:Name="monthlyOccupancy" HorizontalAlignment="Left" Margin="83,514,0,0" TextWrapping="Wrap" Text="TextBlock" VerticalAlignment="Top" Height="40" Width="103"/>
+    </Grid>
+</Window>

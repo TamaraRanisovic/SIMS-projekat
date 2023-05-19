@@ -21,26 +21,8 @@ namespace InitialProject.Repository
         {
             using (var db = new DataContext())
             {
-                if (user.UserType == UserType.Owner)
-                {
-                    Owner owner = new Owner(user.Username, user.Password, user.UserType);
-                    db.Users.Add(owner);
-                } else if (user.UserType == UserType.Guest)
-                {
-                    Guest guest = new Guest(user.Username, user.Password, user.UserType);
-                    db.Users.Add(guest);
-                } else if (user.UserType == UserType.Guide)
-                {
-                    Guide guide = new Guide(user.Username, user.Password, user.UserType);
-                    db.Users.Add(guide);
-                }
-                else if (user.UserType == UserType.Tourist)
-                {
-                    Tourist tourist = new Tourist(user.Username, user.Password, touristAge, user.UserType);
-                    db.Users.Add(tourist);
-                }
+                db.Users.Add(user);
                 db.SaveChanges();
-                return true;
             }
         }
 
@@ -58,22 +40,7 @@ namespace InitialProject.Repository
             {
                 foreach (User user in db.Users)
                 {
-                    if (user.Username.Equals(username))
-                    {
-                        return user;
-                    }
-                }
-            }
-            return null;
-        }
-
-        public User Login(string username, string password)
-        {
-            using (var db = new DataContext())
-            {
-                foreach (User user in db.Users)
-                {
-                    if (user.Username.Equals(username) && user.Password.Equals(password))
+                    if (user.Username == username)
                     {
                         return user;
                     }
@@ -116,6 +83,19 @@ namespace InitialProject.Repository
             {
                 return db.Guides.Include(t => t.TourRequests).Include(t => t.Tours).ToList();
             }
+        public User Login(string username, string password)
+        {
+            using (var db = new DataContext())
+            {
+                foreach (User user in db.Users)
+                {
+                    if (user.Username == username && user.Password == password)
+                    {
+                        return user;
+                    }
+                }
+            }
+            return null;
         }
 
     }

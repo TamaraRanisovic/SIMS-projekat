@@ -70,7 +70,7 @@ namespace InitialProject.Repository
             }
         }
 
-        public Location GetByCityAndCountry(string city, string country)
+        public Location GetLocationByCityAndCountry(string city, string country)
         {
             using (var db = new DataContext())
             {

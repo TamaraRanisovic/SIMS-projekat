@@ -1,4 +1,4 @@
-﻿
+using InitialProject.Resources.Images;
 using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
@@ -50,6 +50,18 @@ namespace InitialProject.Model
 
         public DbSet<TourRequest> TourRequests { get; set; }
 
+
+
+        public DbSet<OwnerReview> OwnerReviews { get; set; }
+
+        public DbSet<ReservationReschedulingRequest> ReservationReschedulingRequests { get; set; }
+
+        public DbSet<Renovation> Renovations { get; set; }
+
+        public DbSet<RenovationSuggestion> RenovationSuggestions { get; set; } 
+
+        public DbSet<AccommodationReservation> AccommodationReservations { get; set; }
+        public DbSet<AccomodationRating> AccomodationRating { get; set; } //
 
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
@@ -116,6 +128,7 @@ namespace InitialProject.Model
                 .OnDelete(DeleteBehavior.Restrict);
 
             //Accomodations
+            //Accomodations check
             modelBuilder.Entity<AccomodationImage>()
                 .HasOne<Accomodation>()
                 .WithMany(t => t.Images)
@@ -135,6 +148,42 @@ namespace InitialProject.Model
                .HasOne<Accomodation>()
                .WithMany(t => t.Guests)
                .OnDelete(DeleteBehavior.Restrict);
+              .HasOne<Accomodation>()
+              .WithMany(t => t.AccomodationReservations)
+              .OnDelete(DeleteBehavior.Restrict);
+
+            // modelBuilder.Entity<AccomodationReservation>()
+            // .HasOne<Guest>()
+            // .WithMany(t => t.AccomodationReservations)
+            //.OnDelete(DeleteBehavior.Cascade);
+
+            /* modelBuilder.Entity<Guest>()
+                .HasOne<Accomodation>()
+                .WithMany(t => t.Guests)
+                .OnDelete(DeleteBehavior.Cascade);*/
+
+            modelBuilder.Entity<AccomodationReservation>()
+                .HasOne<Accomodation>()
+                .WithMany(t => t.AccomodationReservations)
+                .OnDelete(DeleteBehavior.Cascade);
+
+            //AccomodationRating    NOVOOOOO
+
+            modelBuilder.Entity<AccomodationImage>()
+              .HasOne<AccomodationRating>()
+              .WithMany(t => t.Images)
+              .OnDelete(DeleteBehavior.Cascade);
+
+            //AccRes
+            modelBuilder.Entity<Accomodation>()
+                .HasOne<AccomodationReservation>()
+                .WithMany(t => t.Accomodations)
+                .OnDelete(DeleteBehavior.Cascade);
+
+         //  modelBuilder.Entity<User>()
+           //     .HasOne<AccomodationReservation>()
+             //   .WithMany(t => t.Users)
+               // .OnDelete(DeleteBehavior.Cascade);
 
             //Checkpoint
 
@@ -155,7 +204,7 @@ namespace InitialProject.Model
             modelBuilder.Entity<Comment>()
                 .HasOne<Guest>()
                 .WithMany(t => t.Comments)
-                .OnDelete(DeleteBehavior.Cascade);
+                .OnDelete(DeleteBehavior.Restrict);
 
             //Guide
             modelBuilder.Entity<Tour>()
@@ -175,7 +224,7 @@ namespace InitialProject.Model
                 .WithMany(t => t.Tours)
                 .OnDelete(DeleteBehavior.Restrict);
 
-            //Owner
+            //Owner check
             modelBuilder.Entity<GuestRating>()
                 .HasOne<Owner>()
                 .WithMany(t => t.GuestRatings)
@@ -186,11 +235,11 @@ namespace InitialProject.Model
                 .WithMany(t => t.Accomodations)
                 .OnDelete(DeleteBehavior.Restrict);
 
-            //AccomodationReservation 
+            //AccomodationReservation check
             modelBuilder.Entity<Accomodation>()
             .HasOne<AccomodationReservation>()
-            .WithMany(t => t.Accomodations)
-            .OnDelete(DeleteBehavior.Restrict);
+           .WithMany(t => t.Accomodations)
+           .OnDelete(DeleteBehavior.Restrict);
 
             modelBuilder.Entity<User>()
            .HasOne<AccomodationReservation>()

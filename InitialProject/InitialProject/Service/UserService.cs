@@ -19,6 +19,7 @@ namespace InitialProject.Service
         {
             UserRepository = userRepository;
         }
+        
         public bool Add(User user, int touristAge = 0)
         {
             return UserRepository.Add(user, touristAge);
@@ -27,6 +28,10 @@ namespace InitialProject.Service
         public User Login(string username, string password)
         {
             return UserRepository.Login(username, password);
+        }
+        public void UpdateStatus(bool titleFlag)
+        {
+            UserRepository.UpdateStatus(titleFlag);        
         }
 
         public User GetByUsername(string username)

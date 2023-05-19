@@ -15,12 +15,23 @@ using System.Windows.Shapes;
 
 namespace InitialProject.View
 {
+<<<<<<<< HEAD:InitialProject/InitialProject/View/TourAttendanceWindow.xaml.cs
     public partial class TourAttendanceWindow : Page
+========
+    /// <summary>
+    /// Interaction logic for GuestWindow.xaml
+    /// </summary>
+    public partial class GuestWindow : Window
+>>>>>>>> origin/OwnerGuest:InitialProject/InitialProject/View/GuestWindow.xaml.cs
     {
-        public TourAttendanceWindow()
+        public GuestWindow()
         {
             InitializeComponent();
+<<<<<<<< HEAD:InitialProject/InitialProject/View/TourAttendanceWindow.xaml.cs
             /*TourAttendanceViewModel viewModel = new TourAttendanceViewModel();
+========
+            GuestViewModel viewModel = new GuestViewModel();
+>>>>>>>> origin/OwnerGuest:InitialProject/InitialProject/View/GuestWindow.xaml.cs
             viewModel.CloseAction = Close;
             DataContext = viewModel;*/
         }

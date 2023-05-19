@@ -1,5 +1,4 @@
 ﻿using InitialProject.Model;
-//using Microsoft.AspNetCore.Mvc;
 using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
@@ -11,7 +10,6 @@ namespace InitialProject.Repository
 {
     public class AccomodationRepository
     {
-
         public AccomodationRepository()
         {
 
@@ -27,7 +25,6 @@ namespace InitialProject.Repository
         }
 
         public List<Accomodation> GetAllAccomodations()
-
         {
             using (var db = new DataContext())
             {
@@ -37,11 +34,27 @@ namespace InitialProject.Repository
 
         public Accomodation GetAccomodationById(int accId)
         {
+            using(var db = new DataContext())
+            {
+                List<Accomodation> allAccomodations = GetAllAccomodations();
+                foreach(Accomodation accomodation in allAccomodations)
+                {
+                    if(accomodation.AccId == accId)
+                    {
+                        return accomodation;
+                    }
+                }
+            }
+            return null;
+        }
+
+        public List<Accomodation> GetAccomodationsByLocation(int locationId)
+        {
             using (var db = new DataContext())
             {
                 foreach (Accomodation accomodation in db.Accomodations)
                 {
-                    if (accomodation.AccId == accId)
+                    if (accomodation.Id == accId)
                     {
                         return accomodation;
                     }
@@ -54,7 +67,7 @@ namespace InitialProject.Repository
         {
             using (var db = new DataContext())
             {
-                var accomodation = db.Accomodations.FirstOrDefault(t => t.AccId == updatedAccomodation.AccId);
+                var accomodation = db.Accomodations.FirstOrDefault(t => t.Id == updatedAccomodation.Id);
                 if (accomodation != null)
                 {
                     accomodation.Name = updatedAccomodation.Name;
@@ -72,7 +85,7 @@ namespace InitialProject.Repository
         {
             using (var db = new DataContext())
             {
-                var accomodation = db.Accomodations.FirstOrDefault(t => t.AccId == AccId);
+                var accomodation = db.Accomodations.FirstOrDefault(t => t.Id == AccId);
                 if (accomodation != null)
                 {
                     db.Accomodations.Remove(accomodation);
@@ -81,23 +94,37 @@ namespace InitialProject.Repository
             }
         }
 
-        public List<Accomodation> GetAccomodationsByLocation(int locationId)
+        public int GetNumberOfGuestsInAccomodation(int accId)
         {
-            List<Accomodation> accomodationsByLocation = new List<Accomodation>();
-            using (var db = new DataContext())
+            AccomodationRepository accomodationRepository = new AccomodationRepository();
+            using(var db = new DataContext())
             {
-                var location = db.Locations.Include(a => a.Accomodations).SingleOrDefault(a => a.LocationId == locationId);
-                if (location != null)
+                var acc = db.Accomodations.Include(a => a.AccomodationReservations).SingleOrDefault(a => a.AccId == accId);
+
+                int numberOfGuestsInAccomodation = 0;
+                List<AccomodationReservation> accomodationReservations = acc.AccomodationReservations.ToList();
+                foreach(AccomodationReservation accomodationReservation in accomodationReservations)
                 {
-                    accomodationsByLocation.AddRange(location.Accomodations);
+                    numberOfGuestsInAccomodation += accomodationReservation.NumberOfGuests;
+
                 }
+                return numberOfGuestsInAccomodation;
             }
-            return accomodationsByLocation;
         }
+
+        public void UpdateClassBy(string accommodationClass)
+        {
+            List<Accomodation> Accommodations = new();
+
+            using (DataContext db = new())
+            {
+                Accommodations = db.Accomodations
+                    .ToList();
+
+                Accommodations.ForEach(t => t.Class = accommodationClass);
+                db.SaveChanges();
+            }
+        }
+
     }
 }
-    
-
-    
-
-
