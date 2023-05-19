@@ -16,8 +16,10 @@ namespace InitialProject.Model
 
         public int Cleanliness { get; set; }
 
-        public int RuleCompliance { get; set; }
+        public int RuleCompliance { get; set; } 
 
+        //public string Comment { get; set; }
+        
         public AccomodationReservation AccomodationReservation { get; set; }
 
 
@@ -45,6 +47,15 @@ namespace InitialProject.Model
                 RuleCompliance = ruleCompliance;
 
         }
-        
+
+       /* public GuestRating(int cleanliness, int ruleCompliance, string comment)
+        {
+            
+            Cleanliness = cleanliness;
+            RuleCompliance = ruleCompliance;
+            Comment = comment;
+
+        }*/
+
     } 
 }

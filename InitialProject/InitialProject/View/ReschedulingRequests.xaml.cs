@@ -89,5 +89,13 @@ namespace InitialProject.View
             return continuePostponement;
             
         }
+
+        private void BackButton_Click(object sender, RoutedEventArgs e)
+        {
+            Reservations reservationsWindow = new Reservations();
+            reservationsWindow.Show();
+            Close();
+        }
+
     }
 }

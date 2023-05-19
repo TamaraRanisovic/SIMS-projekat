@@ -15,26 +15,20 @@ using System.Windows.Shapes;
 namespace InitialProject.View
 {
     /// <summary>
-    /// Interaction logic for OwnerWindow.xaml
+    /// Interaction logic for ShowReservations.xaml
     /// </summary>
-    public partial class OwnerWindow : Window
+    public partial class ShowReservations : Window
     {
-        public OwnerWindow()
+        public ShowReservations()
         {
             InitializeComponent();
         }
 
-        private void Button_Click(object sender, RoutedEventArgs e)
+        private void BackButton_Click(object sender, RoutedEventArgs e)
         {
-            ReviewsWindow reviewsWindow = new ReviewsWindow(); 
-            reviewsWindow.Show();
+            Reservations reservationsWindow = new Reservations();
+            reservationsWindow.Show();
             Close();
-        }
-
-        private void Button_Click_1(object sender, RoutedEventArgs e)
-        {
-            ReschedulingRequests reschedulingRequests = new ReschedulingRequests();
-            reschedulingRequests.Show();
         }
     }
 }

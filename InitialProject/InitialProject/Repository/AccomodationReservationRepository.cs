@@ -1,4 +1,5 @@
 ﻿using InitialProject.Model;
+using InitialProject.Resources.Images;
 using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
@@ -58,6 +59,191 @@ namespace InitialProject.Repository
             accommodationReservation.CheckInDate = newBegginingDate;
             accommodationReservation.CheckOutDate = newEndingDate;
             db.SaveChanges();
+        }
+
+        public List<int> GetReservationYearsBy(Accomodation accommodation)
+        {
+            List<int> reservationYears = new List<int>();
+
+            using (var dbContext = new DataContext())
+            {
+                reservationYears = dbContext.AccommodationReservations
+                                           .Select(r => r.CheckInDate.Year).Distinct().ToList();
+            }
+
+            return reservationYears;
+        }
+
+         public int GetCountBy(int year, Accomodation accommodation)
+         {
+
+             List<AccommodationReservation> annualReservations = new List<AccommodationReservation>();
+
+             using (var dbContext = new DataContext())
+             {
+                 annualReservations = dbContext.AccommodationReservations
+                                            .Where(r => r.CheckInDate.Year == year).ToList();
+
+             }
+
+             int count = 0;
+             foreach (var reservation in annualReservations)
+             {
+
+
+
+                 if (reservation.AccId == accommodation.Id)
+                 {
+
+                     count++;
+                 }
+
+
+             }
+             return count;
+
+         }
+
+
+
+        public int GetCancellationCountBy(int year, Accomodation accommodation)
+        {
+
+            List<AccommodationReservation> annualCanceledReservations = new List<AccommodationReservation>();
+
+            using (var dbContext = new DataContext())
+            {
+                annualCanceledReservations = dbContext.AccommodationReservations
+                                            .Where(r => r.CheckInDate.Year == year)
+                                            .Where(r => r.Cancelled == true)
+                                            .ToList();
+            }
+
+            int count = 0;
+            foreach (var reservation in annualCanceledReservations)
+            {
+
+
+
+                if (reservation.AccId == accommodation.Id)
+                {
+
+                    count++;
+                }
+
+
+            }
+            return count;
+        }
+
+        public double GetOccupancyBy(int year, Accomodation accommodation)
+        {
+
+            List<AccommodationReservation> annualReservations = new List<AccommodationReservation>();
+
+            using (var dbContext = new DataContext())
+            {
+                annualReservations = dbContext.AccommodationReservations
+                                           .Where(r => r.CheckInDate.Year == year)
+                                           .ToList();
+            }
+
+            TimeSpan duration = new TimeSpan(0, 0, 0, 0);
+
+            foreach (var reservation in annualReservations)
+            {
+
+                if (reservation.AccId == accommodation.Id)
+                {
+
+
+                    duration += (reservation.CheckOutDate - reservation.CheckInDate);
+                }
+            }
+            return Math.Round(Convert.ToDouble(duration.Days) / 366 * 100, 2);
+        }
+
+        public int GetCountBy(int year, int month, Accomodation accommodation)
+        {
+
+            List<AccommodationReservation> monthlyReservations = new List<AccommodationReservation>();
+
+            using (var dbContext = new DataContext())
+            {
+                monthlyReservations = dbContext.AccommodationReservations
+                                           .Where(r => r.CheckInDate.Year == year && r.CheckInDate.Month == month)
+                                           .ToList();
+            }
+
+            int count = 0;
+            foreach (var reservation in monthlyReservations)
+            {
+
+
+
+                if (reservation.AccId == accommodation.Id)
+                {
+
+                    count++;
+                }
+
+
+            }
+            return count;
+        }
+
+        public int GetCancellationCountBy(int year, int month, Accomodation accommodation)
+        {
+
+            List<AccommodationReservation> canceledReservations = new List<AccommodationReservation>();
+
+            using (var dbContext = new DataContext())
+            {
+                canceledReservations = dbContext.AccommodationReservations
+                                            .Where(r => r.CheckInDate.Year == year && r.CheckInDate.Month == month)
+                                            .Where(r => r.Cancelled == true)
+                                            .ToList();
+            }
+
+            int count = 0;
+            foreach (var reservation in canceledReservations)
+            {
+
+
+
+                if (reservation.AccId == accommodation.Id)
+                {
+
+                    count++;
+                }
+
+
+            }
+            return count;
+        }
+
+            public double GetOccupancyBy(int year, int month, Accomodation accommodation)
+        {
+
+            List<AccommodationReservation> monthlyReservations = new List<AccommodationReservation>();
+
+            using (var dbContext = new DataContext())
+            {
+                monthlyReservations = dbContext.AccommodationReservations
+                                           .Where(r => r.CheckInDate.Year == year && r.CheckInDate.Month == month)
+                                           .ToList();
+            }
+
+            TimeSpan duration = new TimeSpan(0, 0, 0, 0);
+
+            foreach (var reservation in monthlyReservations)
+            {
+
+                duration += (reservation.CheckOutDate - reservation.CheckInDate);
+
+            }
+
+            return Math.Round(Convert.ToDouble(duration.Days) / 366 * 100, 2);
         }
 
     }

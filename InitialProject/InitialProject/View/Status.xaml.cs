@@ -15,26 +15,19 @@ using System.Windows.Shapes;
 namespace InitialProject.View
 {
     /// <summary>
-    /// Interaction logic for OwnerWindow.xaml
+    /// Interaction logic for Status.xaml
     /// </summary>
-    public partial class OwnerWindow : Window
+    public partial class Status : Window
     {
-        public OwnerWindow()
+        public Status()
         {
             InitializeComponent();
         }
-
-        private void Button_Click(object sender, RoutedEventArgs e)
+        private void BackButton_Click(object sender, RoutedEventArgs e)
         {
-            ReviewsWindow reviewsWindow = new ReviewsWindow(); 
+            Reviews reviewsWindow = new Reviews();
             reviewsWindow.Show();
             Close();
-        }
-
-        private void Button_Click_1(object sender, RoutedEventArgs e)
-        {
-            ReschedulingRequests reschedulingRequests = new ReschedulingRequests();
-            reschedulingRequests.Show();
         }
     }
 }

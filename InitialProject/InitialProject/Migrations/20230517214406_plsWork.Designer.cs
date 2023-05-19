@@ -11,8 +11,8 @@ using Microsoft.EntityFrameworkCore.Storage.ValueConversion;
 namespace InitialProject.Migrations
 {
     [DbContext(typeof(DataContext))]
-    [Migration("20230319222027_Initial")]
-    partial class Initial
+    [Migration("20230517214406_plsWork")]
+    partial class plsWork
     {
         protected override void BuildTargetModel(ModelBuilder modelBuilder)
         {
@@ -21,18 +21,28 @@ namespace InitialProject.Migrations
 
             modelBuilder.Entity("InitialProject.Model.Accomodation", b =>
                 {
-                    b.Property<int>("AccId")
+                    b.Property<int>("Id")
                         .ValueGeneratedOnAdd()
+                        .HasColumnType("INTEGER");
+
+                    b.Property<int?>("AccomodationReservationId")
                         .HasColumnType("INTEGER");
 
                     b.Property<int>("AccomodationType")
                         .HasColumnType("INTEGER");
+
+                    b.Property<string>("Class")
+                        .IsRequired()
+                        .HasColumnType("TEXT");
 
                     b.Property<int>("DaysBeforeCanceling")
                         .HasColumnType("INTEGER");
 
                     b.Property<int?>("GuestId")
                         .HasColumnType("INTEGER");
+
+                    b.Property<DateTime>("LastRenovation")
+                        .HasColumnType("TEXT");
 
                     b.Property<int?>("LocationId")
                         .HasColumnType("INTEGER");
@@ -50,7 +60,12 @@ namespace InitialProject.Migrations
                     b.Property<int?>("OwnerId")
                         .HasColumnType("INTEGER");
 
-                    b.HasKey("AccId");
+                    b.Property<bool>("RecentlyRenovated")
+                        .HasColumnType("INTEGER");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("AccomodationReservationId");
 
                     b.HasIndex("GuestId");
 
@@ -67,7 +82,7 @@ namespace InitialProject.Migrations
                         .ValueGeneratedOnAdd()
                         .HasColumnType("INTEGER");
 
-                    b.Property<int?>("AccomodationAccId")
+                    b.Property<int?>("AccomodationId")
                         .HasColumnType("INTEGER");
 
                     b.Property<string>("Name")
@@ -80,9 +95,47 @@ namespace InitialProject.Migrations
 
                     b.HasKey("Id");
 
-                    b.HasIndex("AccomodationAccId");
+                    b.HasIndex("AccomodationId");
 
                     b.ToTable("AccomodationImages");
+                });
+
+            modelBuilder.Entity("InitialProject.Model.AccomodationReservation", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("INTEGER");
+
+                    b.Property<int?>("AccomodationId")
+                        .HasColumnType("INTEGER");
+
+                    b.Property<bool>("Cancelled")
+                        .HasColumnType("INTEGER");
+
+                    b.Property<DateTime>("CheckInDate")
+                        .HasColumnType("TEXT");
+
+                    b.Property<DateTime>("CheckOutDate")
+                        .HasColumnType("TEXT");
+
+                    b.Property<int?>("GuestId")
+                        .HasColumnType("INTEGER");
+
+                    b.Property<int>("NumberOfGuests")
+                        .HasColumnType("INTEGER");
+
+                    b.Property<int>("UserId")
+                        .HasColumnType("INTEGER");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("AccomodationId");
+
+                    b.HasIndex("GuestId");
+
+                    b.HasIndex("UserId");
+
+                    b.ToTable("AccomodationReservations");
                 });
 
             modelBuilder.Entity("InitialProject.Model.Comment", b =>
@@ -114,6 +167,9 @@ namespace InitialProject.Migrations
                         .ValueGeneratedOnAdd()
                         .HasColumnType("INTEGER");
 
+                    b.Property<int>("AccomodationReservationId")
+                        .HasColumnType("INTEGER");
+
                     b.Property<int>("Cleanliness")
                         .HasColumnType("INTEGER");
 
@@ -128,9 +184,102 @@ namespace InitialProject.Migrations
 
                     b.HasKey("Id");
 
+                    b.HasIndex("AccomodationReservationId");
+
                     b.HasIndex("OwnerId");
 
                     b.ToTable("GuestRatings");
+                });
+
+            modelBuilder.Entity("InitialProject.Model.OwnerReview", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("INTEGER");
+
+                    b.Property<int>("AccomodationReservationId")
+                        .HasColumnType("INTEGER");
+
+                    b.Property<int>("Cleanliness")
+                        .HasColumnType("INTEGER");
+
+                    b.Property<string>("Comment")
+                        .IsRequired()
+                        .HasColumnType("TEXT");
+
+                    b.Property<string>("Images")
+                        .IsRequired()
+                        .HasColumnType("TEXT");
+
+                    b.Property<int>("OwnerFairness")
+                        .HasColumnType("INTEGER");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("AccomodationReservationId");
+
+                    b.ToTable("OwnerReviews");
+                });
+
+            modelBuilder.Entity("InitialProject.Model.Renovation", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("INTEGER");
+
+                    b.Property<int>("AccomodationId")
+                        .HasColumnType("INTEGER");
+
+                    b.Property<string>("Description")
+                        .IsRequired()
+                        .HasColumnType("TEXT");
+
+                    b.Property<TimeSpan>("Duration")
+                        .HasColumnType("TEXT");
+
+                    b.Property<DateTime>("End")
+                        .HasColumnType("TEXT");
+
+                    b.Property<DateTime>("Start")
+                        .HasColumnType("TEXT");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("AccomodationId");
+
+                    b.ToTable("Renovations");
+                });
+
+            modelBuilder.Entity("InitialProject.Model.ReservationReschedulingRequest", b =>
+                {
+                    b.Property<int>("Id")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("INTEGER");
+
+                    b.Property<bool>("Achievable")
+                        .HasColumnType("INTEGER");
+
+                    b.Property<string>("Comment")
+                        .IsRequired()
+                        .HasColumnType("TEXT");
+
+                    b.Property<DateTime>("NewEndingDate")
+                        .HasColumnType("TEXT");
+
+                    b.Property<DateTime>("NewStartingDate")
+                        .HasColumnType("TEXT");
+
+                    b.Property<int>("ReservationId")
+                        .HasColumnType("INTEGER");
+
+                    b.Property<int>("State")
+                        .HasColumnType("INTEGER");
+
+                    b.HasKey("Id");
+
+                    b.HasIndex("ReservationId");
+
+                    b.ToTable("ReservationReschedulingRequests");
                 });
 
             modelBuilder.Entity("InitialProject.Model.TourImages", b =>
@@ -293,6 +442,9 @@ namespace InitialProject.Migrations
                 {
                     b.HasBaseType("InitialProject.Model.User");
 
+                    b.Property<bool>("SuperOwner")
+                        .HasColumnType("INTEGER");
+
                     b.HasDiscriminator().HasValue("Owner");
                 });
 
@@ -318,28 +470,53 @@ namespace InitialProject.Migrations
 
             modelBuilder.Entity("InitialProject.Model.Accomodation", b =>
                 {
+                    b.HasOne("InitialProject.Model.AccomodationReservation", null)
+                        .WithMany("Accomodations")
+                        .HasForeignKey("AccomodationReservationId")
+                        .OnDelete(DeleteBehavior.Restrict);
+
                     b.HasOne("InitialProject.Model.Guest", null)
                         .WithMany("Accomodations")
                         .HasForeignKey("GuestId")
-                        .OnDelete(DeleteBehavior.Cascade);
+                        .OnDelete(DeleteBehavior.Restrict);
 
                     b.HasOne("WebApi.Entities.Location", null)
                         .WithMany("Accomodations")
                         .HasForeignKey("LocationId")
-                        .OnDelete(DeleteBehavior.Cascade);
+                        .OnDelete(DeleteBehavior.Restrict);
 
                     b.HasOne("InitialProject.Model.Owner", null)
                         .WithMany("Accomodations")
                         .HasForeignKey("OwnerId")
-                        .OnDelete(DeleteBehavior.Cascade);
+                        .OnDelete(DeleteBehavior.Restrict);
                 });
 
             modelBuilder.Entity("InitialProject.Model.AccomodationImage", b =>
                 {
                     b.HasOne("InitialProject.Model.Accomodation", null)
                         .WithMany("Images")
-                        .HasForeignKey("AccomodationAccId")
-                        .OnDelete(DeleteBehavior.Cascade);
+                        .HasForeignKey("AccomodationId")
+                        .OnDelete(DeleteBehavior.Restrict);
+                });
+
+            modelBuilder.Entity("InitialProject.Model.AccomodationReservation", b =>
+                {
+                    b.HasOne("InitialProject.Model.Accomodation", null)
+                        .WithMany("AccomodationReservations")
+                        .HasForeignKey("AccomodationId")
+                        .OnDelete(DeleteBehavior.Restrict);
+
+                    b.HasOne("InitialProject.Model.Guest", null)
+                        .WithMany("AccomodationReservations")
+                        .HasForeignKey("GuestId");
+
+                    b.HasOne("InitialProject.Model.User", "User")
+                        .WithMany()
+                        .HasForeignKey("UserId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("User");
                 });
 
             modelBuilder.Entity("InitialProject.Model.Comment", b =>
@@ -347,15 +524,56 @@ namespace InitialProject.Migrations
                     b.HasOne("InitialProject.Model.Guest", null)
                         .WithMany("Comments")
                         .HasForeignKey("GuestId")
-                        .OnDelete(DeleteBehavior.Cascade);
+                        .OnDelete(DeleteBehavior.Restrict);
                 });
 
             modelBuilder.Entity("InitialProject.Model.GuestRating", b =>
                 {
+                    b.HasOne("InitialProject.Model.AccomodationReservation", "AccomodationReservation")
+                        .WithMany()
+                        .HasForeignKey("AccomodationReservationId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
                     b.HasOne("InitialProject.Model.Owner", null)
                         .WithMany("GuestRatings")
                         .HasForeignKey("OwnerId")
-                        .OnDelete(DeleteBehavior.Cascade);
+                        .OnDelete(DeleteBehavior.Restrict);
+
+                    b.Navigation("AccomodationReservation");
+                });
+
+            modelBuilder.Entity("InitialProject.Model.OwnerReview", b =>
+                {
+                    b.HasOne("InitialProject.Model.AccomodationReservation", "AccomodationReservation")
+                        .WithMany()
+                        .HasForeignKey("AccomodationReservationId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("AccomodationReservation");
+                });
+
+            modelBuilder.Entity("InitialProject.Model.Renovation", b =>
+                {
+                    b.HasOne("InitialProject.Model.Accomodation", "Accomodation")
+                        .WithMany("Renovations")
+                        .HasForeignKey("AccomodationId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Accomodation");
+                });
+
+            modelBuilder.Entity("InitialProject.Model.ReservationReschedulingRequest", b =>
+                {
+                    b.HasOne("InitialProject.Model.AccomodationReservation", "Reservation")
+                        .WithMany()
+                        .HasForeignKey("ReservationId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+
+                    b.Navigation("Reservation");
                 });
 
             modelBuilder.Entity("InitialProject.Model.TourImages", b =>
@@ -384,7 +602,7 @@ namespace InitialProject.Migrations
                     b.HasOne("WebApi.Entities.Location", null)
                         .WithMany("Tours")
                         .HasForeignKey("LocationId")
-                        .OnDelete(DeleteBehavior.Cascade);
+                        .OnDelete(DeleteBehavior.Restrict);
                 });
 
             modelBuilder.Entity("InitialProject.Model.Tourist", b =>
@@ -402,7 +620,16 @@ namespace InitialProject.Migrations
 
             modelBuilder.Entity("InitialProject.Model.Accomodation", b =>
                 {
+                    b.Navigation("AccomodationReservations");
+
                     b.Navigation("Images");
+
+                    b.Navigation("Renovations");
+                });
+
+            modelBuilder.Entity("InitialProject.Model.AccomodationReservation", b =>
+                {
+                    b.Navigation("Accomodations");
                 });
 
             modelBuilder.Entity("WebApi.Entities.Checkpoint", b =>
@@ -428,6 +655,8 @@ namespace InitialProject.Migrations
 
             modelBuilder.Entity("InitialProject.Model.Guest", b =>
                 {
+                    b.Navigation("AccomodationReservations");
+
                     b.Navigation("Accomodations");
 
                     b.Navigation("Comments");

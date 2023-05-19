@@ -67,5 +67,41 @@ namespace InitialProject.Repository
             return reservationReschedulingRequest;
 
         }
+
+        public int GetCountBy(int year, Accomodation accommodation)
+        {
+
+            List<ReservationReschedulingRequest> annualReschedulingReguest = new List<ReservationReschedulingRequest>();
+
+            using (var dbContext = new DataContext())
+            {
+                annualReschedulingReguest = dbContext.ReservationReschedulingRequests
+                                            .Include(r => r.Reservation)
+                                            .Where(r => r.Reservation.CheckInDate.Year == year)
+                                            .Where(r => r.State.Equals(RequestState.Approved))
+                                            .ToList();
+
+            }
+
+            return annualReschedulingReguest.Count;
+        }
+
+        public int GetCountBy(int year, int month, Accomodation accommodation)
+        {
+
+            List<ReservationReschedulingRequest> annualReschedulingReguest = new List<ReservationReschedulingRequest>();
+
+            using (var dbContext = new DataContext())
+            {
+                annualReschedulingReguest = dbContext.ReservationReschedulingRequests
+                                            .Include(r => r.Reservation)
+                                            .Where(r => r.Reservation.CheckInDate.Year == year && r.Reservation.CheckInDate.Month == month)
+                                            .Where(r => r.State.Equals(RequestState.Approved))
+                                            .ToList();
+
+            }
+
+            return annualReschedulingReguest.Count;
+        }
     }
 }

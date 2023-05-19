@@ -1,4 +1,5 @@
-﻿using System;
+﻿using InitialProject.Model;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
@@ -15,26 +16,25 @@ using System.Windows.Shapes;
 namespace InitialProject.View
 {
     /// <summary>
-    /// Interaction logic for OwnerWindow.xaml
+    /// Interaction logic for ShowGuestReviews.xaml
     /// </summary>
-    public partial class OwnerWindow : Window
+    public partial class ShowGuestReviews : Window
     {
-        public OwnerWindow()
+        private List<Review> reviews;
+        public ShowGuestReviews(List<Review> reviews)
         {
             InitializeComponent();
+            this.reviews = reviews;
+
+            ReviewsDataGrid.Items.Clear();
+            ReviewsDataGrid.ItemsSource = reviews;
         }
 
-        private void Button_Click(object sender, RoutedEventArgs e)
+        private void BackButton_Click(object sender, RoutedEventArgs e)
         {
-            ReviewsWindow reviewsWindow = new ReviewsWindow(); 
+            Reviews reviewsWindow = new Reviews();
             reviewsWindow.Show();
             Close();
-        }
-
-        private void Button_Click_1(object sender, RoutedEventArgs e)
-        {
-            ReschedulingRequests reschedulingRequests = new ReschedulingRequests();
-            reschedulingRequests.Show();
         }
     }
 }

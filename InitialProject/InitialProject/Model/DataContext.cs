@@ -1,4 +1,5 @@
-﻿using Microsoft.EntityFrameworkCore;
+﻿using InitialProject.Resources.Images;
+using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -41,6 +42,12 @@ namespace InitialProject.Model
 
         public DbSet<ReservationReschedulingRequest> ReservationReschedulingRequests { get; set; }
 
+        public DbSet<Renovation> Renovations { get; set; }
+
+        public DbSet<RenovationSuggestion> RenovationSuggestions { get; set; } 
+
+        public DbSet<AccommodationReservation> AccommodationReservations { get; set; }
+
 
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
@@ -64,22 +71,27 @@ namespace InitialProject.Model
             modelBuilder.Entity<AccomodationImage>()
                 .HasOne<Accomodation>()
                 .WithMany(t => t.Images)
-                .OnDelete(DeleteBehavior.Cascade);
+                .OnDelete(DeleteBehavior.Restrict);
 
             modelBuilder.Entity<AccomodationReservation>()
                .HasOne<Accomodation>()
                .WithMany(t => t.AccomodationReservations)
-               .OnDelete(DeleteBehavior.Cascade);
+               .OnDelete(DeleteBehavior.Restrict);
 
-           // modelBuilder.Entity<AccomodationReservation>()
-              // .HasOne<Guest>()
-              // .WithMany(t => t.AccomodationReservations)
-               //.OnDelete(DeleteBehavior.Cascade);
+            modelBuilder.Entity<AccomodationReservation>()
+              .HasOne<Accomodation>()
+              .WithMany(t => t.AccomodationReservations)
+              .OnDelete(DeleteBehavior.Restrict);
 
-           /* modelBuilder.Entity<Guest>()
-               .HasOne<Accomodation>()
-               .WithMany(t => t.Guests)
-               .OnDelete(DeleteBehavior.Cascade);*/
+            // modelBuilder.Entity<AccomodationReservation>()
+            // .HasOne<Guest>()
+            // .WithMany(t => t.AccomodationReservations)
+            //.OnDelete(DeleteBehavior.Cascade);
+
+            /* modelBuilder.Entity<Guest>()
+                .HasOne<Accomodation>()
+                .WithMany(t => t.Guests)
+                .OnDelete(DeleteBehavior.Cascade);*/
 
             //Checkpoint
 
@@ -92,12 +104,12 @@ namespace InitialProject.Model
             modelBuilder.Entity<Accomodation>()
                 .HasOne<Guest>()
                 .WithMany(t => t.Accomodations)
-                .OnDelete(DeleteBehavior.Cascade);
+                .OnDelete(DeleteBehavior.Restrict);
 
             modelBuilder.Entity<Comment>()
                 .HasOne<Guest>()
                 .WithMany(t => t.Comments)
-                .OnDelete(DeleteBehavior.Cascade);
+                .OnDelete(DeleteBehavior.Restrict);
 
             //Guide
             modelBuilder.Entity<Tour>()
@@ -110,29 +122,29 @@ namespace InitialProject.Model
             modelBuilder.Entity<Accomodation>()
                 .HasOne<Location>()
                 .WithMany(t => t.Accomodations)
-                .OnDelete(DeleteBehavior.Cascade);
+                .OnDelete(DeleteBehavior.Restrict);
 
             modelBuilder.Entity<Tour>()
                 .HasOne<Location>()
                 .WithMany(t => t.Tours)
-                .OnDelete(DeleteBehavior.Cascade);
+                .OnDelete(DeleteBehavior.Restrict);
 
             //Owner check
             modelBuilder.Entity<GuestRating>()
                 .HasOne<Owner>()
                 .WithMany(t => t.GuestRatings)
-                .OnDelete(DeleteBehavior.Cascade);
+                .OnDelete(DeleteBehavior.Restrict);
 
             modelBuilder.Entity<Accomodation>()
                 .HasOne<Owner>()
                 .WithMany(t => t.Accomodations)
-                .OnDelete(DeleteBehavior.Cascade);
+                .OnDelete(DeleteBehavior.Restrict);
 
             //AccomodationReservation check
             modelBuilder.Entity<Accomodation>()
             .HasOne<AccomodationReservation>()
            .WithMany(t => t.Accomodations)
-           .OnDelete(DeleteBehavior.Cascade);
+           .OnDelete(DeleteBehavior.Restrict);
 
             //modelBuilder.Entity<User>()
             //.HasOne<AccomodationReservation>()

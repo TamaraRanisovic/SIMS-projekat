@@ -58,6 +58,16 @@ namespace InitialProject.Service
             return postponementFeasibility;
         }
 
+        public int GetCountBy(int year, Accomodation accommodation)
+        {
+            return reservationReschedulingRequestRepository.GetCountBy(year, accommodation);
+        }
+
+        public int GetCountBy(int year, int month, Accomodation accommodation)
+        {
+            return reservationReschedulingRequestRepository.GetCountBy(year, month, accommodation);
+        }
+
 
     }
 }

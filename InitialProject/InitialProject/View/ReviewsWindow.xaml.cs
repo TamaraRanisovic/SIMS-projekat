@@ -2,6 +2,7 @@
 using InitialProject.Model;
 using InitialProject.Repository;
 using InitialProject.Service;
+using InitialProject.View;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -37,7 +38,7 @@ namespace InitialProject
             InitializeReviewReports();
 
             this.ownerReviews = OwnerReviewService.GetAllOwnerReviews();
-            DeclareTitle();
+            //DeclareTitle();
         }
 
         public List<OwnerReviewDto> GetAllGraded()
@@ -87,14 +88,21 @@ namespace InitialProject
 
             if (average >= 9.5 && SumGrades() >= 50)
             {
-                TitlePlaceHolder.Text = "Super-Owner";
+                //TitlePlaceHolder.Text = "Super-Owner";
                 OwnerReviewService.DeclareOwner(true);
             }
             else
             {
-                TitlePlaceHolder.Text = "Owner";
+                //TitlePlaceHolder.Text = "Owner";
                 OwnerReviewService.DeclareOwner(false);
             }
+        }
+
+        private void BackButton_Click(object sender, RoutedEventArgs e)
+        {
+            Reviews reviewsWindow = new Reviews();
+            reviewsWindow.Show();
+            Close();
         }
 
 
