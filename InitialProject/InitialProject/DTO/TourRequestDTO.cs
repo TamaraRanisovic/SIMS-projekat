@@ -57,7 +57,7 @@ namespace InitialProject.DTO
             this.description = tourRequest.Description;
             this.startDate = tourRequest.StartDate;
             this.endDate = tourRequest.EndDate;
-            this.requestStatus = RequestStatus.Pending;
+            this.requestStatus = tourRequest.RequestStatus;
             this.guide = guide;
         }
         public string City

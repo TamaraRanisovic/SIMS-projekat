@@ -11,19 +11,20 @@ using System.Windows.Documents;
 using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
+using System.Windows.Navigation;
 using System.Windows.Shapes;
 
 namespace InitialProject.View
 {
-    public partial class ConfirmReservationWindow : Window
+    /// <summary>
+    /// Interaction logic for ConfirmReservationWindow.xaml
+    /// </summary>
+    public partial class ConfirmReservationWindow : Page
     {
         public ConfirmReservationWindow()
         {
             InitializeComponent();
-            ConfirmReservationViewModel viewModel = new ConfirmReservationViewModel();
-            viewModel.CloseAction = Close;
-            DataContext = viewModel;
-
+            //DataContext = new ConfirmReservationViewModel();
         }
     }
 }

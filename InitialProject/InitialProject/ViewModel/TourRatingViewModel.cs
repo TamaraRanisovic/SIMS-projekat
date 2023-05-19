@@ -1,4 +1,5 @@
 ﻿using InitialProject.Commands;
+using InitialProject.DTO;
 using InitialProject.Model;
 using InitialProject.Repository;
 using InitialProject.Service;
@@ -18,83 +19,21 @@ using static System.Net.Mime.MediaTypeNames;
 
 namespace InitialProject.ViewModel
 {
-    public class TourRatingViewModel :  INotifyPropertyChanged
+    public class TourRatingViewModel :  BindableBase
     {
-        private string _guideKnowledge;
-        private string _guideLanguage;
-        private string _tourAmusement;
-        private string _comment;
-        private string _photoURL;
         private string _tourName;
-        private List<TourImages> _tourImages;
+
+        private TourRatingDTO tourRatingDTO;
 
         public ICommand RateTourCommand { get; set; }
 
         public ICommand AddPhotoCommand { get; set; }
 
-
-        public event PropertyChangedEventHandler PropertyChanged;
-
         public TourRatingViewModel()
         {
             RateTourCommand = new DelegateCommand(RateTour, CanRateTour);
             AddPhotoCommand = new DelegateCommand(AddPhoto);
-            TourImages = new List<TourImages>();
-        }
-
-        public string GuideKnowledge
-        {
-            get { return _guideKnowledge; }
-            set { _guideKnowledge = value; RaisePropertyChanged(nameof(GuideKnowledge)); }
-        }
-
-        public string GuideLanguage
-        {
-            get { return _guideLanguage; }
-            set
-            {
-                _guideLanguage = value;
-                RaisePropertyChanged(nameof(GuideLanguage));
-            }
-        }
-
-        public string TourAmusement
-        {
-            get { return _tourAmusement; }
-            set
-            {
-                _tourAmusement = value;
-                RaisePropertyChanged(nameof(TourAmusement));
-            }
-        }
-        public string Comment
-        {
-            get { return _comment; }
-            set
-            {
-                _comment = value;
-                RaisePropertyChanged(nameof(Comment));
-            }
-        }
-
-        public string PhotoURL
-        {
-            get { return _photoURL; }
-            set
-            {
-                _photoURL = value;
-                RaisePropertyChanged(nameof(PhotoURL));
-            }
-        }
-
-        public List<TourImages> TourImages
-        {
-            get { return _tourImages; }
-            set
-            {
-                _tourImages = value;
-                RaisePropertyChanged(nameof(TourImages));
-            }
+            TourRatingDTO  = new TourRatingDTO();
         }
 
         public string TourName
@@ -106,10 +45,22 @@ namespace InitialProject.ViewModel
                 RaisePropertyChanged(nameof(TourName));
             }
         }
+            
 
+        public TourRatingDTO TourRatingDTO
+        {
+            get { return tourRatingDTO; }
+            set
+            {
+                tourRatingDTO = value;
+                RaisePropertyChanged(nameof(TourRatingDTO));
+            }
+        }
+
+ 
         public bool CanRateTour()
         {
-            if (GuideKnowledge != null && GuideLanguage != null && TourAmusement != null && !string.IsNullOrEmpty(Comment) && TourImages.Count >= 1)
+            if (TourRatingDTO.GuideKnowledge != null && TourRatingDTO.GuideLanguage != null && TourRatingDTO.TourAmusement != null && !string.IsNullOrEmpty(TourRatingDTO.Comment) && TourRatingDTO.TourImages.Count >= 1)
             {
                 return true;
             }
@@ -119,8 +70,8 @@ namespace InitialProject.ViewModel
 
         public void RateTour()
         {
-            TourRatingService tourRatingService = new TourRatingService();
-            TourService tourService = new TourService();
+            TourRatingService tourRatingService = new TourRatingService(new TourRatingRepository());
+            TourService tourService = new TourService(new TourRepository());
             Tour ratedTour = tourService.GetByName(TourName);
             if (ratedTour == null)
             {
@@ -129,38 +80,38 @@ namespace InitialProject.ViewModel
             }
             if (CanTouristRate())
             {
-                int guideKnowledge = GetIntFromString(GuideKnowledge);
-                int guideLanguage = GetIntFromString(GuideLanguage);
-                int tourAmusement = GetIntFromString(TourAmusement);
+                int guideKnowledge = GetIntFromString(TourRatingDTO.GuideKnowledge);
+                int guideLanguage = GetIntFromString(TourRatingDTO.GuideLanguage);
+                int tourAmusement = GetIntFromString(TourRatingDTO.TourAmusement);
 
-                TourRating tourRating = new TourRating(guideKnowledge, guideLanguage, tourAmusement, Comment, TourImages);
+                TourRating tourRating = new TourRating(guideKnowledge, guideLanguage, tourAmusement, TourRatingDTO.Comment, TourRatingDTO.TourImages);
                 tourRatingService.Add(tourRating, UserSession.LoggedInUser.Id, ratedTour.TourId);
-                TourImages.Clear();
+                TourRatingDTO.TourImages.Clear();
                 MessageBox.Show("You successfully rated a tour!");
             } else
             {
-                TourImages.Clear();
+                TourRatingDTO.TourImages.Clear();
                 MessageBox.Show("You can't rate this tour.");
             }
         }
 
         public void AddPhoto()
         {
-            TourImages tourImage = new TourImages(TourName, PhotoURL);
-            TourImages.Add(tourImage);
-            PhotoURL = null;
+            TourImage tourImage = new TourImage(TourName, TourRatingDTO.PhotoURL);
+            TourRatingDTO.TourImages.Add(tourImage);
+            TourRatingDTO.PhotoURL = null;
             MessageBox.Show("You added an image!");
         }
 
         public bool CanTouristRate()
         {
-            TourService tourService = new TourService();
+            TourService tourService = new TourService(new TourRepository());
             Tour tour = tourService.GetByName(TourName);
             if (tour == null)
             {
                 MessageBox.Show("No such tour!");
             }
-            TouristsService touristsService = new TouristsService();
+            TouristService touristsService = new TouristService(new TouristRepository());
             return touristsService.CanTouristRate(UserSession.LoggedInUser.Id, tour);
         }
 
@@ -174,13 +125,5 @@ namespace InitialProject.ViewModel
 
             return -1;
         }
-
-        private void RaisePropertyChanged(string propertyName)
-        {
-            PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
-        }
-
-
-        public Action CloseAction { get; set; }
     }
 }

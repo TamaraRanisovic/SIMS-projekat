@@ -1,4 +1,5 @@
-﻿using InitialProject.Model;
+﻿using InitialProject.Interfaces;
+using InitialProject.Model;
 using InitialProject.Repository;
 using System;
 using System.Collections.Generic;
@@ -11,23 +12,26 @@ namespace InitialProject.Service
 {
     public class TourRatingService
     {
-        TourRatingRepository tourRatingRepository = new TourRatingRepository();
+        private readonly ITourRatingRepository TourRatingRepository;
 
-        public TourRatingService() { }
+        public TourRatingService(ITourRatingRepository tourRatingRepository)
+        {
+            TourRatingRepository = tourRatingRepository;
+        }
 
         public void Add(TourRating tourRating, int touristId, int tourId)
         {
-            tourRatingRepository.Add(tourRating, touristId, tourId);
+            TourRatingRepository.Add(tourRating, touristId, tourId);
         }
 
         public List<TourRating> GetAll()
         {
-            return tourRatingRepository.GetAll();
+            return TourRatingRepository.GetAll();
         }
 
         public TourRating GetById(int id)
         {
-            return tourRatingRepository.GetById(id);
+            return TourRatingRepository.GetById(id);
 
         }
 

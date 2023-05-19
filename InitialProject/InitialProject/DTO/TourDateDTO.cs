@@ -1,8 +1,10 @@
-﻿using System;
+﻿using InitialProject.Model;
+using System;
 using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+using WebApi.Entities;
 
 namespace InitialProject.DTO
 {
@@ -28,5 +30,15 @@ namespace InitialProject.DTO
             DateId = dateId;
             Description = description;
         }
+
+        public TourDateDTO(Tour tour, Dates date)
+        {
+            TourId = tour.TourId;
+            TourName = tour.Name;
+            DateId = date.Id;
+            Date = date.Date;
+            Description = tour.Description;
+        }
+        
     }
 }

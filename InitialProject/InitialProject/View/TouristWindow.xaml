@@ -4,15 +4,41 @@
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:InitialProject.View"
+        xmlns:viewModel="clr-namespace:InitialProject.ViewModel"
+
         mc:Ignorable="d"
-        Title="TouristWindow" Height="450" Width="800">
+        Title="TouristWindow" Height="500" Width="850">
+
+    <Window.Resources>
+
+    </Window.Resources>
     <Grid>
-        <Label Content="Tourist" HorizontalAlignment="Center" VerticalAlignment="Top" FontSize="36" Margin="0,39,0,0"/>
-        <Button Content="Show Coupons" Command="{Binding ShowCouponsCommand}" HorizontalAlignment="Left" Margin="152,161,0,0" VerticalAlignment="Top" FontSize="18" FontWeight="Bold"/>
-        <Button Content="Book A Tour" Command="{Binding BookCommand}" HorizontalAlignment="Left" Margin="163,245,0,0" VerticalAlignment="Top" FontSize="18" FontWeight="Bold"/>
-        <Button Content="Rate A Tour" Command="{Binding RateTourCommand}" HorizontalAlignment="Left" Margin="400,161,0,0" VerticalAlignment="Top" FontSize="18" FontWeight="Bold"/>
-        <Button Content="Track A Tour" Command="{Binding TrackTourCommand}" HorizontalAlignment="Left" Margin="397,245,0,0" VerticalAlignment="Top" FontSize="18" FontWeight="Bold"/>
-        <Button Content="Show Notifications" Command="{Binding ShowNotificationsCommand}" HorizontalAlignment="Left" Margin="134,330,0,0" VerticalAlignment="Top" FontSize="18" FontWeight="Bold"/>
+        <Grid.RowDefinitions>
+            <RowDefinition Height="Auto"/>
+            <RowDefinition Height="Auto"/>
+        </Grid.RowDefinitions>
+
+        <DockPanel Grid.Row="0" Margin="5" Width="800" Height="70">
+            <Menu DockPanel.Dock="Top" Height="55" RenderTransformOrigin="0.5,0.633" Width="504" Background="{x:Null}">
+                <MenuItem Header="Book A Tour" Command="{Binding NavigateToPage}"
+                          CommandParameter="bookTour"/>
+                <MenuItem Header="Rate A Tour" Command="{Binding NavigateToPage}"
+                          CommandParameter="tourRating"/>
+                <MenuItem Header="Track A Tour" Command="{Binding NavigateToPage}"
+                          CommandParameter="tourTracking"/>
+                <MenuItem Header="Show Coupons" Command="{Binding NavigateToPage}"
+                          CommandParameter="coupons"/>
+                <MenuItem Header="Show Notifications" Command="{Binding NavigateToPage}"
+                          CommandParameter="notifications"/>
+                <MenuItem Header="Request A Tour" Command="{Binding NavigateToPage}"
+                          CommandParameter="requestTour"/>
+                <MenuItem Header="Show Tour Requests" Command="{Binding NavigateToPage}"
+                          CommandParameter="showTourRequests"/>
+                <MenuItem Header="Tour Request Statistics" Command="{Binding NavigateToPage}"
+                          CommandParameter="requestStats"/>
+            </Menu>
+        </DockPanel>
+        <Frame x:Name="frame" Source="TourReservationWindow.xaml" Margin="25,0,25,-60" Grid.Row="1" Width="800" Height="400" />
 
     </Grid>
 </Window>

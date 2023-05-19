@@ -15,14 +15,14 @@ using System.Windows.Shapes;
 
 namespace InitialProject.View
 {
-    public partial class TrackTourWindow : Window
+    public partial class TrackTourWindow : Page
     {
         public TrackTourWindow()
         {
             InitializeComponent();
             TrackTourViewModel viewModel = new TrackTourViewModel();
-            viewModel.CloseAction = Close;
-            DataContext = viewModel;
+            /*viewModel.CloseAction = Close;
+            DataContext = viewModel;*/
         }
 
 

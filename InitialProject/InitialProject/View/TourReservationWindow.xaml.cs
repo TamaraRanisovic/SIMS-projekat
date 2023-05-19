@@ -15,14 +15,17 @@ using System.Windows.Shapes;
 
 namespace InitialProject.View
 {
-    public partial class TourReservationWindow : Window
+    public partial class TourReservationWindow : Page
     {
+        public TourReservationViewModel _ViewModel { get; set; }
+
         public TourReservationWindow()
         {
             InitializeComponent();
-            TourReservationViewModel viewModel = new TourReservationViewModel();
-            viewModel.CloseAction = Close;
-            DataContext = viewModel;
+            this._ViewModel = new TourReservationViewModel(this.NavigationService);
+            this.DataContext = this._ViewModel;
+         //   DataContext = viewModel;*/
         }
+
     }
 }

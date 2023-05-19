@@ -1,0 +1,24 @@
+﻿<Page x:Class="InitialProject.View.TourRequestAllTimeStatsView"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:InitialProject.View"
+        xmlns:viewModel="clr-namespace:InitialProject.ViewModel"
+        mc:Ignorable="d"
+        Title="TourRequestAllTimeStats" Height="450" Width="800">
+    <Page.DataContext>
+        <viewModel:TourRequestAllTimeViewModel/>
+    </Page.DataContext>
+    <Grid>
+        <Label Content="Tour Requests Statistics" HorizontalAlignment="Left" Margin="249,18,0,0" VerticalAlignment="Top" FontSize="24" FontWeight="Bold"/>
+        <Rectangle HorizontalAlignment="Left" Height="221" Margin="213,101,0,0" Stroke="Black" VerticalAlignment="Top" Width="346"/>
+        <Label Content="Percentage of Accepted/Unaccepted Requests" HorizontalAlignment="Left" Margin="230,132,0,0" VerticalAlignment="Top" FontSize="14" FontWeight="Bold" VerticalContentAlignment="Center" HorizontalContentAlignment="Center"/>
+        <Button Content="Show All-Time Statistics" Command="{Binding NavToAllTimeStats}" HorizontalAlignment="Left" Margin="316,211,0,0" VerticalAlignment="Top" FontWeight="Bold" IsEnabled="False"/>
+        <Label Content="Accepted Requests:" HorizontalAlignment="Left" Margin="260,247,0,0" VerticalAlignment="Top"/>
+        <Label Content="Unaccepted Requests:" HorizontalAlignment="Left" Margin="260,278,0,0" VerticalAlignment="Top"/>
+        <TextBox Text="{Binding AcceptedRequests, StringFormat={}{0}%}" HorizontalAlignment="Left" Margin="400,251,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="56" IsEnabled="False"/>
+        <TextBox Text="{Binding UnacceptedRequests, StringFormat={}{0}%}" HorizontalAlignment="Left" Margin="400,282,0,0" TextWrapping="Wrap" VerticalAlignment="Top" Width="56" IsEnabled="False"/>
+
+    </Grid>
+</Page>

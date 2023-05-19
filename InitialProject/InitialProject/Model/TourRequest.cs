@@ -30,11 +30,14 @@ namespace InitialProject.Model
 
         public RequestStatus RequestStatus { get; set; }
 
+        public List<TouristNotification> Notifications { get; set; }
 
         public TourRequest()
         {
             this.RequestDate = DateTime.Now;
             this.RequestStatus = RequestStatus.Pending;
+            Notifications = new List<TouristNotification>();
+
         }
 
         public TourRequest(string city, string country, string language, int tourists, string description, DateTime startDate, DateTime endDate)
@@ -48,6 +51,8 @@ namespace InitialProject.Model
             this.EndDate = endDate;
             this.RequestDate = DateTime.Now;
             this.RequestStatus = RequestStatus.Pending;
+            Notifications = new List<TouristNotification>();
+
         }
 
 

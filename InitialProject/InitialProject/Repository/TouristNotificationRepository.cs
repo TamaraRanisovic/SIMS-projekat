@@ -1,4 +1,5 @@
-﻿using InitialProject.Model;
+﻿using InitialProject.Interfaces;
+using InitialProject.Model;
 using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
@@ -9,14 +10,26 @@ using WebApi.Entities;
 
 namespace InitialProject.Repository
 {
-    public class TouristNotificationsRepository : ITouristNotificationsRepository
+    public class TouristNotificationRepository : ITouristNotificationsRepository
     {
-        public TouristNotificationsRepository()
+        public TouristNotificationRepository()
         {
             
         }
 
-        public void Delete(TouristNotifications touristNotifications)
+        public void AddNewTourNotification(int tourId)
+        {
+            using (var db = new DataContext())
+            {
+                TouristNotification newTourNotification = new TouristNotification();
+                newTourNotification.Type = TouristNotificationType.NewTour;
+                db.TouristNotifications.Add(newTourNotification);
+            }
+                
+
+        }
+
+        public void Delete(TouristNotification touristNotifications)
         {
             using (var db = new DataContext())
             {
@@ -24,7 +37,7 @@ namespace InitialProject.Repository
                 db.SaveChanges();
             }
         }
-        public List<TouristNotifications> GetAll()
+        public List<TouristNotification> GetAll()
         {
             using (var db = new DataContext())
             {
@@ -32,13 +45,13 @@ namespace InitialProject.Repository
             }
         }
 
-        public List<TouristNotifications> GetByTourist(int touristId)
+        public List<TouristNotification> GetByTourist(int touristId)
         {
             using (var db = new DataContext())
             {
                 var touristToReturn = db.Tourists.Include(t => t.TouristNotifications).FirstOrDefault(t => t.Id == touristId);
 
-                List<TouristNotifications> touristNotifications = new List<TouristNotifications>();
+                List<TouristNotification> touristNotifications = new List<TouristNotification>();
                 touristNotifications.AddRange(touristToReturn.TouristNotifications);
                 return touristNotifications;
             }

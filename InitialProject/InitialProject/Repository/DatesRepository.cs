@@ -58,7 +58,7 @@ namespace InitialProject.Repository
         {
             using (var db = new DataContext())
             {
-                return db.Dates.Include(t => t.Tourists).Where(t=>t.Date.Year == year).ToList();
+                return db.Dates.Include(t => t.Tourists).Where(t => t.Date.Year == year).ToList();
             }
         }
     }

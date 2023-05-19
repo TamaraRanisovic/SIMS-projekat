@@ -25,7 +25,7 @@ public class Tour
 
     public List<Dates> StartingDates { get; set; }
 
-    public List<TourImages> Images { get; set; }
+    public List<TourImage> Images { get; set; }
 
     public List<Checkpoint> Checkpoints { get; set; }
 
@@ -35,17 +35,17 @@ public class Tour
 
     public List<TourRating> TourRatings { get; set; }
 
-
     public Tour()
 
     {
         GuideId = UserSession.LoggedInUser.Id;
-        Images = new List<TourImages>();
+        Images = new List<TourImage>();
         Checkpoints = new List<Checkpoint>();
         Tourists = new List<Tourist>();
         TourReservations = new List<TourReservation>();
         StartingDates = new List<Dates>();
         TourRatings = new List<TourRating>();
+
     }
 
     public Tour(string name, string description, string language, int maxGuests, int duration)
@@ -55,7 +55,7 @@ public class Tour
         Language = language;
         MaxGuests = maxGuests;
         Duration = duration;
-        Images = new List<TourImages>();
+        Images = new List<TourImage>();
         Checkpoints = new List<Checkpoint>();
         Tourists = new List<Tourist>();
         TourReservations = new List<TourReservation>();

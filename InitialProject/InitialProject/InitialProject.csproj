@@ -32,15 +32,34 @@
   </ItemGroup>
 
   <ItemGroup>
+    <PackageReference Include="LiveCharts" Version="0.9.7" />
+    <PackageReference Include="LiveCharts.Wpf" Version="0.9.7" />
     <PackageReference Include="Microsoft.EntityFrameworkCore.Sqlite" Version="6.0.0" />
     <PackageReference Include="Microsoft.EntityFrameworkCore.Tools" Version="6.0.0">
       <PrivateAssets>all</PrivateAssets>
       <IncludeAssets>runtime; build; native; contentfiles; analyzers; buildtransitive</IncludeAssets>
     </PackageReference>
+    <PackageReference Include="Syncfusion.SfChart.WPF" Version="21.2.5" />
   </ItemGroup>
 
   <ItemGroup>
     <Folder Include="Resources\Data\" />
+    <Folder Include="View\Tourist\" />
+    <Folder Include="View\TourRequestStatistics\" />
+    <Folder Include="View\TourRequest\" />
+    <Folder Include="View\Tour\" />
+  </ItemGroup>
+
+  <ItemGroup>
+    <Reference Include="OxyPlot">
+      <HintPath>..\..\..\..\..\.nuget\packages\oxyplot.core\2.1.2\lib\net40\OxyPlot.dll</HintPath>
+    </Reference>
+    <Reference Include="OxyPlot.Wpf">
+      <HintPath>..\..\..\..\..\.nuget\packages\oxyplot.wpf\2.1.2\lib\netcoreapp3.1\OxyPlot.Wpf.dll</HintPath>
+    </Reference>
+    <Reference Include="OxyPlot.Wpf.Shared">
+      <HintPath>..\..\..\..\..\.nuget\packages\oxyplot.wpf.shared\2.1.2\lib\net40\OxyPlot.Wpf.Shared.dll</HintPath>
+    </Reference>
   </ItemGroup>
 
 </Project>

@@ -1,0 +1,20 @@
+﻿<Page x:Class="InitialProject.View.TourRequestStatisticsView"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:InitialProject.View"
+        xmlns:viewModel="clr-namespace:InitialProject.ViewModel"
+        mc:Ignorable="d"
+        Title="TourRequestStatisticsView" Height="450" Width="800">
+    <Page.DataContext>
+        <viewModel:TourRequestStatisticsViewModel/>
+    </Page.DataContext>
+    <Grid>
+        <Label Content="Tour Requests Statistics" HorizontalAlignment="Center" Margin="0,9,0,0" VerticalAlignment="Top" FontSize="24" FontWeight="Bold"/>
+        <Button Content="Show Percentage of Accepted/Unaccepted Requests" Command="{Binding NavigateToStatsPage}" CommandParameter="percentage" HorizontalAlignment="Center" VerticalAlignment="Top" FontSize="16" FontWeight="Bold" Margin="0,122,0,0"/>
+        <Button Content="Show Diagrams" Command="{Binding NavigateToStatsPage}" CommandParameter="diagrams" HorizontalAlignment="Center" VerticalAlignment="Top" FontSize="16" FontWeight="Bold" Margin="0,192,0,0"/>
+        <Button Content="Show Average Number of Tourists in Accepted Requests" Command="{Binding NavigateToStatsPage}" CommandParameter="avgStats" HorizontalAlignment="Center" Margin="0,256,0,0" VerticalAlignment="Top" FontSize="16" FontWeight="Bold"/>
+
+    </Grid>
+</Page>

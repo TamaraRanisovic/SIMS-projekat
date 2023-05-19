@@ -17,12 +17,16 @@ namespace InitialProject.View
 {
     public partial class TouristWindow : Window
     {
+        public TouristViewModel _ViewModel { get; set; }
+
         public TouristWindow()
         {
             InitializeComponent();
-            TouristViewModel viewModel = new TouristViewModel();
-            viewModel.CloseAction = Close;
-            DataContext = viewModel;
+            this._ViewModel = TouristViewModel.Instance;
+            this._ViewModel.NavService = this.frame.NavigationService;
+            this._ViewModel.Frame = this.frame;
+
+            this.DataContext = this._ViewModel;
         }
 
     }

@@ -17,7 +17,7 @@ namespace InitialProject.Model
 
         public bool Attendance { get; set; }
 
-        public List<TouristNotifications> Notifications { get; set; }
+        public List<TouristNotification> Notifications { get; set; }
 
         public TourReservation()
         {
@@ -28,14 +28,14 @@ namespace InitialProject.Model
         {
             TouristsNumber = touristsNumber;
             Attendance = false;
-            Notifications = new List<TouristNotifications>();
+            Notifications = new List<TouristNotification>();
         }
 
         public TourReservation(int touristsNumber, bool attendance)
         {
             TouristsNumber = touristsNumber;
             Attendance = attendance;
-            Notifications = new List<TouristNotifications>();
+            Notifications = new List<TouristNotification>();
 
         }
     }

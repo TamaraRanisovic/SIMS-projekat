@@ -14,46 +14,38 @@ using System.Windows.Input;
 
 namespace InitialProject.ViewModel
 {
-    public class TouristCouponsViewModel : INotifyPropertyChanged
+    public class TouristCouponsViewModel : BindableBase
     {
-        TouristsService touristsService = new TouristsService();
 
-        public event PropertyChangedEventHandler PropertyChanged;
+         public ICommand RefreshCommand { get; set; }
 
-        public ICommand RefreshCommand { get; set; }
-
-        public TouristCouponsViewModel()
-        {
-            Coupons = new ObservableCollection<Coupon>(touristsService.GetTouristCoupons(UserSession.LoggedInUser.Id));
-            RefreshCommand = new DelegateCommand(Refresh);
-        }
+         public TouristCouponsViewModel()
+         {
+             LoadCoupons();
+             RefreshCommand = new DelegateCommand(LoadCoupons);
+         }
 
 
-        private ObservableCollection<Coupon> _coupons;
+         private ObservableCollection<Coupon> _coupons;
 
-        public ObservableCollection<Coupon> Coupons
-        {
-            get { return _coupons; }
-            set
+         public ObservableCollection<Coupon> Coupons
+         {
+             get { return _coupons; }
+             set
+             {
+                 _coupons = value;
+                 RaisePropertyChanged(nameof(Coupons));
+             }
+         }
+
+         public void LoadCoupons()
+         {
+            if (UserSession.LoggedInUser != null)
             {
-                _coupons = value;
-                RaisePropertyChanged(nameof(Coupons));
+                TouristService touristsService = new TouristService(new TouristRepository());
+                Coupons = new ObservableCollection<Coupon>(touristsService.GetTouristCoupons(UserSession.LoggedInUser.Id));
             }
-        }
-        protected void OnPropertyChanged(string propertyName)
-        {
-            PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
-        }
-
-        public void Refresh()
-        {
-            Coupons = new ObservableCollection<Coupon>(touristsService.GetTouristCoupons(UserSession.LoggedInUser.Id));
-        }
-
-        private void RaisePropertyChanged(string propertyName)
-        {
-            PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
-        }
-        public Action CloseAction { get; set; }
+            return;
+        }    
     }
 }

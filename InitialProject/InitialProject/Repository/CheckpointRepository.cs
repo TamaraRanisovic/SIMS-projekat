@@ -1,4 +1,5 @@
-﻿using InitialProject.Model;
+﻿using InitialProject.Interfaces;
+using InitialProject.Model;
 using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
@@ -9,11 +10,11 @@ using WebApi.Entities;
 
 namespace InitialProject.Repository
 {
-    public class CheckpointRepository
+    public class CheckpointRepository : ICheckpointRepository
     {
         public CheckpointRepository() { }
 
-        public List<Checkpoint> GetAllCheckpoints()
+        public List<Checkpoint> GetAll()
         {
             using (var db = new DataContext())
             {
@@ -21,7 +22,7 @@ namespace InitialProject.Repository
             }
         }
 
-        public Checkpoint GetCheckpointById(int id)
+        public Checkpoint GetById(int id)
         {
             using (var db = new DataContext())
             {
@@ -29,7 +30,7 @@ namespace InitialProject.Repository
             }
         }
 
-        public List<Checkpoint> GetTourCheckpoints(int tourId)
+        public List<Checkpoint> GetByTour(int tourId)
         {
             List<Checkpoint> checkpoints = new List<Checkpoint>();
             using (var db = new DataContext())

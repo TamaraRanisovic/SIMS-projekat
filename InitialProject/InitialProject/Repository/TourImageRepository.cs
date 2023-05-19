@@ -1,4 +1,5 @@
-﻿using InitialProject.Model;
+﻿using InitialProject.Interfaces;
+using InitialProject.Model;
 using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
@@ -10,12 +11,12 @@ using WebApi.Entities;
 
 namespace InitialProject.Repository
 {
-    public class TourImagesRepository
+    public class TourImageRepository : ITourImageRepository
     {
 
-        public TourImagesRepository() { }
+        public TourImageRepository() { }
 
-        public TourImages GetImageById(int id)
+        public TourImage GetById(int id)
         {
             using (var db = new DataContext())
             {
@@ -23,9 +24,9 @@ namespace InitialProject.Repository
             }
         }
        
-        public List<TourImages> GetAllByTour(int tourId)
+        public List<TourImage> GetByTour(int tourId)
         { 
-            List<TourImages> images = new List<TourImages>();
+            List<TourImage> images = new List<TourImage>();
             using (var db = new DataContext())
             {
                 var tour = db.Tours.Include(t => t.Images).SingleOrDefault(t => t.TourId == tourId);

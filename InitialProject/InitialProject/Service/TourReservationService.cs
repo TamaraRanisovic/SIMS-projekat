@@ -1,4 +1,5 @@
-﻿using InitialProject.Model;
+﻿using InitialProject.Interfaces;
+using InitialProject.Model;
 using InitialProject.Repository;
 using System;
 using System.Collections.Generic;
@@ -11,30 +12,32 @@ namespace InitialProject.Service
 {
     public class TourReservationService
     {
-        TourReservationRepository tourReservationRepository = new TourReservationRepository();
-        public TourReservationService()
+        private readonly ITourReservationRepository TourReservationRepository;
+
+        public TourReservationService(ITourReservationRepository tourReservationRepository)
         {
+            TourReservationRepository = tourReservationRepository;
         }
 
         public List<TourReservation> GetByTour(Tour tour)
         {
-            return tourReservationRepository.GetByTour(tour);
+            return TourReservationRepository.GetByTour(tour);
         }
 
         public List<TourReservation> GetByTourist(int touristId)
         {
-            return tourReservationRepository.GetByTourist(touristId);
+            return TourReservationRepository.GetByTourist(touristId);
         }
 
 
         public TourReservation GetByNotification(int notificationId)
         {
-            return tourReservationRepository.GetByNotification(notificationId);
+            return TourReservationRepository.GetByNotification(notificationId);
         }
 
         public void UpdateAttendance(int tourReservationId)
         {
-            tourReservationRepository.UpdateAttendance(tourReservationId);
+            TourReservationRepository.UpdateAttendance(tourReservationId);
         }
 
 

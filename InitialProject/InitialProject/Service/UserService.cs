@@ -1,4 +1,5 @@
-﻿using InitialProject.Model;
+﻿using InitialProject.Interfaces;
+using InitialProject.Model;
 using InitialProject.Repository;
 using System;
 using System.Collections.Generic;
@@ -12,25 +13,30 @@ namespace InitialProject.Service
     public class UserService
     {
 
-        UserRepository userRepository = new UserRepository();
+        private readonly IUserRepository UserRepository;
 
-        public UserService()
+        public UserService(IUserRepository userRepository)
         {
-            
+            UserRepository = userRepository;
         }
-        public bool AddUser(User user, int touristAge = 0)
+        public bool Add(User user, int touristAge = 0)
         {
-            return userRepository.AddUser(user, touristAge);
+            return UserRepository.Add(user, touristAge);
         }
 
         public User Login(string username, string password)
         {
-            return userRepository.Login(username, password);
+            return UserRepository.Login(username, password);
         }
 
         public User GetByUsername(string username)
         {
-            return userRepository.GetByUsername(username);
+            return UserRepository.GetByUsername(username);
+        }
+
+        public List<Guide> GetAllGuides()
+        {
+            return UserRepository.GetAllGuides();
         }
     }
 }

@@ -18,9 +18,9 @@ namespace InitialProject.ViewModel
         {
             if (value == null) return "";
 
-            TourReservationService tourReservationService = new TourReservationService();
+            TourReservationService tourReservationService = new TourReservationService(new TourReservationRepository());
             TourReservation tourReservation = tourReservationService.GetByNotification((int) value);
-            TourService tourService = new TourService();
+            TourService tourService = new TourService(new TourRepository());
             Tour tour = tourService.GetByTourReservation(tourReservation.TourReservationId);
 
             return tour.Name;

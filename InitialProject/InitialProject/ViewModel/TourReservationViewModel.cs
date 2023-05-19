@@ -1,5 +1,6 @@
 ﻿using InitialProject.Commands;
 using InitialProject.Model;
+using InitialProject.Repository;
 using InitialProject.Service;
 using InitialProject.View;
 using Microsoft.Win32;
@@ -11,32 +12,35 @@ using System.Text;
 using System.Threading.Tasks;
 using System.Windows;
 using System.Windows.Input;
+using System.Windows.Navigation;
 using WebApi.Entities;
 
 namespace InitialProject.ViewModel
 {
-    public class TourReservationViewModel
+    public class TourReservationViewModel : BindableBase
     {
         private string _tourName;
         private int _tourists;
         private bool _isChangeEnabled;
-
-        public event PropertyChangedEventHandler PropertyChanged;
+        public NavigationService NavService { get; set; }
 
         public ICommand BookCommand { get; set; }
         public ICommand ChangeTouristsNumberCommand { get; set; }
         public ICommand ChooseTourCommand { get; set; }
         public ICommand CancelReservationCommand { get; set; }
         public ICommand NavigateToConfirmationWindowCommand { get; set; }
-
-        public TourReservationViewModel()
+        public ICommand NavToShowTourRequestsPage { get; set; }
+        
+        public TourReservationViewModel(NavigationService navService)
         {
             BookCommand = new DelegateCommand(Book, CanBook);
             ChangeTouristsNumberCommand = new DelegateCommand(ChangeTouristsNumber, CanChange);
             ChooseTourCommand = new DelegateCommand(ChooseTour, CanChange);
             CancelReservationCommand = new DelegateCommand(CancelReservation, CanCancel);
             NavigateToConfirmationWindowCommand = new DelegateCommand(NavigateToConfirmationWindow);
+            this.NavService = navService;
         }
+
 
         public string TourName
         {
@@ -66,7 +70,7 @@ namespace InitialProject.ViewModel
 
         public bool HasFreeSpots(string TourName, int Tourists)
         {
-            TourService tourService = new TourService();
+            TourService tourService = new TourService(new TourRepository());
             Tour tour = tourService.GetByName(TourName);
 
             if (tour == null)
@@ -108,7 +112,7 @@ namespace InitialProject.ViewModel
         private void CancelReservation()
         {
             var loginWindow = new LoginWindow();
-            CloseAction();
+            //CloseAction();
             loginWindow.Show();
         }
 
@@ -130,22 +134,18 @@ namespace InitialProject.ViewModel
             }
         }
 
-        private void RaisePropertyChanged(string propertyName)
-        {
-            PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
-        }
-
-
         private void NavigateToConfirmationWindow()
         {
+            ConfirmReservationViewModel confirmReservationViewModel = new ConfirmReservationViewModel();
             ConfirmReservationWindow confirmReservationWindow = new ConfirmReservationWindow();
-            ConfirmReservationViewModel confirmReservationViewModel = (ConfirmReservationViewModel)confirmReservationWindow.DataContext;
-            confirmReservationViewModel.TourName = this.TourName;
-            confirmReservationViewModel.Tourists = this.Tourists;
-            confirmReservationWindow.Show();
-        }
+            TouristViewModel touristViewModel = TouristViewModel.Instance;
 
-        public Action CloseAction { get; set; }
+            confirmReservationViewModel.TourName = this.TourName;
+            confirmReservationViewModel.Tourists = this.Tourists;   
+            confirmReservationWindow.DataContext = confirmReservationViewModel;
+
+            touristViewModel.NavService.Navigate(confirmReservationWindow);
+        }
 
     }
 }

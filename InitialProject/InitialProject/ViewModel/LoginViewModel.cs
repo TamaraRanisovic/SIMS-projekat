@@ -9,14 +9,13 @@ using System.Threading.Tasks;
 using System.Windows.Input;
 using System.Windows;
 using InitialProject.View;
+using InitialProject.DTO;
 
 namespace InitialProject.ViewModel
 {
-    public class LoginViewModel : INotifyPropertyChanged
+    public class LoginViewModel : BindableBase
     {
-        private string _username;
-        private string _password;
-        private string _message;
+        private LoginDTO loginDTO;
 
         public event PropertyChangedEventHandler PropertyChanged;
 
@@ -29,34 +28,24 @@ namespace InitialProject.ViewModel
             LoginCommand = new DelegateCommand(Login, CanLogin);
             CancelCommand = new DelegateCommand(Cancel);
             RegisterCommand = new DelegateCommand(Register);
+            LoginDTO = new LoginDTO();
         }
 
-        public string Username
+        public LoginDTO LoginDTO
         {
-            get { return _username; }
-            set { _username = value; RaisePropertyChanged(nameof(Username)); }
-        }
-
-        public string Password
-        {
-            get { return _password; }
+            get { return loginDTO; }
             set
             {
-                _password = value;
-                RaisePropertyChanged(nameof(Password));
+                loginDTO = value;
+                RaisePropertyChanged(nameof(LoginDTO));
             }
-        }
-
-        public string Message
-        {
-            get { return _message; }
-            set { _message = value; RaisePropertyChanged(nameof(Message)); }
         }
 
         private bool CanLogin()
         {
-            return !string.IsNullOrWhiteSpace(Username) && !string.IsNullOrWhiteSpace(Password);
+            return !string.IsNullOrWhiteSpace(LoginDTO.Username) && !string.IsNullOrWhiteSpace(LoginDTO.Password);
         }
+
         public void ShowUserWindow(User user)
         {
             if (user.UserType == UserType.Owner)
@@ -84,7 +73,7 @@ namespace InitialProject.ViewModel
         {
             using (var db = new DataContext())
             {
-                var user = db.Users.SingleOrDefault(u => u.Username == Username && u.Password == Password);
+                var user = db.Users.SingleOrDefault(u => u.Username == LoginDTO.Username && u.Password == LoginDTO.Password);
 
                 if (user != null)
                 {

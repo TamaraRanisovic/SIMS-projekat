@@ -24,6 +24,10 @@ namespace InitialProject.Service
         {
             TourRequestRepository.Add(tourRequest, touristId, guideId);
         }
+        public List<TourRequest> GetAll()
+        {
+            return TourRequestRepository.GetAll();
+        }
 
         public List<TourRequestDTO> GetAllByTourist(int touristId)
         {
@@ -166,4 +170,95 @@ namespace InitialProject.Service
         }
     }   
 
+        public void ChangeTourRequestStatus()
+        {
+            TourRequestRepository.ChangeTourRequestStatus();
+        }
+
+        public Guide GetTourRequestGuide(TourRequest tourRequest)
+        {
+            return TourRequestRepository.GetTourRequestGuide(tourRequest);
+        }
+        public TourRequestDTO GetTourRequestDTO(TourRequest tourRequest, Guide guide)
+        {
+            return TourRequestRepository.GetTourRequestDTO(tourRequest, guide);
+
+        }
+
+        public List<TourRequestDTO> GetAllAccepted(int touristId)
+        {
+            return TourRequestRepository.GetAllAccepted(touristId);
+        }
+
+        public List<TourRequestDTO> GetAllByTouristAndYear(int touristId, int year)
+        {
+            return TourRequestRepository.GetAllByTouristAndYear(touristId, year);
+
+        }
+
+        public List<TourRequestDTO> GetAllAcceptedByYear(int touristId, int year)
+        {
+            return TourRequestRepository.GetAllAcceptedByYear(touristId, year);
+
+        }
+
+
+        public double GetAcceptanceRate(int touristId)
+        {
+            return TourRequestRepository.GetAcceptanceRate(touristId);
+        }
+        public double GetYearlyAcceptanceRate(int touristId, int year)
+        {
+            return TourRequestRepository.GetYearlyAcceptanceRate(touristId, year);
+        }
+
+        public double GetAvgNumOfTourists(int touristId)
+        {
+            return TourRequestRepository.GetAvgNumOfTourists(touristId);
+        }
+
+        public double GetAvgNumOfTouristsByYear(int touristId, int year)
+        {
+            return TourRequestRepository.GetAvgNumOfTouristsByYear(touristId, year);
+        }
+        public List<string> GetTourRequestLanguages(int touristId)
+        {
+            return TourRequestRepository.GetTourRequestLanguages(touristId);
+
+        }
+        public List<string> GetTourRequestLocations(int touristId)
+        {
+            return TourRequestRepository.GetTourRequestLocations(touristId);
+
+        }
+
+        public Dictionary<string, double> CountByLanguage(int touristId)
+        {
+            return TourRequestRepository.CountByLanguage(touristId);
+
+        }
+
+        public Dictionary<string, double> CountByLocation(int touristId)
+        {
+            return TourRequestRepository.CountByLocation(touristId);
+
+        }
+        public List<TourDateDTO> GetAcceptedToursByTourist(int touristId)
+        {
+            return TourRequestRepository.GetAcceptedToursByTourist(touristId);
+
+        }
+        public List<TourRequestDTO> GetAllUnaccepted(int touristId)
+        {
+            return TourRequestRepository.GetAllUnaccepted(touristId);
+
+        }
+        public List<Tour> GetPartiallyAcceptedTours(int touristId)
+        {
+            return TourRequestRepository.GetPartiallyAcceptedTours(touristId);
+
+        }
+
+
+    }
 }

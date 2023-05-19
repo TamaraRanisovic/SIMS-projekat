@@ -1,4 +1,5 @@
 ﻿using InitialProject.Model;
+using InitialProject.Repository;
 using InitialProject.Service;
 using System;
 using System.Collections.Generic;
@@ -14,10 +15,10 @@ namespace InitialProject.Controller
     public class TourController
     {
 
-        TourService tourService = new TourService();
-        TourImagesService tourImagesService = new TourImagesService();
-        CheckpointService checkpointService = new CheckpointService();
-        LocationService locationService = new LocationService();
+        TourService tourService = new TourService(new TourRepository());
+        TourImageService tourImageService = new TourImageService(new TourImageRepository());
+        private readonly CheckpointService checkpointService = new(new CheckpointRepository());
+        LocationService locationService = new LocationService(new LocationRepository());
 
         public TourController()
         {
@@ -125,8 +126,8 @@ namespace InitialProject.Controller
 
         public void ShowTourImages(Tour tour)
         {
-            List<TourImages> tourImages = tourImagesService.GetAllByTour(tour.TourId);
-            foreach (TourImages tourImage in tourImages)
+            List<TourImage> tourImages = tourImageService.GetByTour(tour.TourId);
+            foreach (TourImage tourImage in tourImages)
             {
                 Console.WriteLine(tourImage);
             }
@@ -140,7 +141,7 @@ namespace InitialProject.Controller
 
         public void ShowCheckpoints(Tour tour)
         {
-            List<Checkpoint> tourCheckpoints = checkpointService.GetTourCheckpoints(tour.TourId);
+            List<Checkpoint> tourCheckpoints = checkpointService.GetByTour(tour.TourId);
             foreach (Checkpoint checkpoint in tourCheckpoints)
             {
                 Console.WriteLine(checkpoint);
@@ -234,7 +235,7 @@ namespace InitialProject.Controller
 
         public bool Book(int tourId, int tourists)
         {
-            UserService userService = new UserService();
+            UserService userService = new UserService(new UserRepository());
 
             string chosenOption;
 

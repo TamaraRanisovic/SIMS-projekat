@@ -30,4 +30,9 @@ namespace InitialProject.Model
     {
         Pending, Accepted, Invalid
     }
+
+    public enum TouristNotificationType
+    {
+        TourAttendance, AcceptedTourRequest, NewTour 
+    }
 }

@@ -80,7 +80,7 @@ namespace InitialProject.Controller
         {
             AccomodationService accomodationService = new AccomodationService();
             AccomodationImagesService accomodationImagesService = new AccomodationImagesService();
-            LocationService locationService = new LocationService();
+            LocationService locationService = new LocationService(new LocationRepository());
             List<Accomodation> allAccomodations = accomodationService.GetAllAccomodations();
             List<AccomodationImage> accomodationImages = new List<AccomodationImage>();
             Location accomodationLocation = new Location();
@@ -122,7 +122,7 @@ namespace InitialProject.Controller
         public void GetByLocation(string city, string country)
         {
             AccomodationService accomodationService = new AccomodationService();
-            LocationService locationService = new LocationService();
+            LocationService locationService = new LocationService(new LocationRepository());
             Location location = locationService.GetByCityAndCountry(city, country);
             List<Accomodation> accomodationsByLocation = accomodationService.GetAccomodationsByLocation(location.LocationId);
 

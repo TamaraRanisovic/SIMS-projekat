@@ -1,4 +1,5 @@
-﻿using InitialProject.Model;
+﻿using InitialProject.Interfaces;
+using InitialProject.Model;
 using InitialProject.Repository;
 using System;
 using System.Collections.Generic;
@@ -9,33 +10,38 @@ using WebApi.Entities;
 
 namespace InitialProject.Service
 {
-    public class TouristsService
+    public class TouristService
     {
-        TouristsRepository touristsRepository = new TouristsRepository();
+        private readonly ITouristRepository TouristRepository;
+
+        public TouristService(ITouristRepository touristRepository)
+        {
+            TouristRepository = touristRepository;
+        }
         public Tourist GetById(int id)
         {
-            return touristsRepository.GetById(id);
+            return TouristRepository.GetById(id);
         }
         public List<Tourist> GetTourists(int tourId)
         {
-            return touristsRepository.GetTourists(tourId);
+            return TouristRepository.GetTourists(tourId);
 
         }
 
         public List<Coupon> GetTouristCoupons(int touristId)
         {
-            return touristsRepository.GetTouristCoupons(touristId);
+            return TouristRepository.GetTouristCoupons(touristId);
 
         }
         public List<Coupon> GetUsableTouristCoupons(int touristId)
         {
-            return touristsRepository.GetUsableTouristCoupons(touristId);
+            return TouristRepository.GetUsableTouristCoupons(touristId);
 
         }
 
         public bool CanTouristTrack(int touristId, Tour tour)
         {
-            TourReservationService tourReservationService = new TourReservationService();
+            TourReservationService tourReservationService = new TourReservationService(new TourReservationRepository());
             List<TourReservation> touristReservations = tourReservationService.GetByTourist(touristId);
             List<TourReservation> tourReservations = tourReservationService.GetByTour(tour);
 
@@ -54,7 +60,7 @@ namespace InitialProject.Service
 
         public bool CanTouristRate(int touristId, Tour tour)
         {
-            TourReservationService tourReservationService = new TourReservationService();
+            TourReservationService tourReservationService = new TourReservationService(new TourReservationRepository());
             List<TourReservation> touristReservations = tourReservationService.GetByTourist(touristId);
             List<TourReservation> tourReservations = tourReservationService.GetByTour(tour);
 

@@ -1,4 +1,6 @@
-﻿using InitialProject.Model;
+﻿using InitialProject.Interfaces;
+using InitialProject.Model;
+using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -7,7 +9,7 @@ using System.Threading.Tasks;
 
 namespace InitialProject.Repository
 {
-    public class UserRepository
+    public class UserRepository : IUserRepository
     {
 
         public UserRepository()
@@ -15,7 +17,7 @@ namespace InitialProject.Repository
 
         }
 
-        public bool AddUser(User user, int touristAge = 0)
+        public bool Add(User user, int touristAge = 0)
         {
             using (var db = new DataContext())
             {
@@ -42,7 +44,7 @@ namespace InitialProject.Repository
             }
         }
 
-        public static List<User> GetAllUsers()
+        public List<User> GetAll()
         {
             using (var db = new DataContext())
             {
@@ -80,7 +82,7 @@ namespace InitialProject.Repository
             return null;
         }
 
-        public void UpdateUser(User updatedUser)
+        public void Update(User updatedUser)
         {
             using (var db = new DataContext())
             {
@@ -95,7 +97,7 @@ namespace InitialProject.Repository
             }
         }
 
-        public void DeleteUser(int userId)
+        public void Delete(int userId)
         {
             using (var db = new DataContext())
             {
@@ -105,6 +107,14 @@ namespace InitialProject.Repository
                     db.Users.Remove(user);
                     db.SaveChanges();
                 }
+            }
+        }
+
+        public List<Guide> GetAllGuides()
+        {
+            using (var db = new DataContext())
+            {
+                return db.Guides.Include(t => t.TourRequests).Include(t => t.Tours).ToList();
             }
         }
 

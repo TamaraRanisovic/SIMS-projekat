@@ -1,4 +1,5 @@
 ﻿using InitialProject.Model;
+using InitialProject.Repository;
 using InitialProject.Service;
 using System;
 using System.Collections.Generic;
@@ -16,7 +17,7 @@ namespace InitialProject.Controller
 
         public GuideController() { }
 
-        public static readonly TourService tourService = new TourService();
+        public static readonly TourService tourService = new TourService(new TourRepository());
 
 
         public void Menu()
@@ -51,7 +52,7 @@ namespace InitialProject.Controller
                 case "1":
                     Tour tour = CreateTour();
                     Location location = CreateLocation();
-                    List<TourImages> image = CreateTourImages();
+                    List<TourImage> image = CreateTourImages();
                     List<Checkpoint> checkpoint = CreateCheckpoints();
                     List<Dates> dates = CreateDates();
                     tourService.MakeTour(tour, location, image, checkpoint, dates);
@@ -150,13 +151,13 @@ namespace InitialProject.Controller
             return newLocation;
 
         }
-        public static List<TourImages> CreateTourImages()
+        public static List<TourImage> CreateTourImages()
         {
             string Name;
 
             string URL;
 
-            List<TourImages> tourImages = new List<TourImages>();
+            List<TourImage> tourImages = new List<TourImage>();
 
             Console.Clear();
             Console.WriteLine("Koliko vasa tura ima slika(URL):");
@@ -172,7 +173,7 @@ namespace InitialProject.Controller
                 Console.WriteLine("URL:");
                 URL = Console.ReadLine();
 
-                TourImages tourImage = new TourImages(Name, URL);
+                TourImage tourImage = new TourImage(Name, URL);
                 tourImages.Add(tourImage);
 
             }

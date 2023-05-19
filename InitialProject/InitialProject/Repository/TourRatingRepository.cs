@@ -1,4 +1,5 @@
 ﻿using InitialProject.DTO;
+﻿using InitialProject.Interfaces;
 using InitialProject.Model;
 using Microsoft.EntityFrameworkCore;
 using System;
@@ -10,7 +11,7 @@ using WebApi.Entities;
 
 namespace InitialProject.Repository
 {
-    public class TourRatingRepository
+    public class TourRatingRepository : ITourRatingRepository
     {
         public TourRatingRepository() { }
 
@@ -18,7 +19,7 @@ namespace InitialProject.Repository
         {
             using (var db = new DataContext())
             {
-                TouristsRepository touristRepository = new TouristsRepository();
+                TouristRepository touristRepository = new TouristRepository();
                 Tourist loggedInTourist = db.Tourists.Find(touristId);
                 Tour ratedTour = db.Tours.Find(tourId);
                 db.TourRatings.Add(tourRating);

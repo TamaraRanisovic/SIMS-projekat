@@ -7,12 +7,14 @@ using System.Threading.Tasks;
 
 namespace InitialProject.Model
 {
-    public class TouristNotifications
+    public class TouristNotification
     {
         [Key]
         public int Id { get; set; }
 
-        public TouristNotifications() { }
+        public TouristNotificationType Type { get; set; }
+
+        public TouristNotification() { }
 
     }
 }

@@ -1,4 +1,5 @@
-﻿using InitialProject.Repository;
+﻿using InitialProject.Interfaces;
+using InitialProject.Repository;
 using System;
 using System.Collections.Generic;
 using System.Linq;
@@ -11,21 +12,21 @@ namespace InitialProject.Service
     public class LocationService
     {
 
-        LocationRepository locationRepository = new LocationRepository();
+        private readonly ILocationRepository LocationRepository;
 
-        public LocationService()
+        public LocationService(ILocationRepository locationRepository)
         {
-
+            LocationRepository = locationRepository;
         }
 
         public List<Location> GetAllLocations()
         {
-            return locationRepository.GetAll();
+            return LocationRepository.GetAll();
         }
 
         public Location GetByCityAndCountry(string city, string country)
         {
-            return locationRepository.GetByCityAndCountry(city, country);
+            return LocationRepository.GetByCityAndCountry(city, country);
         }
 
 

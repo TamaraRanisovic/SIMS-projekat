@@ -26,7 +26,7 @@ namespace InitialProject.Service
             DatesRepository datesRepository = new DatesRepository();
 
             Dates date = datesRepository.GetByIdRatings(dateId);
-            List<Checkpoint> checkpoints = checkpointRepository.GetAllCheckpoints();
+            List<Checkpoint> checkpoints = checkpointRepository.GetAll();
 
             List<TourRating> ratings = new List<TourRating>();
             List<TourRatingCheckpointDTO> toursToReturn = new List<TourRatingCheckpointDTO>();

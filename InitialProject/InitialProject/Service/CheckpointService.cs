@@ -1,4 +1,6 @@
 ﻿using InitialProject.Model;
+﻿using InitialProject.Interfaces;
+using InitialProject.Model;
 using InitialProject.Repository;
 using System;
 using System.Collections.Generic;
@@ -11,23 +13,20 @@ namespace InitialProject.Service
 {
     public class CheckpointService
     {
-        private readonly CheckpointRepository CheckpointRepository;
-        public CheckpointService() { }
+        private readonly ICheckpointRepository CheckpointRepository;
 
-        public CheckpointService(CheckpointRepository checkpointRepository)
+        public CheckpointService(ICheckpointRepository checkpointRepository)
         {
             CheckpointRepository = checkpointRepository;
         }
-        public List<Checkpoint> GetAllCheckpoints()
+        public List<Checkpoint> GetAll()
         {
-            CheckpointRepository checkpointRepository = new CheckpointRepository();
-            return checkpointRepository.GetAllCheckpoints();
+            return CheckpointRepository.GetAll();
         }
 
-        public List<Checkpoint> GetTourCheckpoints(int tourId)
+        public List<Checkpoint> GetByTour(int tourId)
         {
-            CheckpointRepository checkpointRepository = new CheckpointRepository();
-            return checkpointRepository.GetTourCheckpoints(tourId);
+            return CheckpointRepository.GetByTour(tourId);
         }
     }
 

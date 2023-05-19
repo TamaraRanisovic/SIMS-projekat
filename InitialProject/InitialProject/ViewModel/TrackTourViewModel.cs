@@ -15,22 +15,21 @@ using WebApi.Entities;
 
 namespace InitialProject.ViewModel
 {
-    public class TrackTourViewModel : INotifyPropertyChanged
+    public class TrackTourViewModel : BindableBase
     {
 
         private string _tourName;
 
         public ICommand ConfirmCommand { get; set; }
 
-        public event PropertyChangedEventHandler PropertyChanged;
 
-        TourService tourService = new TourService();
+        TourService tourService = new TourService(new TourRepository());
 
         public TrackTourViewModel()
         {
             ConfirmCommand = new DelegateCommand(Confirm, CanConfirm);
-
         }
+
         public string TourName
         {
             get { return _tourName; }
@@ -66,7 +65,6 @@ namespace InitialProject.ViewModel
                 TourAttendanceWindow tourAttendanceWindow = new TourAttendanceWindow();
                 TourAttendanceViewModel tourAttendanceViewModel = (TourAttendanceViewModel)tourAttendanceWindow.DataContext;
                 tourAttendanceViewModel.TourName = TourName;
-                tourAttendanceWindow.Show();
             }
             else
             {
@@ -82,15 +80,9 @@ namespace InitialProject.ViewModel
                 MessageBox.Show("No such tour!");
             }
 
-            TouristsService touristsService = new TouristsService();
+            TouristService touristsService = new TouristService(new TouristRepository());
             return touristsService.CanTouristTrack(UserSession.LoggedInUser.Id, tour);
 
         }
-
-        private void RaisePropertyChanged(string propertyName)
-        {
-            PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
-        }
-        public Action CloseAction { get; set; }
     }
 }

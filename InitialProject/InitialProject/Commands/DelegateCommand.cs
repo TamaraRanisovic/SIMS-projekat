@@ -15,6 +15,7 @@ namespace InitialProject.Commands
         private readonly Action<object> _executed2;
 
         private readonly Func<bool> _canExecute;
+        private readonly Action<string> navigate;
 
         public DelegateCommand(Action execute) : this(execute, null)
         {
@@ -28,6 +29,11 @@ namespace InitialProject.Commands
         public DelegateCommand(Action<object> executed2)
         {
             _executed2 = executed2;
+        }
+
+        public DelegateCommand(Action<string> navigate)
+        {
+            this.navigate = navigate;
         }
 
         public DelegateCommand(Action execute, Func<bool> canExecute)

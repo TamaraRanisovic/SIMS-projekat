@@ -16,20 +16,18 @@ using WebApi.Entities;
 
 namespace InitialProject.ViewModel
 {
-    public class TourAttendanceViewModel : INotifyPropertyChanged
+    public class TourAttendanceViewModel : BindableBase
     {
         private string _tourName;
-        private TourAttendanceDTO _tourAttendance;
 
         private ObservableCollection<Checkpoint> _checkpoints;
 
-        private CheckpointService checkpointService = new CheckpointService();
+        private readonly CheckpointService checkpointService = new CheckpointService(new CheckpointRepository());
 
-        private TourService tourService = new TourService();
+
+        private TourService tourService = new TourService(new TourRepository());
 
         public ICommand ShowCheckpointsCommand { get; set; }
-
-        public event PropertyChangedEventHandler PropertyChanged;
 
         public TourAttendanceViewModel()
         {
@@ -40,11 +38,6 @@ namespace InitialProject.ViewModel
         {
             get { return _tourName; }
             set { _tourName = value; RaisePropertyChanged(nameof(TourName)); }
-        }
-        public TourAttendanceDTO TourAttendance
-        {
-            get { return _tourAttendance; }
-            set { _tourAttendance = value; RaisePropertyChanged(nameof(TourAttendance)); }
         }
 
         public ObservableCollection<Checkpoint> Checkpoints
@@ -64,16 +57,8 @@ namespace InitialProject.ViewModel
             {
                 MessageBox.Show("No tour");
             }
-            Checkpoints = new ObservableCollection<Checkpoint>(checkpointService.GetTourCheckpoints(tour.TourId));
+            Checkpoints = new ObservableCollection<Checkpoint>(checkpointService.GetByTour(tour.TourId));
         }
-
-
-        private void RaisePropertyChanged(string propertyName)
-        {
-            PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
-        }
-
-        public Action CloseAction { get; set; }
 
     }
 }

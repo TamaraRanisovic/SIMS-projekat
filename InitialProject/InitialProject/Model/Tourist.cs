@@ -22,7 +22,8 @@ namespace InitialProject.Model
 
         public List<TourRating> TourRatings { get; set; }
 
-        public List<TouristNotifications> TouristNotifications { get; set; }
+        public List<TouristNotification> TouristNotifications { get; set; }
+        public List<TourRequest> TourRequests { get; set; }
 
 
         public Tourist(string username, string password, UserType userType = UserType.Tourist) : base(username, password, userType)
@@ -30,7 +31,9 @@ namespace InitialProject.Model
             TourReservations = new List<TourReservation>();
             Coupons = new List<Coupon>();
             TourRatings = new List<TourRating>();
-            TouristNotifications = new List<TouristNotifications>();
+            TouristNotifications = new List<TouristNotification>();
+            TourRequests = new List<TourRequest>();
+
         }
 
         public Tourist(string username, string password, bool isPresent, UserType userType = UserType.Tourist) : base(username, password, userType)
@@ -39,7 +42,8 @@ namespace InitialProject.Model
             TourReservations = new List<TourReservation>();
             Coupons = new List<Coupon>();
             TourRatings = new List<TourRating>();
-            TouristNotifications = new List<TouristNotifications>();
+            TouristNotifications = new List<TouristNotification>();
+            TourRequests = new List<TourRequest>();
 
         }
 
@@ -49,7 +53,8 @@ namespace InitialProject.Model
             TourReservations = new List<TourReservation>();
             Coupons = new List<Coupon>();
             TourRatings = new List<TourRating>();
-            TouristNotifications = new List<TouristNotifications>();
+            TouristNotifications = new List<TouristNotification>();
+            TourRequests = new List<TourRequest>();
 
         }
         public override string ToString()

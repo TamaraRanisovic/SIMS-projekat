@@ -1,4 +1,5 @@
-﻿using InitialProject.Model;
+﻿using InitialProject.Interfaces;
+using InitialProject.Model;
 using InitialProject.Repository;
 using System;
 using System.Collections.Generic;
@@ -14,30 +15,30 @@ namespace InitialProject.Service
         TouristsRepository touristsRepository = new TouristsRepository();
         public CouponService()
         {
-            
+            CouponRepository = couponRepository;
         }
         public void Delete(Coupon coupon)
         {
-            couponRepository.Delete(coupon);
+            CouponRepository.Delete(coupon);
         }
 
         public List<Coupon> GetAll()
         {
-            return couponRepository.GetAll();
+            return CouponRepository.GetAll();
         }
 
         public Coupon GetById(int id)
         {
-            return couponRepository.GetById(id);
+            return CouponRepository.GetById(id);
         }
 
         public void UseCoupon(int couponId)
         {
-            couponRepository.UseCoupon(couponId);
+            CouponRepository.UseCoupon(couponId);
         }
         public void RemoveExpiredCoupons()
         {
-            couponRepository.RemoveExpiredCoupons();
+            CouponRepository.RemoveExpiredCoupons();
         }
         public void AssignCoupon(Dates tourDate)
         {

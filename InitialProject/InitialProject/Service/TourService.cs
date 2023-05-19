@@ -10,6 +10,8 @@ using System.Text;
 using System.Threading.Tasks;
 
 using WebApi.Entities;
+using InitialProject.Interfaces;
+using InitialProject.DTO;
 
 namespace InitialProject.Service
 {
@@ -20,33 +22,37 @@ namespace InitialProject.Service
         public TourRepository tourRepository = new TourRepository();
         public CouponService couponService = new CouponService();
         public DatesRepository datesRepository = new DatesRepository();
+        private readonly ITourRepository TourRepository;
         public TourService() {
 
+        public TourService(ITourRepository tourRepository)
+        {
+            TourRepository = tourRepository;
         }
 
         public List<Tour> GetAll()
         {
-            return tourRepository.GetAll();
+            return TourRepository.GetAll();
         }
 
         public Tour GetById(int tourId)
         {
-            return tourRepository.GetById(tourId);
+            return TourRepository.GetById(tourId);
         }
 
         public Tour GetByName(string tourName)
         {
-            return tourRepository.GetByName(tourName);
+            return TourRepository.GetByName(tourName);
         }
 
         public List<Tour> GetByLocation(int locationId)
         {
-            return tourRepository.GetByLocation(locationId);
+            return TourRepository.GetByLocation(locationId);
         }
 
         public List<Tour> GetAllByDuration(int duration)
         {
-            List<Tour> allTours = tourRepository.GetAll();
+            List<Tour> allTours = TourRepository.GetAll();
             List<Tour> toursByDuration = new List<Tour>();
 
             foreach (Tour tour in allTours)
@@ -62,7 +68,7 @@ namespace InitialProject.Service
 
         public List<Tour> GetAllByLanguage(string language)
         {
-            List<Tour> allTours = tourRepository.GetAll();
+            List<Tour> allTours = TourRepository.GetAll();
             List<Tour> toursByLanguage = new List<Tour>();
 
             foreach (Tour tour in allTours)
@@ -77,7 +83,7 @@ namespace InitialProject.Service
         }
         public List<Tour> GetAllByTouristsNumber(int tourists)
         {
-            List<Tour> allTours = tourRepository.GetAll();
+            List<Tour> allTours = TourRepository.GetAll();
             List<Tour> toursByTouristsNumber = new List<Tour>();
 
             foreach (Tour tour in allTours)
@@ -113,7 +119,7 @@ namespace InitialProject.Service
 
         public List<Tourist> GetTourists(int tourId)
         {
-            TouristsRepository touristsRepository = new TouristsRepository();
+            TouristRepository touristsRepository = new TouristRepository();
             return touristsRepository.GetTourists(tourId);
         }
 
@@ -121,16 +127,16 @@ namespace InitialProject.Service
         {
             Tour tour = GetById(tourId);
             List<Tourist> tourTourists = GetTourists(tourId);
-            int freeSpotsNumber = tour.MaxGuests - tourRepository.GetTouristsNumber(tourId);
+            int freeSpotsNumber = tour.MaxGuests - TourRepository.GetTouristsNumber(tourId);
             return freeSpotsNumber;
         }
 
         public void BookTour(int tourId, int touristId, int tourists)
-        { 
-            tourRepository.BookTour(tourId, touristId, tourists);
+        {
+            TourRepository.BookTour(tourId, touristId, tourists);
         }
 
-        public void MakeTour(Tour tour, Location location, List<TourImages> tourImages, List<Checkpoint> checkpoints, List<Dates> dates)
+        public void MakeTour(Tour tour, Location location, List<TourImage> tourImages, List<Checkpoint> checkpoints, List<Dates> dates)
         {
 
             using (var context = new DataContext())
@@ -177,13 +183,13 @@ namespace InitialProject.Service
 
         public Tour GetByTourReservation(int tourReservationId)
         {
-            return tourRepository.GetByTourReservation(tourReservationId);
+            return TourRepository.GetByTourReservation(tourReservationId);
         }
 
         public bool IsTourActive(Tour tour)
         {
-            CheckpointService checkpointService = new CheckpointService();
-            List<Checkpoint> checkpoints = checkpointService.GetTourCheckpoints(tour.TourId);
+            CheckpointService checkpointService = new(new CheckpointRepository());
+            List<Checkpoint> checkpoints = checkpointService.GetByTour(tour.TourId);
             int falseCheckpoints = CountFalseCheckpoints(tour);
             int markedCheckpoints = CountMarkedCheckpoints(tour);
             if (checkpoints.Count == falseCheckpoints || checkpoints.Count == markedCheckpoints)
@@ -416,7 +422,7 @@ namespace InitialProject.Service
         {
             CheckpointRepository checkpointRepository = new CheckpointRepository();
 
-            List<Checkpoint> checkpoints = checkpointRepository.GetTourCheckpoints(tour.TourId);
+            List<Checkpoint> checkpoints = checkpointRepository.GetByTour(tour.TourId);
 
             int falseCheckpoints = 0;
 
@@ -434,7 +440,7 @@ namespace InitialProject.Service
         {
             CheckpointRepository checkpointRepository = new CheckpointRepository();
 
-            List<Checkpoint> checkpoints = checkpointRepository.GetTourCheckpoints(tour.TourId);
+            List<Checkpoint> checkpoints = checkpointRepository.GetByTour(tour.TourId);
 
             int markedCheckpoints = 0;
 
@@ -493,7 +499,7 @@ namespace InitialProject.Service
         {
             Console.WriteLine("TEST"); //ne ucitava turiste ili ne prepoznaje
 
-            trackingTour.Tourists = tourRepository.GetTourists(trackingTour);
+            trackingTour.Tourists = TourRepository.GetTourists(trackingTour);
 
             foreach (var tourist in trackingTour.Tourists)
             {
@@ -615,5 +621,52 @@ namespace InitialProject.Service
 
             return false;
         }
+        public TourDateDTO GetByTourRequest(TourRequestDTO tourRequestDTO)
+        {
+            return TourRepository.GetByTourRequest(tourRequestDTO);
+        }
+
+        public TourDateDTO GetByUnaceptedTourRequest(TourRequestDTO tourRequestDTO)
+        {
+            TourRepository tourRepository = new TourRepository();
+            LocationRepository locationRepository = new LocationRepository();
+
+            Location location = locationRepository.GetByCityAndCountry(tourRequestDTO.City, tourRequestDTO.Country);
+
+            if (location == null)
+            {
+                return null;
+            }
+
+            List<Tour> toursByLocation = GetByLocation(location.LocationId);
+
+            List<Dates> dates = new List<Dates>();
+
+            foreach (Tour tour in toursByLocation)
+            {
+                if (tour.Language.Equals(tourRequestDTO.Language))
+                {
+                    dates = tour.StartingDates;
+                    foreach (Dates date in dates)
+                    {
+                        TourDateDTO tourDateDTO = new TourDateDTO(tour, date);
+                        return tourDateDTO;
+                    }
+                }
+            }
+            return null;
+        }
+        public Guide GetTourGuide(int tourId)
+        {
+            return TourRepository.GetTourGuide(tourId);
+
+        }
+        public List<Dates> GetTourDates(int tourId)
+        {
+            return TourRepository.GetTourDates(tourId);
+
+        }
+
+
     }
 }

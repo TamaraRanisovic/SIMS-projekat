@@ -15,14 +15,14 @@ using System.Windows.Shapes;
 
 namespace InitialProject.View
 {
-    public partial class TouristNotificationsWindow : Window
+    public partial class TouristNotificationsWindow : Page
     {
         public TouristNotificationsWindow()
         {
             InitializeComponent();
-            TouristNotificationsViewModel viewModel = new TouristNotificationsViewModel();
-            viewModel.CloseAction = Close;
-            DataContext = viewModel;
+          //  TouristNotificationsViewModel viewModel = new TouristNotificationsViewModel();
+          //  viewModel.CloseAction = Close;
+           // DataContext = viewModel;
         }
 
     }

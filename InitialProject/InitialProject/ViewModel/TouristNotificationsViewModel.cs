@@ -1,7 +1,9 @@
 ﻿using InitialProject.Commands;
+using InitialProject.DTO;
 using InitialProject.Model;
 using InitialProject.Repository;
 using InitialProject.Service;
+using InitialProject.View;
 using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
@@ -17,26 +19,25 @@ using WebApi.Entities;
 
 namespace InitialProject.ViewModel
 {
-    public class TouristNotificationsViewModel : INotifyPropertyChanged
+    public class TouristNotificationsViewModel : BindableBase
     {
-
+        private Tour tour;
         private string _tourName;
+        private ObservableCollection<Tour> _newTours;
+        private ObservableCollection<TouristNotification> _touristNotifications;
+        private ObservableCollection<TourDateDTO> _acceptedTourRequests;
 
-        private ObservableCollection<TouristNotifications> _touristNotifications;
-
-        TourNotificationsService tourNotificationsService = new TourNotificationsService();
+        TouristNotificationsService tourNotificationsService = new TouristNotificationsService(new TouristNotificationRepository());
         public ICommand ConfirmCommand { get; set; }
-
-        public event PropertyChangedEventHandler PropertyChanged;
+        public ICommand ShowCommand { get; set; }
 
         public TouristNotificationsViewModel()
         {
-            using (var db = new DataContext())
-            {
-                TouristNotifications = new ObservableCollection<TouristNotifications>(tourNotificationsService.GetByTourist(UserSession.LoggedInUser.Id));
-                ConfirmCommand = new DelegateCommand(Confirm);
-            }
-        }       
+            LoadNotifications();
+            ConfirmCommand = new DelegateCommand(Confirm);
+            ShowCommand = new DelegateCommand(Show);
+
+        }
 
         public string TourName
         {
@@ -45,7 +46,7 @@ namespace InitialProject.ViewModel
         }
 
 
-        public ObservableCollection<TouristNotifications> TouristNotifications
+        public ObservableCollection<TouristNotification> TouristNotifications
         {
             get { return _touristNotifications; }
             set
@@ -55,23 +56,101 @@ namespace InitialProject.ViewModel
             }
         }
 
+        public ObservableCollection<TourDateDTO> AcceptedTourRequests
+        {
+            get { return _acceptedTourRequests; }
+            set
+            {
+                _acceptedTourRequests = value;
+                RaisePropertyChanged(nameof(AcceptedTourRequests));
+            }
+        }
+        public ObservableCollection<Tour> NewTours
+        {
+            get { return _newTours; }
+            set
+            {
+                _newTours = value;
+                RaisePropertyChanged(nameof(NewTours));
+            }
+        }
+        public Tour Tour
+        {
+            get { return tour; }
+            set
+            {
+                tour = value;
+                RaisePropertyChanged(nameof(Tour));
+            }
+        }
+        public void LoadNotifications()
+        {
+            if (UserSession.LoggedInUser != null)
+            {
+                TourRequestService tourRequestService = new TourRequestService(new TourRequestRepository());
+
+                NewTours = new ObservableCollection<Tour>(tourRequestService.GetPartiallyAcceptedTours(UserSession.LoggedInUser.Id));
+                TouristNotifications = new ObservableCollection<TouristNotification>(tourNotificationsService.GetByTourist(UserSession.LoggedInUser.Id));
+                AcceptedTourRequests = new ObservableCollection<TourDateDTO>(tourRequestService.GetAcceptedToursByTourist(UserSession.LoggedInUser.Id));
+            }
+        }
+
+        public List<string> GetImageUrls(List<TourImage> tourImages)
+        {
+            List<string> imageUrls = new List<string>();
+
+            foreach (TourImage tourImage in tourImages)
+            {
+                imageUrls.Add(tourImage.URL);
+            }
+
+            return imageUrls;
+        }
+
+        public TourDTO GetTourDTO(Tour tour)
+        {
+            TourService tourService = new TourService(new TourRepository());
+            TourImageService tourImageService = new TourImageService(new TourImageRepository());
+
+            Location location = tourService.GetTourLocation(Tour.TourId);
+            Guide guide = tourService.GetTourGuide(Tour.TourId);
+
+            List<Dates> dates = tourService.GetTourDates(Tour.TourId);
+            List<TourImage> tourImages = tourImageService.GetByTour(Tour.TourId);
+            List<string> imageUrls = GetImageUrls(tourImages);
+
+            TourDTO tourDTO = new TourDTO(tour, location, guide, dates, imageUrls);
+            return tourDTO;
+        } 
 
         public void Confirm(object parameter)
         {
-            TouristNotifications touristNotification = (TouristNotifications)parameter;
-            TourReservationService tourReservationService = new TourReservationService();
-            TourService tourService = new TourService();
+            TouristNotification touristNotification = (TouristNotification)parameter;
+            TourReservationService tourReservationService = new TourReservationService(new TourReservationRepository());
+            TourService tourService = new TourService(new TourRepository());
 
             TourReservation tourReservation = tourReservationService.GetByNotification(touristNotification.Id);
             tourReservationService.UpdateAttendance(tourReservation.TourReservationId);
             Tour tour = tourService.GetByTourReservation(tourReservation.TourReservationId);
             tourNotificationsService.Delete(touristNotification);
-            TouristNotifications = new ObservableCollection<TouristNotifications>(tourNotificationsService.GetByTourist(UserSession.LoggedInUser.Id));
+            TouristNotifications = new ObservableCollection<TouristNotification>(tourNotificationsService.GetByTourist(UserSession.LoggedInUser.Id));
         }
-        private void RaisePropertyChanged(string propertyName)
+
+        public void Show(object parameter)
         {
-            PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
+            TouristViewModel touristViewModel = TouristViewModel.Instance;
+            ShowTourView showTourView = new ShowTourView();
+            TourService tourService = new TourService(new TourRepository());
+
+            Tour = tourService.GetByName((string)parameter);
+            
+            TourDTO tourDTO = GetTourDTO(Tour);
+
+            ShowTourViewModel showTourViewModel = new ShowTourViewModel(tourDTO);
+            showTourView.DataContext = showTourViewModel;
+            touristViewModel.NavService.Navigate(showTourView);
+
         }
-        public Action CloseAction { get; set; }
+
     }
 }

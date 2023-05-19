@@ -24,13 +24,13 @@ namespace InitialProject.Model
 
         public bool IsValid { get; set; }   
 
-        public List<TourImages>? TourImages { get; set; }
+        public List<TourImages> TourImages { get; set; }
 
         public TourRating()
         {
-            TourImages = new List<TourImages>();
+            TourImages = new List<TourImage>();
         }
-        public TourRating(int guideKnowledge, int guideLanguage, int tourAmusement, string comment, List<TourImages> tourImages)
+        public TourRating(int guideKnowledge, int guideLanguage, int tourAmusement, string comment, List<TourImage> tourImages)
         {   
             GuideKnowledge = guideKnowledge;
             GuideLanguage = guideLanguage;
@@ -40,7 +40,7 @@ namespace InitialProject.Model
             IsValid = true;
             
         }
-        public TourRating(int touristId,int guideKnowledge, int guideLanguage, int tourAmusement, string comment, List<TourImages> tourImages)
+        public TourRating(int touristId,int guideKnowledge, int guideLanguage, int tourAmusement, string comment, List<TourImage> tourImages)
         {   
             TouristId = touristId;
             GuideKnowledge = guideKnowledge;

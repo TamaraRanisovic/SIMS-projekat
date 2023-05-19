@@ -15,14 +15,14 @@ using System.Windows.Shapes;
 
 namespace InitialProject.View
 {
-    public partial class TouristCouponsWindow : Window
+    public partial class TouristCouponsWindow : Page
     {
         public TouristCouponsWindow()
         {
             InitializeComponent();
             TouristCouponsViewModel viewModel = new TouristCouponsViewModel();
-            viewModel.CloseAction = Close;
-            DataContext = viewModel;
+            /*
+            DataContext = viewModel;*/
         }
 
     }

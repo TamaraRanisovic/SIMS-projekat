@@ -1,4 +1,5 @@
-﻿using InitialProject.Model;
+﻿using InitialProject.Interfaces;
+using InitialProject.Model;
 using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
@@ -9,7 +10,7 @@ using WebApi.Entities;
 
 namespace InitialProject.Repository
 {
-    public class TourReservationRepository
+    public class TourReservationRepository : ITourReservationRepository
     {
         public TourReservationRepository()
         {
@@ -60,7 +61,7 @@ namespace InitialProject.Repository
 
                 foreach (TourReservation tourReservation in tourReservations)
                 {
-                    foreach (TouristNotifications touristNotification in tourReservation.Notifications)
+                    foreach (TouristNotification touristNotification in tourReservation.Notifications)
                     {
                         if (touristNotification.Id == notificationId)
                         {

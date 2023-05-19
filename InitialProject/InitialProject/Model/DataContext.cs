@@ -33,7 +33,8 @@ namespace InitialProject.Model
 
         public DbSet<AccomodationImage> AccomodationImages { get; set; }
 
-        public DbSet<TourImages> TourImages { get; set; }
+        public DbSet<TourImage> TourImages { get; set; }
+
 
 
         public DbSet<AccomodationReservation> AccomodationReservations { get; set; }
@@ -45,7 +46,9 @@ namespace InitialProject.Model
 
         public DbSet<TourRating> TourRatings { get; set; }
 
-        public DbSet<TouristNotifications> TouristNotifications { get; set; }
+        public DbSet<TouristNotification> TouristNotifications { get; set; }
+
+        public DbSet<TourRequest> TourRequests { get; set; }
 
         public DbSet<TourRequest> TourRequests { get; set; }
 
@@ -53,7 +56,7 @@ namespace InitialProject.Model
         protected override void OnModelCreating(ModelBuilder modelBuilder)
         {
             //Tura
-            modelBuilder.Entity<TourImages>()
+            modelBuilder.Entity<TourImage>()
                 .HasOne<Tour>()
                 .WithMany(t => t.Images)
                 .OnDelete(DeleteBehavior.Restrict);
@@ -88,6 +91,16 @@ namespace InitialProject.Model
                 .WithMany(t => t.TourReservations)
                 .OnDelete(DeleteBehavior.Restrict);
 
+            modelBuilder.Entity<TourRequest>()
+                .HasOne<Tourist>()
+                .WithMany(t => t.TourRequests)
+                .OnDelete(DeleteBehavior.Cascade);
+
+            modelBuilder.Entity<TourRequest>()
+                .HasOne<Guide>()
+                .WithMany(t => t.TourRequests)
+                .OnDelete(DeleteBehavior.Cascade);
+
             modelBuilder.Entity<TourRating>()
                 .HasOne<Tour>()
                 .WithMany(t => t.TourRatings)
@@ -98,7 +111,7 @@ namespace InitialProject.Model
                 .WithMany(t => t.TourRatings)
                 .OnDelete(DeleteBehavior.Restrict);
 
-            modelBuilder.Entity<TourImages>()
+            modelBuilder.Entity<TourImage>()
                 .HasOne<TourRating>()
                 .WithMany(t => t.TourImages)
                 .OnDelete(DeleteBehavior.Restrict);
@@ -197,16 +210,20 @@ namespace InitialProject.Model
            .WithMany(t => t.Tourists)
            .OnDelete(DeleteBehavior.Restrict);
 
-            modelBuilder.Entity<TouristNotifications>()
+            modelBuilder.Entity<TouristNotification>()
            .HasOne<Tourist>()
            .WithMany(t => t.TouristNotifications)
            .OnDelete(DeleteBehavior.Restrict);
 
-            modelBuilder.Entity<TouristNotifications>()
+            modelBuilder.Entity<TouristNotification>()
            .HasOne<TourReservation>()
            .WithMany(t => t.Notifications)
            .OnDelete(DeleteBehavior.Restrict);
 
+            modelBuilder.Entity<TouristNotification>()
+           .HasOne<TourRequest>()
+           .WithMany(t => t.Notifications)
+           .OnDelete(DeleteBehavior.Cascade);
             //Coupons
             modelBuilder.Entity<Coupon>()
            .HasOne<Tourist>()

@@ -19,7 +19,7 @@ using WebApi.Entities;
 
 namespace InitialProject.ViewModel
 {
-    public class ConfirmReservationViewModel : INotifyPropertyChanged
+    public class ConfirmReservationViewModel : BindableBase
     {
         private string _tourName;
         private int _tourists;
@@ -27,10 +27,7 @@ namespace InitialProject.ViewModel
         private int _couponId;
 
         private ObservableCollection<Coupon> _coupons;
-
-        TouristsService touristsService = new TouristsService();
-
-        public event PropertyChangedEventHandler PropertyChanged;
+        TouristService touristsService = new TouristService(new TouristRepository());
 
         public ICommand CancelReservationCommand { get; set; }
         public ICommand ConfirmReservationCommand { get; set; }
@@ -41,8 +38,17 @@ namespace InitialProject.ViewModel
             CancelReservationCommand = new DelegateCommand(CancelReservation);
             ConfirmReservationCommand = new DelegateCommand(ConfirmReservation);
             UseCouponCommand = new DelegateCommand(UseCoupon);
-
-            Coupons = new ObservableCollection<Coupon>(touristsService.GetUsableTouristCoupons(UserSession.LoggedInUser.Id));
+            LoadUsableCoupons();
+            IsCouponEnabled = true;
+        }
+        public ConfirmReservationViewModel(string tourName, int tourists)
+        {
+            TourName = tourName;
+            Tourists = tourists;
+            CancelReservationCommand = new DelegateCommand(CancelReservation);
+            ConfirmReservationCommand = new DelegateCommand(ConfirmReservation);
+            UseCouponCommand = new DelegateCommand(UseCoupon);
+            LoadUsableCoupons();
             IsCouponEnabled = true;
 
         }
@@ -92,31 +98,44 @@ namespace InitialProject.ViewModel
             }
         }
 
+        public void LoadUsableCoupons()
+        {
+            if (UserSession.LoggedInUser != null)
+            {
+                Coupons = new ObservableCollection<Coupon>(touristsService.GetUsableTouristCoupons(UserSession.LoggedInUser.Id));
+            }
+            return;
+        }
+
         private void CancelReservation()
         {
-            CloseAction();
+            //CloseAction();
         }
 
         public void ConfirmReservation()
         {
 
-            TourService tourService = new TourService();
+            TourService tourService = new TourService(new TourRepository());
             Tour tour = tourService.GetByName(TourName);
+            if (tour == null)
+            {
+                MessageBox.Show("Tour null");
+                return;
+            }
             tourService.BookTour(tour.TourId, UserSession.LoggedInUser.Id, Tourists);
             if (IsCouponEnabled == false)
             {
-                CouponService couponService = new CouponService();
+                CouponService couponService = new CouponService(new CouponRepository());
                 couponService.UseCoupon(CouponId);
             }
             MessageBox.Show("You successfully booked a tour!");
-            Cancel();
         }
 
         public bool IsCouponExpired(Coupon coupon)
         {
             if (coupon.Date < DateTime.Now)
             {
-                CouponService couponService = new CouponService();
+                CouponService couponService = new CouponService(new CouponRepository());
                 couponService.Delete(coupon);
                 Coupons = new ObservableCollection<Coupon>(touristsService.GetUsableTouristCoupons(UserSession.LoggedInUser.Id));
                 return true;
@@ -141,18 +160,6 @@ namespace InitialProject.ViewModel
         }
 
 
-        private void Cancel()
-        {
-            CloseAction();
-        }
-
-        private void RaisePropertyChanged(string propertyName)
-        {
-            PropertyChanged?.Invoke(this, new PropertyChangedEventArgs(propertyName));
-        }
-
-
-        public Action CloseAction { get; set; }
 
     }
 }

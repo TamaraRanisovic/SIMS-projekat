@@ -1,4 +1,5 @@
-﻿using InitialProject.Model;
+﻿using InitialProject.Interfaces;
+using InitialProject.Model;
 using Microsoft.EntityFrameworkCore;
 using System;
 using System.Collections.Generic;
@@ -9,9 +10,9 @@ using WebApi.Entities;
 
 namespace InitialProject.Repository
 {
-    public class TouristsRepository
+    public class TouristRepository : ITouristRepository
     {
-        public TouristsRepository() { }
+        public TouristRepository() { }
 
         public Tourist GetById(int id)
         {
