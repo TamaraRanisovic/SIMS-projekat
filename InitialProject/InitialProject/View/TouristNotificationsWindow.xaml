@@ -1,0 +1,59 @@
+﻿<Page x:Class="InitialProject.View.TouristNotificationsWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:InitialProject.View"
+        xmlns:viewModel="clr-namespace:InitialProject.ViewModel"
+        mc:Ignorable="d"
+        Title="TouristNotificationsWindow" Height="450" Width="800">
+    <Page.DataContext>
+        <viewModel:TouristNotificationsViewModel/>
+    </Page.DataContext>
+
+    <Page.Resources>
+        <viewModel:Converter x:Key="Convert" />
+    </Page.Resources>
+
+    <Grid>
+        <Label Content="My notifications:" HorizontalAlignment="Left" Margin="283,8,0,0" VerticalAlignment="Top" FontSize="24" VerticalContentAlignment="Center" FontWeight="Bold" Width="300" HorizontalContentAlignment="Center"/>
+        <DataGrid ItemsSource="{Binding TouristNotifications, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" Height="125" Margin="53,82,0,0" AutoGenerateColumns="False" Width="300" HorizontalAlignment="Left" VerticalAlignment="Top" HorizontalContentAlignment="Center" VerticalContentAlignment="Center">
+            <DataGrid.Columns>
+                <DataGridTextColumn Header="Name" Binding="{Binding Id, Converter={StaticResource Convert}}" Width="150"/>
+
+                <DataGridTemplateColumn Header="Tour Attendance">
+                    <DataGridTemplateColumn.CellTemplate>
+                        <DataTemplate>
+                            <Button Content="Confirm" Command="{Binding DataContext.ConfirmCommand, RelativeSource={RelativeSource AncestorType=DataGrid}}" CommandParameter="{Binding}" />
+                        </DataTemplate>
+                    </DataGridTemplateColumn.CellTemplate>
+                </DataGridTemplateColumn>
+            </DataGrid.Columns>
+        </DataGrid>
+        <DataGrid ItemsSource="{Binding AcceptedTourRequests, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" Height="123" Margin="433,84,0,0" AutoGenerateColumns="False" Width="300" HorizontalAlignment="Left" VerticalAlignment="Top" HorizontalContentAlignment="Center" VerticalContentAlignment="Center">
+            <DataGrid.Columns>
+                <DataGridTextColumn Header="Tour Name" Binding="{Binding TourName}" Width="150"/>
+                <DataGridTextColumn Header="Date" Binding="{Binding Date}" Width="150"/>
+                <DataGridTemplateColumn Header="Tour">
+                    <DataGridTemplateColumn.CellTemplate>
+                        <DataTemplate>
+                            <Button Content="Show Tour" Command="{Binding DataContext.ShowCommand, RelativeSource={RelativeSource AncestorType={x:Type DataGrid}}}" CommandParameter="{Binding TourName}" />
+                        </DataTemplate>
+                    </DataGridTemplateColumn.CellTemplate>
+                </DataGridTemplateColumn>
+            </DataGrid.Columns>
+        </DataGrid>
+        <DataGrid ItemsSource="{Binding NewTours, Mode=TwoWay, UpdateSourceTrigger=PropertyChanged}" Height="125" Margin="0,253,0,0" AutoGenerateColumns="False" Width="300" HorizontalAlignment="Center" VerticalAlignment="Top" HorizontalContentAlignment="Center" VerticalContentAlignment="Center">
+            <DataGrid.Columns>
+                <DataGridTextColumn Header="Tour Name" Binding="{Binding Name}" Width="150"/>
+                <DataGridTemplateColumn Header="Tour">
+                    <DataGridTemplateColumn.CellTemplate>
+                        <DataTemplate>
+                            <Button Content="Show Tour" Command="{Binding DataContext.ShowCommand, RelativeSource={RelativeSource AncestorType={x:Type DataGrid}}}" CommandParameter="{Binding Name}" />
+                        </DataTemplate>
+                    </DataGridTemplateColumn.CellTemplate>
+                </DataGridTemplateColumn>
+            </DataGrid.Columns>
+        </DataGrid>
+    </Grid>
+</Page>
