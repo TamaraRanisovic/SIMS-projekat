@@ -54,7 +54,10 @@ namespace InitialProject.Repository
 
         public int GetNumberOfGuestsInAccomodation(int accId)
         {
+<<<<<<< Updated upstream
             AccomodationRepository accomodationRepository = new AccomodationRepository();
+=======
+>>>>>>> Stashed changes
             using(var db = new DataContext())
             {
                 var acc = db.Accomodations.Include(a => a.AccomodationReservations).SingleOrDefault(a => a.AccId == accId);

@@ -23,7 +23,11 @@ namespace InitialProject.Migrations
                         .ValueGeneratedOnAdd()
                         .HasColumnType("INTEGER");
 
+<<<<<<< Updated upstream
                     b.Property<int?>("AccomodationAccId")
+=======
+                    b.Property<int>("AccomodationId")
+>>>>>>> Stashed changes
                         .HasColumnType("INTEGER");
 
                     b.Property<DateTime>("CheckInDate")
@@ -40,7 +44,11 @@ namespace InitialProject.Migrations
 
                     b.HasKey("Id");
 
+<<<<<<< Updated upstream
                     b.HasIndex("AccomodationAccId");
+=======
+                    b.HasIndex("AccomodationId");
+>>>>>>> Stashed changes
 
                     b.HasIndex("UserId");
 
@@ -132,6 +140,7 @@ namespace InitialProject.Migrations
                     b.Property<int>("Cleanliness")
                         .HasColumnType("INTEGER");
 
+<<<<<<< Updated upstream
                     b.Property<int>("OwnerFriendliness")
                         .HasColumnType("INTEGER");
 
@@ -158,6 +167,38 @@ namespace InitialProject.Migrations
 
                     b.HasKey("AccomodationId");
 
+=======
+                    b.Property<string>("Comment")
+                        .IsRequired()
+                        .HasColumnType("TEXT");
+
+                    b.Property<int>("OwnerFriendliness")
+                        .HasColumnType("INTEGER");
+
+                    b.Property<int>("OwnerId")
+                        .HasColumnType("INTEGER");
+
+                    b.HasKey("AccomodationId");
+
+                    b.ToTable("AccomodationRating");
+                });
+
+            modelBuilder.Entity("InitialProject.Model.AccomodationReview", b =>
+                {
+                    b.Property<int>("AccomodationId")
+                        .ValueGeneratedOnAdd()
+                        .HasColumnType("INTEGER");
+
+                    b.Property<int>("Rating")
+                        .HasColumnType("INTEGER");
+
+                    b.Property<string>("Recommendations")
+                        .IsRequired()
+                        .HasColumnType("TEXT");
+
+                    b.HasKey("AccomodationId");
+
+>>>>>>> Stashed changes
                     b.ToTable("AccomodationReviews");
                 });
 
@@ -195,7 +236,20 @@ namespace InitialProject.Migrations
                         .ValueGeneratedOnAdd()
                         .HasColumnType("INTEGER");
 
+<<<<<<< Updated upstream
+=======
+                    b.Property<int?>("AccomodationRatingAccomodationId")
+                        .HasColumnType("INTEGER");
+
+>>>>>>> Stashed changes
                     b.Property<int>("Cleanliness")
+                        .HasColumnType("INTEGER");
+
+                    b.Property<string>("Comment")
+                        .IsRequired()
+                        .HasColumnType("TEXT");
+
+                    b.Property<int>("IdOwner")
                         .HasColumnType("INTEGER");
 
                     b.Property<int?>("OwnerId")
@@ -209,6 +263,11 @@ namespace InitialProject.Migrations
 
                     b.HasKey("Id");
 
+<<<<<<< Updated upstream
+=======
+                    b.HasIndex("AccomodationRatingAccomodationId");
+
+>>>>>>> Stashed changes
                     b.HasIndex("OwnerId");
 
                     b.ToTable("GuestRatings");
@@ -410,8 +469,14 @@ namespace InitialProject.Migrations
                 {
                     b.HasOne("InitialProject.Model.Accomodation", null)
                         .WithMany("AccomodationReservations")
+<<<<<<< Updated upstream
                         .HasForeignKey("AccomodationAccId")
                         .OnDelete(DeleteBehavior.Cascade);
+=======
+                        .HasForeignKey("AccomodationId")
+                        .OnDelete(DeleteBehavior.Cascade)
+                        .IsRequired();
+>>>>>>> Stashed changes
 
                     b.HasOne("InitialProject.Model.User", null)
                         .WithMany("AccomodationReservations")
@@ -470,6 +535,13 @@ namespace InitialProject.Migrations
 
             modelBuilder.Entity("InitialProject.Model.GuestRating", b =>
                 {
+<<<<<<< Updated upstream
+=======
+                    b.HasOne("InitialProject.Model.AccomodationRating", null)
+                        .WithMany("guestRatings")
+                        .HasForeignKey("AccomodationRatingAccomodationId");
+
+>>>>>>> Stashed changes
                     b.HasOne("InitialProject.Model.Owner", null)
                         .WithMany("GuestRatings")
                         .HasForeignKey("OwnerId")
@@ -542,9 +614,15 @@ namespace InitialProject.Migrations
 
             modelBuilder.Entity("InitialProject.Model.AccomodationRating", b =>
                 {
+<<<<<<< Updated upstream
                     b.Navigation("Comments");
 
                     b.Navigation("Images");
+=======
+                    b.Navigation("Images");
+
+                    b.Navigation("guestRatings");
+>>>>>>> Stashed changes
                 });
 
             modelBuilder.Entity("InitialProject.Model.User", b =>

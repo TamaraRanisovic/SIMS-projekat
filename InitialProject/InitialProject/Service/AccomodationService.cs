@@ -1,4 +1,9 @@
+<<<<<<< Updated upstream
 ﻿using InitialProject.Model;
+=======
+﻿using InitialProject.Controller;
+using InitialProject.Model;
+>>>>>>> Stashed changes
 using InitialProject.Repository;
 using Microsoft.EntityFrameworkCore.Diagnostics;
 using System;
@@ -6,6 +11,10 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Text;
 using System.Threading.Tasks;
+<<<<<<< Updated upstream
+=======
+using System.Windows;
+>>>>>>> Stashed changes
 using WebApi.Entities;
 
 namespace InitialProject.Service
@@ -195,6 +204,7 @@ namespace InitialProject.Service
             return freeSpotsNumber;
         }
 
+<<<<<<< Updated upstream
         public void BookAcc(int accId,int guestsId,int guestsNumber,DateTime start,DateTime end)
         {
             AccomodationReservationRepository accomodationReservationRepository = new AccomodationReservationRepository();
@@ -203,12 +213,34 @@ namespace InitialProject.Service
 
         
         public void CancelReservation(int accId)//accRes po ID, ne uklapa se uvek
+=======
+        public bool IsAvailable(DateTime start,DateTime end,Accomodation accomodation)
+        {
+            var reservations = accomodation.AccomodationReservations;
+            return !reservations.Any(r => (start >= r.CheckInDate && start < r.CheckOutDate) || (end > r.CheckInDate && end <= r.CheckOutDate));
+        }
+
+        public void BookAcc(int accId, int guestsId, int guestsNumber, DateTime start, DateTime end)
+        {
+            AccomodationReservationRepository accomodationReservationRepository = new AccomodationReservationRepository();
+            accomodationReservationRepository.BookAcc(accId, guestsId, guestsNumber, start, end);
+        }
+
+        public void CancelReservation(int idRezervacije)                            //!?!?!?!?!?!??!?!?!?!?!
+>>>>>>> Stashed changes
         {
             AccomodationRepository accomodationRepository = new AccomodationRepository();
             AccomodationReservationRepository accomodationReservationRepository = new AccomodationReservationRepository();
 
+<<<<<<< Updated upstream
             Accomodation accomodation = accomodationRepository.GetAccomodationById(accId);
             AccomodationReservation accomodationReservation = accomodationReservationRepository.GetAccomodationReservationById(accId);
+=======
+            Accomodation accomodation = GetAccomodationById(idRezervacije); //ZAMASKIRANO ID i IDACC u bazi podesavam da je isti to je GRESKA MORA SE SREDITI!!!
+            AccomodationReservation accomodationReservation = accomodationReservationRepository.GetAccomodationReservationById(idRezervacije);
+
+            //funkcija za ID dobavljanje
+>>>>>>> Stashed changes
 
             using(var db = new DataContext()) {
 
@@ -225,17 +257,93 @@ namespace InitialProject.Service
 
                 else
                 {
+<<<<<<< Updated upstream
 
 
                     db.AccomodationReservations.Remove(accomodationReservation);
                     Console.WriteLine("Succesfully removed accomodation reservation!");
                     db.SaveChanges();
+=======
+                    db.AccomodationReservations.Remove(accomodationReservation);
+                    db.SaveChanges();
+                    Console.WriteLine("Succesfully removed accomodation reservation!");
+>>>>>>> Stashed changes
                     return;
             }
             }
 
         }
+<<<<<<< Updated upstream
         
+=======
+
+
+        // PRAVIM FUNKCIJU ZA RESERVACIJU SKROZ TACNU 
+        //Fja za VIEW MODEL
+        public void ReserveAccomodation(int AccId,int GuestId,int NumberOfGuests,DateTime DateIn, DateTime DateOut,string username, string password)
+        {
+            UserService userService = new UserService();
+            Accomodation accomodation = GetAccomodationById(AccId);  //????????????
+            AccomodationService accomodationService = new AccomodationService();
+
+            if (userService.Login(username, password) != null)
+            {
+                Guest guest = (Guest)userService.GetByUsername(username);
+
+                if (guest.UserType == UserType.Guest)
+                {
+                    if (IsAvailable(DateIn,DateOut,accomodation)) {
+                        MakeReservation(AccId, GuestId, NumberOfGuests, DateIn, DateOut);
+                        MessageBox.Show("Succesfully reserved accomodation!");
+                    }
+                    else { MessageBox.Show("Zauzet je u tom periodu"); }
+                }
+                else { MessageBox.Show("Moras jos da mozgas"); }
+            }
+
+        }
+
+        // I OVDE ISTO
+        // FUNKCIJA ZA REZERVACIJU
+        public void MakeReservation(int accId, int guestsId, int numberGuests, DateTime startD, DateTime endD)
+        {
+            AccomodationService accomodationService = new AccomodationService();
+            Accomodation izabran = accomodationService.GetAccomodationById(accId);
+            List<Accomodation> availableAccommodation = accomodationService.FindAvailableAccomodations(startD, endD, numberGuests);
+            if (availableAccommodation == null)
+            {
+                throw new Exception("Nema slobodnih.");
+            }
+
+            foreach (Accomodation accomodation in availableAccommodation)
+            {
+                if (accomodation == izabran)
+                {
+                    accomodationService.BookAcc(accId, guestsId, numberGuests, startD, endD);
+                }
+            }
+            using (var db = new DataContext())
+            {
+                var reservation = new AccomodationReservation
+                {
+                    
+                    CheckInDate = startD,
+                    CheckOutDate = endD,
+                    NumberOfGuests = numberGuests,
+                    AccomodationId = accId
+
+                };
+
+                //  List<AccomodationReservation> listaRezervisanihId = new List<AccomodationReservation>();
+                Accomodation accomodation = accomodationService.GetAccomodationById(accId);
+                accomodation.AccomodationReservations.Add(reservation);
+                db.AccomodationReservations.Add(reservation);
+                db.SaveChanges();
+                accomodationService.UpdateAvailability(accId, startD, endD, numberGuests);
+                Console.WriteLine("aaa");
+            }
+        }
+>>>>>>> Stashed changes
 
     }
 }

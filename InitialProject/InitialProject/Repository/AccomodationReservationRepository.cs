@@ -29,7 +29,11 @@ namespace InitialProject.Repository
                 List<AccomodationReservation> allAccomodationReservation = GetAllAccomodationReservation();
                 foreach (AccomodationReservation accomodationReservation in allAccomodationReservation)
                 {
+<<<<<<< Updated upstream
                     if (accomodationReservation.Id == accId)
+=======
+                    if (accomodationReservation.AccomodationId == accId)
+>>>>>>> Stashed changes
                     {
                         return accomodationReservation;
                     }
@@ -38,6 +42,14 @@ namespace InitialProject.Repository
             return null;
         }
 
+<<<<<<< Updated upstream
+=======
+        //   public bool IsAvailable(DateTime start,DateTime end)
+        //  {
+        //     foreach(var r in Accomodation.)
+        // }
+
+>>>>>>> Stashed changes
 
         public void BookAcc(int accId,int guestId,int guestsNumber, DateTime start,DateTime end)
         {

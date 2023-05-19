@@ -5,33 +5,18 @@ using Microsoft.EntityFrameworkCore.Migrations;
 
 namespace InitialProject.Migrations
 {
-<<<<<<<< Updated upstream:InitialProject/InitialProject/Migrations/20230416042249_Initial.cs
     public partial class Initial : Migration
-========
-    public partial class Igor : Migration
->>>>>>>> Stashed changes:InitialProject/Migrations.cs
     {
         protected override void Up(MigrationBuilder migrationBuilder)
         {
             migrationBuilder.CreateTable(
-<<<<<<<< Updated upstream:InitialProject/InitialProject/Migrations/20230416042249_Initial.cs
-                name: "accomodationRatings",
-========
                 name: "AccomodationRating",
->>>>>>>> Stashed changes:InitialProject/Migrations.cs
                 columns: table => new
                 {
                     AccomodationId = table.Column<int>(type: "INTEGER", nullable: false)
                         .Annotation("Sqlite:Autoincrement", true),
                     OwnerId = table.Column<int>(type: "INTEGER", nullable: false),
                     Cleanliness = table.Column<int>(type: "INTEGER", nullable: false),
-<<<<<<<< Updated upstream:InitialProject/InitialProject/Migrations/20230416042249_Initial.cs
-                    OwnerFriendliness = table.Column<int>(type: "INTEGER", nullable: false)
-                },
-                constraints: table =>
-                {
-                    table.PrimaryKey("PK_accomodationRatings", x => x.AccomodationId);
-========
                     OwnerFriendliness = table.Column<int>(type: "INTEGER", nullable: false),
                     Comment = table.Column<string>(type: "TEXT", nullable: false)
                 },
@@ -52,7 +37,6 @@ namespace InitialProject.Migrations
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_AccomodationReviews", x => x.AccomodationId);
->>>>>>>> Stashed changes:InitialProject/Migrations.cs
                 });
 
             migrationBuilder.CreateTable(
@@ -84,15 +68,9 @@ namespace InitialProject.Migrations
                 {
                     table.PrimaryKey("PK_AccomodationImages", x => x.Id);
                     table.ForeignKey(
-<<<<<<<< Updated upstream:InitialProject/InitialProject/Migrations/20230416042249_Initial.cs
-                        name: "FK_AccomodationImages_accomodationRatings_AccomodationRatingAccomodationId",
-                        column: x => x.AccomodationRatingAccomodationId,
-                        principalTable: "accomodationRatings",
-========
                         name: "FK_AccomodationImages_AccomodationRating_AccomodationRatingAccomodationId",
                         column: x => x.AccomodationRatingAccomodationId,
                         principalTable: "AccomodationRating",
->>>>>>>> Stashed changes:InitialProject/Migrations.cs
                         principalColumn: "AccomodationId",
                         onDelete: ReferentialAction.Cascade);
                 });
@@ -121,18 +99,11 @@ namespace InitialProject.Migrations
                         .Annotation("Sqlite:Autoincrement", true),
                     CreationTime = table.Column<DateTime>(type: "TEXT", nullable: false),
                     Text = table.Column<string>(type: "TEXT", nullable: false),
-                    AccomodationRatingAccomodationId = table.Column<int>(type: "INTEGER", nullable: true),
                     GuestId = table.Column<int>(type: "INTEGER", nullable: true)
                 },
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_Comments", x => x.Id);
-                    table.ForeignKey(
-                        name: "FK_Comments_accomodationRatings_AccomodationRatingAccomodationId",
-                        column: x => x.AccomodationRatingAccomodationId,
-                        principalTable: "accomodationRatings",
-                        principalColumn: "AccomodationId",
-                        onDelete: ReferentialAction.Cascade);
                 });
 
             migrationBuilder.CreateTable(
@@ -144,11 +115,19 @@ namespace InitialProject.Migrations
                     RatingExperationDate = table.Column<DateTime>(type: "TEXT", nullable: false),
                     Cleanliness = table.Column<int>(type: "INTEGER", nullable: false),
                     RuleCompliance = table.Column<int>(type: "INTEGER", nullable: false),
+                    Comment = table.Column<string>(type: "TEXT", nullable: false),
+                    IdOwner = table.Column<int>(type: "INTEGER", nullable: false),
+                    AccomodationRatingAccomodationId = table.Column<int>(type: "INTEGER", nullable: true),
                     OwnerId = table.Column<int>(type: "INTEGER", nullable: true)
                 },
                 constraints: table =>
                 {
                     table.PrimaryKey("PK_GuestRatings", x => x.Id);
+                    table.ForeignKey(
+                        name: "FK_GuestRatings_AccomodationRating_AccomodationRatingAccomodationId",
+                        column: x => x.AccomodationRatingAccomodationId,
+                        principalTable: "AccomodationRating",
+                        principalColumn: "AccomodationId");
                 });
 
             migrationBuilder.CreateTable(
@@ -235,11 +214,7 @@ namespace InitialProject.Migrations
                     CheckInDate = table.Column<DateTime>(type: "TEXT", nullable: false),
                     CheckOutDate = table.Column<DateTime>(type: "TEXT", nullable: false),
                     NumberOfGuests = table.Column<int>(type: "INTEGER", nullable: false),
-<<<<<<<< Updated upstream:InitialProject/InitialProject/Migrations/20230416042249_Initial.cs
-                    AccomodationAccId = table.Column<int>(type: "INTEGER", nullable: true),
-========
                     AccomodationId = table.Column<int>(type: "INTEGER", nullable: false),
->>>>>>>> Stashed changes:InitialProject/Migrations.cs
                     UserId = table.Column<int>(type: "INTEGER", nullable: true)
                 },
                 constraints: table =>
@@ -309,15 +284,9 @@ namespace InitialProject.Migrations
                 column: "AccomodationRatingAccomodationId");
 
             migrationBuilder.CreateIndex(
-<<<<<<<< Updated upstream:InitialProject/InitialProject/Migrations/20230416042249_Initial.cs
-                name: "IX_AccomodationReservations_AccomodationAccId",
-                table: "AccomodationReservations",
-                column: "AccomodationAccId");
-========
                 name: "IX_AccomodationReservations_AccomodationId",
                 table: "AccomodationReservations",
                 column: "AccomodationId");
->>>>>>>> Stashed changes:InitialProject/Migrations.cs
 
             migrationBuilder.CreateIndex(
                 name: "IX_AccomodationReservations_UserId",
@@ -350,14 +319,14 @@ namespace InitialProject.Migrations
                 column: "TourId");
 
             migrationBuilder.CreateIndex(
-                name: "IX_Comments_AccomodationRatingAccomodationId",
-                table: "Comments",
-                column: "AccomodationRatingAccomodationId");
-
-            migrationBuilder.CreateIndex(
                 name: "IX_Comments_GuestId",
                 table: "Comments",
                 column: "GuestId");
+
+            migrationBuilder.CreateIndex(
+                name: "IX_GuestRatings_AccomodationRatingAccomodationId",
+                table: "GuestRatings",
+                column: "AccomodationRatingAccomodationId");
 
             migrationBuilder.CreateIndex(
                 name: "IX_GuestRatings_OwnerId",
@@ -451,15 +420,9 @@ namespace InitialProject.Migrations
                 onDelete: ReferentialAction.Cascade);
 
             migrationBuilder.AddForeignKey(
-<<<<<<<< Updated upstream:InitialProject/InitialProject/Migrations/20230416042249_Initial.cs
-                name: "FK_AccomodationReservations_Accomodations_AccomodationAccId",
-                table: "AccomodationReservations",
-                column: "AccomodationAccId",
-========
                 name: "FK_AccomodationReservations_Accomodations_AccomodationId",
                 table: "AccomodationReservations",
                 column: "AccomodationId",
->>>>>>>> Stashed changes:InitialProject/Migrations.cs
                 principalTable: "Accomodations",
                 principalColumn: "AccId",
                 onDelete: ReferentialAction.Cascade);
@@ -495,11 +458,7 @@ namespace InitialProject.Migrations
                 name: "TourImages");
 
             migrationBuilder.DropTable(
-<<<<<<<< Updated upstream:InitialProject/InitialProject/Migrations/20230416042249_Initial.cs
-                name: "accomodationRatings");
-========
                 name: "AccomodationRating");
->>>>>>>> Stashed changes:InitialProject/Migrations.cs
 
             migrationBuilder.DropTable(
                 name: "AccomodationReservations");

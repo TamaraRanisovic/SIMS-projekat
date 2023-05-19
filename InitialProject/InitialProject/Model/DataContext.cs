@@ -77,11 +77,6 @@ namespace InitialProject.Model
 
             //AccomodationRating    NOVOOOOO
 
-            modelBuilder.Entity<Comment>()
-                .HasOne<AccomodationRating>()
-                .WithMany(t => t.Comments)
-                .OnDelete(DeleteBehavior.Cascade);
-
             modelBuilder.Entity<AccomodationImage>()
               .HasOne<AccomodationRating>()
               .WithMany(t => t.Images)

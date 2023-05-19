@@ -5,7 +5,12 @@
     <TargetFramework>net6.0-windows</TargetFramework>
     <Nullable>enable</Nullable>
     <UseWPF>true</UseWPF>
+<<<<<<< Updated upstream
     <StartupObject>InitialProject.Program</StartupObject>
+=======
+    <StartupObject>InitialProject.App</StartupObject>
+    <UseWindowsForms>False</UseWindowsForms>
+>>>>>>> Stashed changes
   </PropertyGroup>
 
   <ItemGroup>

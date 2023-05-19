@@ -301,12 +301,10 @@ namespace InitialProject.Controller
         public void MakeReservation(int accId, int guestsId,int numberGuests, DateTime startD, DateTime endD)
         {
             AccomodationService accomodationService = new AccomodationService();
-
             Accomodation izabran = accomodationService.GetAccomodationById(accId);
             List<Accomodation> availableAccommodation = accomodationService.FindAvailableAccomodations(startD, endD, numberGuests);
             if (availableAccommodation == null)
             {
-
                 throw new Exception("Nema slobodnih.");
             }
 

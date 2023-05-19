@@ -19,8 +19,9 @@ namespace InitialProject.Model
 
         public int OwnerFriendliness { get; set; }
 
-         public List<Comment> Comments { get; set; }
+         public string Comment { get; set; }
 
+        public List<GuestRating> guestRatings { get; set; }
 
         public List<AccomodationImage> Images { get; set; } 
 
@@ -30,19 +31,19 @@ namespace InitialProject.Model
             //Images = new List<AccomodationImage>();
         }
 
-        public AccomodationRating(int accomodationId, int ownerId,int cleanliness, int ownerFriendliness,List<Comment> comments,List<AccomodationImage> accomodationImages)
+        public AccomodationRating(int accomodationId, int ownerId,int cleanliness, int ownerFriendliness,string comment,List<AccomodationImage> accomodationImages)
         {
             AccomodationId = accomodationId;
             OwnerId = ownerId;
             Cleanliness = cleanliness;
             OwnerFriendliness = ownerFriendliness;
-            Comments = new List<Comment>();
+            Comment = comment;
             Images = new List<AccomodationImage> ();
         }
 
         public override string ToString()
         {
-            return $"AccomodationId: {AccomodationId}\n, OwnerId: {OwnerId}\n, Cleanliness {Cleanliness}\n, OwnerFriendliness: {OwnerFriendliness}\n, Comments: {Comments}\n, Images: {Images}\n";
+            return $"AccomodationId: {AccomodationId}\n, OwnerId: {OwnerId}\n, Cleanliness {Cleanliness}\n, OwnerFriendliness: {OwnerFriendliness}\n, Comment: {Comment}\n, Images: {Images}\n";
         }
 
     }

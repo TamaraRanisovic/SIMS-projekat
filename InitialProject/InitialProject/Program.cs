@@ -31,22 +31,29 @@ namespace InitialProject
             Console.Write("Your option: ");
         }
 
-        private static void ProcessChosenOption(string chosenOption) 
+        private static void ProcessChosenOption(string chosenOption)
         {
-            switch(chosenOption)
+            switch (chosenOption)
             {
                 case "1":
                     Console.WriteLine("Chosen option: A");
                     AccomodationController accomodationController = new AccomodationController();
                     accomodationController.GetMenu();
+<<<<<<< Updated upstream
                     break; 
                 case "2": 
                     Console.WriteLine("Chosen option: B"); 
                     break; 
+=======
+                    break;
+                case "2":
+                    Console.WriteLine("Chosen option: B");
+                    break;
+>>>>>>> Stashed changes
                 case "x":
                     break;
                 default:
-                    Console.WriteLine("Option does not exist"); 
+                    Console.WriteLine("Option does not exist");
                     break;
             }
 
