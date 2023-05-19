@@ -24,7 +24,12 @@ namespace InitialProject.Model
 
         public int DaysBeforeCanceling { get; set; }
 
+      //  public bool IsAvailable { get; set; }
+
         public List<AccomodationImage> Images { get; set; }
+
+        public List<Guest> Guests { get; set; }
+
      
         public string Class { get; set; }
 
@@ -98,6 +103,15 @@ namespace InitialProject.Model
             Images = new List<AccomodationImage>(); 
             
             AccomodationReservations = new List<AccomodationReservation>();
+            
+            Guests = new List<Guest>();
+            
+
+        }
+
+        public override string ToString()
+        {
+            return $"[==========****************===========]\nAccomodationId: {AccId}\n, Name: {Name}\n, AccomodationType: {AccomodationType}\n, MaxGuests: {MaxGuests}\n, MinDaysReservation: {MinReservationDays}\n, DaysBeforeCanceling: {DaysBeforeCanceling}\n";
         }
     }
 }

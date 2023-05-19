@@ -19,8 +19,11 @@ namespace InitialProject.Model
 
         public UserType UserType { get; set; }
 
+        public List<AccomodationReservation> AccomodationReservations { get; set; }
 
-        public User() { }
+        public User() {
+            AccomodationReservations = new List<AccomodationReservation>();
+        }
 
 
         public User(string username, string password, UserType userType)

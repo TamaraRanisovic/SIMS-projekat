@@ -1,4 +1,5 @@
-﻿using System;
+
+using System;
 using System.Collections.Generic;
 using System.ComponentModel.DataAnnotations;
 using System.Linq;
@@ -23,6 +24,8 @@ namespace InitialProject.Model
 
         public bool Cancelled { get; set; }
 
+        public int AccomodationId { get; set; }
+
         public override string ToString()
         {
             return "CheckIn " + CheckInDate + " CheckOut " + CheckOutDate + " NumberofGuests " + NumberOfGuests;
@@ -43,5 +46,15 @@ namespace InitialProject.Model
             Accomodations = new List<Accomodation>();
         }
 
+        public override string ToString()
+        {
+        return $"[==========****************===========]\nID: {Id}\n, StartDate: {CheckInDate}\n, EndDate: {CheckOutDate}\n, NumberOfGuests: {NumberOfGuests}\n, AccId: {AccomodationId}\n";
+        }
+
     }
 }
+
+
+
+
+

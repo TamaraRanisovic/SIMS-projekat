@@ -10,21 +10,17 @@ namespace InitialProject.Model
 
         public Comment() { }
 
-        public Comment(int id, DateTime creationTime, string text, User user)
+        public Comment(int commentId, DateTime creationTime, string commentText)
         {
-            Id = id;
+            Id = commentId;
             CreationTime = creationTime;
-            Text = text;
+            Text = commentText;
         }
 
-        public Comment(DateTime creationTime, string text, User user)
+        public override string ToString()
         {
-            CreationTime = creationTime;
-            Text = text;
+            return $"CommentID: {Id}\n, CreationTime: {CreationTime}\n, Text: {Text}\n";
         }
-
-
-
 
     }
 }
